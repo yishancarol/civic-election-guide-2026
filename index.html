@@ -6,14 +6,14 @@
 <title>台灣選舉圖鑑 2026</title>
 <style>
   :root {
-    --navy:      #1B2A4A;
-    --navy-deep: #11192E;
-    --gold:      #C9A227;
-    --paper:     #F7F8FA;
-    --white:     #FFFFFF;
-    --text:      #1F2430;
-    --muted:     #6B7280;
-    --border:    #E2E6EE;
+    --navy:      #4A342A;
+    --navy-deep: #4C362D;
+    --gold:      #B2967D;
+    --paper:     #F5F1EA;
+    --white:     #F2EFE8;
+    --text:      #3A2518;
+    --muted:     #9C8472;
+    --border:    #D7C9B8;
     --dpp:       #1B7A3D;
     --kmt:       #1B4A9C;
     --tpp:       #0E8C8C;
@@ -30,16 +30,8 @@
     flex-direction: column;
   }
 
-  .party-stripe {
-    height: 5px;
-    background: linear-gradient(90deg,
-      var(--dpp) 0%, var(--dpp) 33.3%,
-      var(--kmt) 33.3%, var(--kmt) 66.6%,
-      var(--tpp) 66.6%, var(--tpp) 100%);
-  }
-
   .hero {
-    background: var(--navy-deep);
+    background: linear-gradient(160deg, #3E2B20 0%, #4A342A 50%, #4C362D 100%);
     padding: 5rem 1.5rem 4rem;
     text-align: center;
   }
@@ -60,7 +52,7 @@
   }
   .hero-sub {
     font-size: 0.95rem;
-    color: rgba(255,255,255,0.5);
+    color: rgba(242,239,232,0.65);
     max-width: 420px;
     margin: 0 auto;
   }
@@ -69,15 +61,15 @@
     flex: 1;
     max-width: 860px;
     margin: 0 auto;
-    padding: 3rem 1.5rem;
+    padding: 3rem 1.5rem 2rem;
     width: 100%;
   }
   .section-label {
-    font-size: 0.7rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--muted);
-    font-weight: 600;
+    font-size: 1.25rem;
+    letter-spacing: 0.02em;
+    text-transform: none;
+    color: var(--navy);
+    font-weight: 700;
     margin-bottom: 1.2rem;
   }
   .county-grid {
@@ -107,9 +99,9 @@
     transition: width 0.15s;
   }
   .county-card:hover {
-    box-shadow: 0 8px 24px rgba(0,0,0,0.09);
+    box-shadow: 0 8px 24px rgba(58,35,20,0.10);
     transform: translateY(-2px);
-    border-color: #C5CDE0;
+    border-color: #CFC0AA;
   }
   .county-card:hover::before { width: 6px; }
 
@@ -150,7 +142,7 @@
     top: 50%;
     transform: translateY(-50%);
     font-size: 1.1rem;
-    color: #C5CDE0;
+    color: #CFC0AA;
     transition: color 0.15s, right 0.15s;
   }
   .county-card:hover .county-arrow { color: var(--navy); right: 1rem; }
@@ -171,9 +163,93 @@
     margin-top: 0.6rem;
   }
 
+  /* ── FAQ ─────────────────────────────────────── */
+  .faq-wrapper {
+    background: #EDE6DA;
+    border-top: 1px solid #D7C9B8;
+    border-bottom: 1px solid #D7C9B8;
+    margin: 1rem 0 0;
+  }
+  .faq-section {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 3rem;
+    width: 100%;
+  }
+  .faq-section .section-label { margin-bottom: 1.2rem; }
+
+  .faq-item {
+    background: #F5F1EA;
+    border: 1px solid #D7C9B8;
+    border-radius: 10px;
+    margin-bottom: 0.6rem;
+    overflow: hidden;
+  }
+  .faq-question {
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 1rem 1.2rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    cursor: pointer;
+    text-align: left;
+    transition: background 0.15s;
+  }
+  .faq-question:hover { background: #EDE6DA; }
+  .faq-num {
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: var(--white);
+    background: var(--navy);
+    padding: 0.15rem 0.5rem;
+    border-radius: 5px;
+    flex-shrink: 0;
+    margin-top: 0.15rem;
+    letter-spacing: 0.05em;
+  }
+  .faq-q-text {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--navy);
+    flex: 1;
+    line-height: 1.4;
+  }
+  .faq-arrow {
+    font-size: 0.75rem;
+    color: var(--muted);
+    flex-shrink: 0;
+    margin-top: 0.2rem;
+    transition: transform 0.2s;
+  }
+  .faq-item.open .faq-arrow { transform: rotate(180deg); }
+
+  .faq-answer {
+    display: none;
+    padding: 1rem 1.2rem 1.2rem 3.1rem;
+    font-size: 0.88rem;
+    color: #3A2518;
+    line-height: 1.8;
+    border-top: 1px solid var(--border);
+  }
+  .faq-item.open .faq-answer { display: block; }
+  .faq-answer p { margin-bottom: 0.7rem; }
+  .faq-answer p:last-child { margin-bottom: 0; }
+  .faq-answer strong { color: var(--navy); }
+  .faq-example {
+    background: #EDE6DA;
+    border-left: 3px solid var(--gold);
+    border-radius: 0 6px 6px 0;
+    padding: 0.65rem 1rem;
+    margin: 0.5rem 0 0.7rem;
+    font-size: 0.84rem;
+    color: #3A2518;
+  }
+
   footer {
-    background: var(--navy-deep);
-    color: rgba(255,255,255,0.4);
+    background: linear-gradient(160deg, #4C362D 0%, #3E2B20 100%);
+    color: rgba(242,239,232,0.6);
     text-align: center;
     padding: 1.5rem;
     font-size: 0.75rem;
@@ -181,8 +257,12 @@
 
   @media (max-width: 480px) {
     .hero { padding: 3.5rem 1rem 3rem; }
-    main { padding: 2rem 1rem; }
+    main { padding: 2rem 1rem 1rem; }
     .county-grid { grid-template-columns: 1fr; }
+    .faq-section { padding: 1.5rem 1rem 2rem; }
+    .faq-answer { padding-left: 1.2rem; }
+    .countdown-widget { min-width: 0; width: 100%; }
+    .countdown-widget-num { font-size: 1.8rem; }
   }
   @media (prefers-reduced-motion: reduce) {
     * { transition: none !important; }
@@ -191,16 +271,38 @@
 </head>
 <body>
 
-<div class="party-stripe" aria-hidden="true"></div>
-
 <header class="hero">
   <p class="hero-eyebrow">2026 九合一選舉</p>
   <h1 class="hero-title">台灣選舉圖鑑</h1>
-  <p class="hero-sub">選擇縣市，瀏覽各選區議員候選人提名名單。</p>
+
+  <div class="hero-info-line">
+    22 縣市・11/28 投票日
+  </div>
+
+  <div class="countdown-widget">
+    <div class="countdown-widget-label">距離投票日還有</div>
+    <div class="countdown-widget-digits">
+      <div class="countdown-widget-unit">
+        <span class="countdown-widget-num" id="cd-days">--</span>
+        <span class="countdown-widget-unit-label">天</span>
+      </div>
+      <span class="countdown-widget-sep">:</span>
+      <div class="countdown-widget-unit">
+        <span class="countdown-widget-num" id="cd-hours">--</span>
+        <span class="countdown-widget-unit-label">時</span>
+      </div>
+      <span class="countdown-widget-sep">:</span>
+      <div class="countdown-widget-unit">
+        <span class="countdown-widget-num" id="cd-mins">--</span>
+        <span class="countdown-widget-unit-label">分</span>
+      </div>
+    </div>
+  </div>
 </header>
 
 <main>
   <p class="section-label">選擇縣市</p>
+  <p class="section-sub">選擇縣市，瀏覽各選區議員候選人提名名單。</p>
   <div class="county-grid">
 
     <!-- 新北市 -->
@@ -240,9 +342,63 @@
   </div>
 </main>
 
+<!-- FAQ Section -->
+<div class="faq-wrapper">
+<section class="faq-section">
+  <p class="section-label">公民基礎知識小幫手</p>
+
+  <div class="faq-item" id="faq-1">
+    <button class="faq-question" onclick="toggleFaq('faq-1')" aria-expanded="false">
+      <span class="faq-num">Q1</span>
+      <span class="faq-q-text">「總席次」是什麼意思？為什麼每個黨可以提名的席次不同？</span>
+      <span class="faq-arrow">▼</span>
+    </button>
+    <div class="faq-answer">
+      <p><strong>總席次</strong>是指這個選區裡，選民總共可以選出幾個議員。例如新北市全市 68 席，就代表最後會有 68 個人當選議員。</p>
+      <p>每個黨提名數量不同，是因為提名數量是各黨<strong>自己決定</strong>的，不是規定。黨會根據自己的實力評估要提幾個人，背後的關鍵是：</p>
+      <div class="faq-example">
+        ⚠️ <strong>提太多人 → 票源分散 → 可能全部落選</strong>
+      </div>
+      <p>舉例：一個選區有 5 席，國民黨評估自己大概有 3 份票，就提名 3 人，讓這 3 人平均分配支持者的票，3 個都當選。如果貪心提 5 人，票被分成 5 份，可能 5 個都選不上。</p>
+      <p>所以：大黨（國民黨、民進黨）有較多基本盤，可以提較多席；小黨（民眾黨）基本盤較小，通常一個選區只提 1 人，集中火力；無黨籍則自己決定要不要參選，不受黨的控制。</p>
+    </div>
+  </div>
+
+</section>
+</div>
+
 <footer>
   資料來源：各政黨中央／新北市黨部公告、中選會、媒體報導（截至 2026 年 6 月）。正式名單以中選會公告為準。
 </footer>
+
+<script>
+  function toggleFaq(id) {
+    const item = document.getElementById(id);
+    const btn = item.querySelector('.faq-question');
+    const isOpen = item.classList.toggle('open');
+    btn.setAttribute('aria-expanded', isOpen);
+  }
+
+  function updateCountdown() {
+    const voteDay = new Date('2026-11-28T08:00:00+08:00');
+    const now = new Date();
+    const diff = voteDay - now;
+    if (diff <= 0) {
+      document.getElementById('cd-days').textContent = '0';
+      document.getElementById('cd-hours').textContent = '00';
+      document.getElementById('cd-mins').textContent = '00';
+      return;
+    }
+    const days  = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const mins  = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    document.getElementById('cd-days').textContent  = days;
+    document.getElementById('cd-hours').textContent = String(hours).padStart(2,'0');
+    document.getElementById('cd-mins').textContent  = String(mins).padStart(2,'0');
+  }
+  updateCountdown();
+  setInterval(updateCountdown, 30000);
+</script>
 
 </body>
 </html>
