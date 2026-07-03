@@ -186,8 +186,19 @@
   .district-no { font-size: 0.7rem; letter-spacing: 0.15em; color: var(--gold); text-transform: uppercase; font-weight: 600; margin-bottom: 0.15rem; }
   .district-name { font-size: 1.25rem; font-weight: 700; color: var(--white); }
   .district-areas { font-size: 0.8rem; color: rgba(255,255,255,0.55); margin-top: 0.15rem; }
-  .district-right { text-align: right; flex-shrink: 0; }
+  .district-right { text-align: right; flex-shrink: 0; display: flex; flex-direction: column; align-items: flex-end; }
   .district-seats { font-size: 0.85rem; font-weight: 600; color: var(--gold); margin-bottom: 0.4rem; }
+  .district-header { cursor: pointer; user-select: none; }
+  .district-header:hover { background: var(--navy-mid); }
+  .toggle-arrow {
+    display: inline-block;
+    margin-top: 0.5rem;
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.55);
+    transition: transform 0.2s ease;
+  }
+  .district.expanded .toggle-arrow { transform: rotate(180deg); }
+  .district:not(.expanded) .district-header { border-radius: 12px; }
 
   .status-pill {
     display: inline-block;
@@ -207,6 +218,17 @@
     border-top: none;
     border-radius: 0 0 12px 12px;
     overflow: hidden;
+    max-height: 3000px;
+    opacity: 1;
+    transition: max-height 0.35s ease, opacity 0.25s ease;
+  }
+  .district-body.collapsed {
+    max-height: 0;
+    opacity: 0;
+    border-top: none;
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
   }
 
   /* Party block */
@@ -291,7 +313,7 @@
     .hero { padding: 3rem 1rem 2rem; }
     main { padding: 1rem 1rem 3rem; }
     .district-header { flex-direction: column; }
-    .district-right { text-align: left; }
+    .district-right { text-align: left; align-items: flex-start; }
     .hero-stats { grid-template-columns: repeat(2, 1fr); }
   }
   @media (prefers-reduced-motion: reduce) {
@@ -304,24 +326,6 @@
 
 <!-- Signature: party-color stripe -->
 <div class="party-stripe" aria-hidden="true"></div>
-
-<!-- Sticky nav -->
-<nav class="sticky-nav" aria-label="選區快速跳轉">
-  <span class="nav-label">選區</span>
-  <a href="#d1">1｜淡水</a>
-  <a href="#d2">2｜林口</a>
-  <a href="#d3">3｜新莊</a>
-  <a href="#d4">4｜三重</a>
-  <a href="#d5">5｜板橋</a>
-  <a href="#d6">6｜中和</a>
-  <a href="#d7">7｜永和</a>
-  <a href="#d8">8｜土城</a>
-  <a href="#d9">9｜新店</a>
-  <a href="#d10">10｜瑞芳</a>
-  <a href="#d11">11｜汐止</a>
-  <a href="#d12">12｜平原</a>
-  <a href="#d13">13｜山原</a>
-</nav>
 
 <!-- Hero -->
 <header class="hero">
@@ -352,6 +356,24 @@
   </div>
 </header>
 
+<!-- Sticky nav -->
+<nav class="sticky-nav" aria-label="選區快速跳轉">
+  <span class="nav-label">選區</span>
+  <a href="#d1">1｜淡水</a>
+  <a href="#d2">2｜林口</a>
+  <a href="#d3">3｜新莊</a>
+  <a href="#d4">4｜三重</a>
+  <a href="#d5">5｜板橋</a>
+  <a href="#d6">6｜中和</a>
+  <a href="#d7">7｜永和</a>
+  <a href="#d8">8｜土城</a>
+  <a href="#d9">9｜新店</a>
+  <a href="#d10">10｜瑞芳</a>
+  <a href="#d11">11｜汐止</a>
+  <a href="#d12">12｜平原</a>
+  <a href="#d13">13｜山原</a>
+</nav>
+
 <!-- Legend -->
 <div class="legend-bar">
   <span class="legend-label">政黨色標</span>
@@ -380,9 +402,10 @@
       <div class="district-right">
         <div class="district-seats">應選 4 席</div>
         <span class="status-pill status-partial">部分確定／初選中</span>
+        <span class="toggle-arrow" aria-hidden="true">▾</span>
       </div>
     </div>
-    <div class="district-body">
+    <div class="district-body collapsed">
       <div class="party-block">
         <div class="party-block-head">
           <span class="party-tag" style="background:var(--dpp)">民進黨</span>
@@ -420,9 +443,10 @@
       <div class="district-right">
         <div class="district-seats">應選 5 席（原4+1）</div>
         <span class="status-pill status-partial">部分確定／初選中</span>
+        <span class="toggle-arrow" aria-hidden="true">▾</span>
       </div>
     </div>
-    <div class="district-body">
+    <div class="district-body collapsed">
       <div class="party-block">
         <div class="party-block-head">
           <span class="party-tag" style="background:var(--kmt)">國民黨</span>
@@ -460,9 +484,10 @@
       <div class="district-right">
         <div class="district-seats">應選 4 席</div>
         <span class="status-pill status-confirmed">提名結果確定</span>
+        <span class="toggle-arrow" aria-hidden="true">▾</span>
       </div>
     </div>
-    <div class="district-body">
+    <div class="district-body collapsed">
       <div class="party-block">
         <div class="party-block-head">
           <span class="party-tag" style="background:var(--dpp)">民進黨</span>
@@ -502,9 +527,10 @@
       <div class="district-right">
         <div class="district-seats">應選 9 席</div>
         <span class="status-pill status-partial">部分確定／初選中</span>
+        <span class="toggle-arrow" aria-hidden="true">▾</span>
       </div>
     </div>
-    <div class="district-body">
+    <div class="district-body collapsed">
       <div class="party-block">
         <div class="party-block-head">
           <span class="party-tag" style="background:var(--tpp)">民眾黨</span>
@@ -550,9 +576,10 @@
       <div class="district-right">
         <div class="district-seats">應選 5 席</div>
         <span class="status-pill status-partial">部分確定／初選中</span>
+        <span class="toggle-arrow" aria-hidden="true">▾</span>
       </div>
     </div>
-    <div class="district-body">
+    <div class="district-body collapsed">
       <div class="party-block">
         <div class="party-block-head">
           <span class="party-tag" style="background:var(--kmt)">國民黨</span>
@@ -598,9 +625,10 @@
       <div class="district-right">
         <div class="district-seats">席次待確認</div>
         <span class="status-pill status-pending">提名作業進行中</span>
+        <span class="toggle-arrow" aria-hidden="true">▾</span>
       </div>
     </div>
-    <div class="district-body">
+    <div class="district-body collapsed">
       <div class="pending-state">
         <div class="pending-icon">⏳</div>
         <div class="pending-text">提名作業進行中</div>
@@ -624,9 +652,10 @@
       <div class="district-right">
         <div class="district-seats">席次待確認</div>
         <span class="status-pill status-partial">部分確定／初選中</span>
+        <span class="toggle-arrow" aria-hidden="true">▾</span>
       </div>
     </div>
-    <div class="district-body">
+    <div class="district-body collapsed">
       <div class="party-block">
         <div class="party-block-head">
           <span class="party-tag" style="background:var(--kmt)">國民黨</span>
@@ -654,9 +683,10 @@
       <div class="district-right">
         <div class="district-seats">應選 9 席（原10-1）</div>
         <span class="status-pill status-partial">部分確定／初選中</span>
+        <span class="toggle-arrow" aria-hidden="true">▾</span>
       </div>
     </div>
-    <div class="district-body">
+    <div class="district-body collapsed">
       <div class="party-block">
         <div class="party-block-head">
           <span class="party-tag" style="background:var(--dpp)">民進黨</span>
@@ -699,9 +729,10 @@
       <div class="district-right">
         <div class="district-seats">應選 4 席</div>
         <span class="status-pill status-pending">提名作業進行中</span>
+        <span class="toggle-arrow" aria-hidden="true">▾</span>
       </div>
     </div>
-    <div class="district-body">
+    <div class="district-body collapsed">
       <div class="party-block">
         <div class="party-block-head">
           <span class="party-tag" style="background:var(--kmt)">國民黨</span>
@@ -729,9 +760,10 @@
       <div class="district-right">
         <div class="district-seats">席次待確認</div>
         <span class="status-pill status-pending">提名作業進行中</span>
+        <span class="toggle-arrow" aria-hidden="true">▾</span>
       </div>
     </div>
-    <div class="district-body">
+    <div class="district-body collapsed">
       <div class="pending-state">
         <div class="pending-icon">⏳</div>
         <div class="pending-text">提名作業進行中</div>
@@ -755,9 +787,10 @@
       <div class="district-right">
         <div class="district-seats">席次待確認</div>
         <span class="status-pill status-pending">提名作業進行中</span>
+        <span class="toggle-arrow" aria-hidden="true">▾</span>
       </div>
     </div>
-    <div class="district-body">
+    <div class="district-body collapsed">
       <div class="pending-state">
         <div class="pending-icon">⏳</div>
         <div class="pending-text">提名作業進行中</div>
@@ -781,9 +814,10 @@
       <div class="district-right">
         <div class="district-seats">應選約 4 席</div>
         <span class="status-pill status-pending">提名作業進行中</span>
+        <span class="toggle-arrow" aria-hidden="true">▾</span>
       </div>
     </div>
-    <div class="district-body">
+    <div class="district-body collapsed">
       <div class="pending-state">
         <div class="pending-icon">⏳</div>
         <div class="pending-text">提名作業進行中</div>
@@ -807,9 +841,10 @@
       <div class="district-right">
         <div class="district-seats">應選約 2 席</div>
         <span class="status-pill status-pending">提名作業進行中</span>
+        <span class="toggle-arrow" aria-hidden="true">▾</span>
       </div>
     </div>
-    <div class="district-body">
+    <div class="district-body collapsed">
       <div class="pending-state">
         <div class="pending-icon">⏳</div>
         <div class="pending-text">提名作業進行中</div>
@@ -854,6 +889,16 @@
     });
   }, { threshold: 0.3, rootMargin: '-80px 0px -60% 0px' });
   sections.forEach(s => observer.observe(s));
+
+  // Collapsible district sections — collapsed by default
+  document.querySelectorAll('.district-header').forEach(header => {
+    header.addEventListener('click', () => {
+      const district = header.closest('.district');
+      const body = district.querySelector('.district-body');
+      const isExpanded = district.classList.toggle('expanded');
+      body.classList.toggle('collapsed', !isExpanded);
+    });
+  });
 </script>
 
 </body>
