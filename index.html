@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>台灣選舉圖鑑 2026</title>
+<style>
+  :root {
+    --navy:      #1B2A4A;
+    --navy-deep: #11192E;
+    --gold:      #C9A227;
+    --paper:     #F7F8FA;
+    --white:     #FFFFFF;
+    --text:      #1F2430;
+    --muted:     #6B7280;
+    --border:    #E2E6EE;
+    --dpp:       #1B7A3D;
+    --kmt:       #1B4A9C;
+    --tpp:       #0E8C8C;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Noto Sans TC', '微軟正黑體', 'PingFang TC', sans-serif;
+    background: var(--paper);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .party-stripe {
+    height: 5px;
+    background: linear-gradient(90deg,
+      var(--dpp) 0%, var(--dpp) 33.3%,
+      var(--kmt) 33.3%, var(--kmt) 66.6%,
+      var(--tpp) 66.6%, var(--tpp) 100%);
+  }
+
+  .hero {
+    background: var(--navy-deep);
+    padding: 5rem 1.5rem 4rem;
+    text-align: center;
+  }
+  .hero-eyebrow {
+    font-size: 0.78rem;
+    letter-spacing: 0.22em;
+    color: var(--gold);
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+  }
+  .hero-title {
+    font-size: clamp(2rem, 6vw, 3rem);
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.2;
+    margin-bottom: 0.75rem;
+  }
+  .hero-sub {
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.5);
+    max-width: 420px;
+    margin: 0 auto;
+  }
+
+  main {
+    flex: 1;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem;
+    width: 100%;
+  }
+  .section-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 600;
+    margin-bottom: 1.2rem;
+  }
+  .county-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1rem;
+  }
+
+  .county-card {
+    display: block;
+    text-decoration: none;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.4rem 1.5rem;
+    transition: box-shadow 0.15s, transform 0.15s, border-color 0.15s;
+    position: relative;
+    overflow: hidden;
+  }
+  .county-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 4px;
+    background: var(--navy);
+    border-radius: 12px 0 0 12px;
+    transition: width 0.15s;
+  }
+  .county-card:hover {
+    box-shadow: 0 8px 24px rgba(0,0,0,0.09);
+    transform: translateY(-2px);
+    border-color: #C5CDE0;
+  }
+  .county-card:hover::before { width: 6px; }
+
+  .county-tag {
+    display: inline-block;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--white);
+    background: var(--navy);
+    padding: 0.18rem 0.55rem;
+    border-radius: 5px;
+    margin-bottom: 0.7rem;
+  }
+  .county-name {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 0.3rem;
+  }
+  .county-meta {
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-bottom: 0.9rem;
+  }
+  .county-stats {
+    display: flex;
+    gap: 1rem;
+  }
+  .county-stat { display: flex; flex-direction: column; gap: 0.1rem; }
+  .county-stat-num { font-size: 1.1rem; font-weight: 700; color: var(--text); }
+  .county-stat-label { font-size: 0.68rem; color: var(--muted); }
+
+  .county-arrow {
+    position: absolute;
+    right: 1.2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.1rem;
+    color: #C5CDE0;
+    transition: color 0.15s, right 0.15s;
+  }
+  .county-card:hover .county-arrow { color: var(--navy); right: 1rem; }
+
+  .county-card.coming-soon {
+    opacity: 0.45;
+    pointer-events: none;
+  }
+  .county-card.coming-soon::before { background: var(--muted); }
+  .coming-badge {
+    display: inline-block;
+    font-size: 0.65rem;
+    font-weight: 600;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    padding: 0.15rem 0.5rem;
+    border-radius: 5px;
+    margin-top: 0.6rem;
+  }
+
+  footer {
+    background: var(--navy-deep);
+    color: rgba(255,255,255,0.4);
+    text-align: center;
+    padding: 1.5rem;
+    font-size: 0.75rem;
+  }
+
+  @media (max-width: 480px) {
+    .hero { padding: 3.5rem 1rem 3rem; }
+    main { padding: 2rem 1rem; }
+    .county-grid { grid-template-columns: 1fr; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="party-stripe" aria-hidden="true"></div>
+
+<header class="hero">
+  <p class="hero-eyebrow">2026 九合一選舉</p>
+  <h1 class="hero-title">台灣選舉圖鑑</h1>
+  <p class="hero-sub">選擇縣市，瀏覽各選區議員候選人提名名單。</p>
+</header>
+
+<main>
+  <p class="section-label">選擇縣市</p>
+  <div class="county-grid">
+
+    <!-- 新北市 -->
+    <a class="county-card" href="https://yishancarol.github.io/civic-election-guide-2026/guide-ntpc.html">
+      <span class="county-tag">直轄市</span>
+      <div class="county-name">新北市</div>
+      <div class="county-meta">13 個選區　議員選舉</div>
+      <div class="county-stats">
+        <div class="county-stat">
+          <span class="county-stat-num">68</span>
+          <span class="county-stat-label">總席次</span>
+        </div>
+        <div class="county-stat">
+          <span class="county-stat-num">13</span>
+          <span class="county-stat-label">選舉區</span>
+        </div>
+      </div>
+      <span class="county-arrow">→</span>
+    </a>
+
+    <!-- 台北市（預留） -->
+    <div class="county-card coming-soon">
+      <span class="county-tag">直轄市</span>
+      <div class="county-name">台北市</div>
+      <div class="county-meta">議員選舉</div>
+      <span class="coming-badge">即將上線</span>
+    </div>
+
+    <!-- 桃園市（預留） -->
+    <div class="county-card coming-soon">
+      <span class="county-tag">直轄市</span>
+      <div class="county-name">桃園市</div>
+      <div class="county-meta">議員選舉</div>
+      <span class="coming-badge">即將上線</span>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  資料來源：各政黨中央／新北市黨部公告、中選會、媒體報導（截至 2026 年 6 月）。正式名單以中選會公告為準。
+</footer>
+
+</body>
+</html>
