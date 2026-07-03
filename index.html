@@ -50,11 +50,55 @@
     line-height: 1.2;
     margin-bottom: 0.75rem;
   }
-  .hero-sub {
-    font-size: 0.95rem;
-    color: rgba(242,239,232,0.65);
-    max-width: 420px;
+  .hero-info-line {
+    font-size: 0.88rem;
+    color: rgba(242,239,232,0.55);
+    letter-spacing: 0.08em;
+    margin-bottom: 2rem;
+  }
+  .countdown-widget {
+    display: inline-block;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(242,239,232,0.15);
+    border-radius: 16px;
+    padding: 1.2rem 2rem 1rem;
     margin: 0 auto;
+    min-width: 280px;
+  }
+  .countdown-widget-label {
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(242,239,232,0.5);
+    margin-bottom: 0.8rem;
+  }
+  .countdown-widget-digits {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .countdown-widget-unit { text-align: center; }
+  .countdown-widget-num {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: rgba(242,239,232,0.88);
+    line-height: 1;
+    display: block;
+    min-width: 2.4ch;
+  }
+  .countdown-widget-unit-label {
+    font-size: 0.6rem;
+    color: rgba(242,239,232,0.45);
+    letter-spacing: 0.1em;
+    margin-top: 0.3rem;
+    display: block;
+  }
+  .countdown-widget-sep {
+    font-size: 1.8rem;
+    color: rgba(242,239,232,0.2);
+    line-height: 1;
+    margin-bottom: 1rem;
   }
 
   main {
@@ -70,6 +114,14 @@
     text-transform: none;
     color: var(--navy);
     font-weight: 700;
+    margin-bottom: 0.4rem;
+  }
+  .section-sub {
+    font-size: 0.78rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 600;
     margin-bottom: 1.2rem;
   }
   .county-grid {
@@ -99,7 +151,7 @@
     transition: width 0.15s;
   }
   .county-card:hover {
-    box-shadow: 0 8px 24px rgba(58,35,20,0.10);
+    box-shadow: 0 8px 24px rgba(58,37,24,0.10);
     transform: translateY(-2px);
     border-color: #CFC0AA;
   }
@@ -249,7 +301,7 @@
 
   footer {
     background: linear-gradient(160deg, #4C362D 0%, #3E2B20 100%);
-    color: rgba(242,239,232,0.6);
+    color: rgba(242,239,232,0.5);
     text-align: center;
     padding: 1.5rem;
     font-size: 0.75rem;
