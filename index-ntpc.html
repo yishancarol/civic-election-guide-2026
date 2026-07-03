@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026 新北市議員候選人圖鑑</title>
+<style>
+  /* ── Tokens ─────────────────────────────────── */
+  :root {
+    --navy:       #1B2A4A;
+    --navy-deep:  #11192E;
+    --navy-mid:   #243558;
+    --gold:       #C9A227;
+    --paper:      #F7F8FA;
+    --white:      #FFFFFF;
+    --text:       #1F2430;
+    --muted:      #6B7280;
+    --border:     #E2E6EE;
+    --dpp:        #1B7A3D;
+    --kmt:        #1B4A9C;
+    --tpp:        #0E8C8C;
+    --ind:        #8A8F98;
+    --confirmed:  #1B7A3D;
+    --partial:    #B07D10;
+    --pending:    #8A8F98;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Noto Sans TC', '微軟正黑體', 'PingFang TC', sans-serif;
+    background: var(--paper);
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  /* ── Party stripe (signature element) ───────── */
+  .party-stripe {
+    height: 5px;
+    background: linear-gradient(90deg,
+      var(--dpp) 0%, var(--dpp) 33.3%,
+      var(--kmt) 33.3%, var(--kmt) 66.6%,
+      var(--tpp) 66.6%, var(--tpp) 100%);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  /* ── Sticky nav ──────────────────────────────── */
+  .sticky-nav {
+    position: sticky;
+    top: 5px;
+    z-index: 99;
+    background: var(--navy-deep);
+    padding: 0 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .sticky-nav::-webkit-scrollbar { display: none; }
+  .sticky-nav .nav-label {
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+    padding: 0.7rem 0;
+    flex-shrink: 0;
+  }
+  .sticky-nav a {
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    white-space: nowrap;
+    padding: 0.7rem 0.55rem;
+    border-bottom: 2px solid transparent;
+    transition: color 0.15s, border-color 0.15s;
+    flex-shrink: 0;
+  }
+  .sticky-nav a:hover, .sticky-nav a.active {
+    color: var(--gold);
+    border-bottom-color: var(--gold);
+  }
+
+  /* ── Hero ────────────────────────────────────── */
+  .hero {
+    background: var(--navy-deep);
+    padding: 4rem 1.5rem 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+  }
+  .hero-eyebrow {
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 0.6rem;
+  }
+  .hero-title {
+    font-size: clamp(2rem, 6vw, 3.2rem);
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+  .hero-sub {
+    font-size: 1rem;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 2rem;
+    max-width: 520px;
+  }
+  .hero-meta {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin-bottom: 2.5rem;
+  }
+  .hero-meta-item { display: flex; flex-direction: column; gap: 0.15rem; }
+  .hero-meta-label { font-size: 0.7rem; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.1em; }
+  .hero-meta-value { font-size: 1rem; font-weight: 600; color: var(--white); }
+  .hero-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 0.75rem;
+    max-width: 620px;
+  }
+  .stat-card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    padding: 1rem 1.2rem;
+  }
+  .stat-num {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 0.2rem;
+  }
+  .stat-desc { font-size: 0.75rem; color: rgba(255,255,255,0.5); }
+
+  /* ── Legend ──────────────────────────────────── */
+  .legend-bar {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    border-bottom: 1px solid var(--border);
+  }
+  .legend-label { font-size: 0.72rem; color: var(--muted); }
+  .legend-items { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .legend-item { display: flex; align-items: center; gap: 0.35rem; font-size: 0.78rem; color: var(--text); }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+  /* ── Main ────────────────────────────────────── */
+  main { max-width: 900px; margin: 0 auto; padding: 1rem 1.5rem 4rem; }
+
+  /* ── District section ────────────────────────── */
+  .district { margin-bottom: 2.5rem; scroll-margin-top: 80px; }
+  .district-header {
+    background: var(--navy);
+    border-radius: 12px 12px 0 0;
+    padding: 1rem 1.4rem;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .district-title-group {}
+  .district-no { font-size: 0.7rem; letter-spacing: 0.15em; color: var(--gold); text-transform: uppercase; font-weight: 600; margin-bottom: 0.15rem; }
+  .district-name { font-size: 1.25rem; font-weight: 700; color: var(--white); }
+  .district-areas { font-size: 0.8rem; color: rgba(255,255,255,0.55); margin-top: 0.15rem; }
+  .district-right { text-align: right; flex-shrink: 0; }
+  .district-seats { font-size: 0.85rem; font-weight: 600; color: var(--gold); margin-bottom: 0.4rem; }
+
+  .status-pill {
+    display: inline-block;
+    font-size: 0.68rem;
+    font-weight: 600;
+    padding: 0.2rem 0.6rem;
+    border-radius: 99px;
+    color: var(--white);
+  }
+  .status-confirmed { background: var(--confirmed); }
+  .status-partial   { background: var(--partial); }
+  .status-pending   { background: var(--pending); }
+
+  .district-body {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-top: none;
+    border-radius: 0 0 12px 12px;
+    overflow: hidden;
+  }
+
+  /* Party block */
+  .party-block {
+    padding: 1rem 1.4rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .party-block:last-child { border-bottom: none; }
+  .party-block-head { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.7rem; }
+  .party-tag {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 0.2rem 0.65rem;
+    border-radius: 6px;
+    color: var(--white);
+  }
+  .party-note { font-size: 0.78rem; color: var(--muted); font-style: italic; }
+
+  .candidate-chips { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+  .chip {
+    background: #EEF1F7;
+    border-radius: 7px;
+    padding: 0.28rem 0.7rem;
+    font-size: 0.82rem;
+    color: var(--text);
+    font-weight: 500;
+    border: 1px solid transparent;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .chip:hover { background: #E0E5F0; border-color: var(--border); }
+  .chip-tag {
+    font-size: 0.68rem;
+    color: var(--muted);
+    margin-left: 0.3em;
+    font-weight: 400;
+  }
+  .no-candidates { font-size: 0.82rem; color: var(--muted); font-style: italic; }
+
+  /* Pending state */
+  .pending-state {
+    padding: 2.5rem 1.4rem;
+    text-align: center;
+  }
+  .pending-icon {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    background: #F0F1F4;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 0.75rem;
+    font-size: 1.2rem;
+  }
+  .pending-text { font-size: 0.95rem; font-weight: 600; color: var(--muted); margin-bottom: 0.3rem; }
+  .pending-sub { font-size: 0.8rem; color: #9CA3AF; }
+
+  /* Remark */
+  .district-remark {
+    background: #F0F3FA;
+    border-top: 1px solid var(--border);
+    padding: 0.75rem 1.4rem;
+    font-size: 0.8rem;
+    color: #4B5563;
+    display: flex;
+    gap: 0.5rem;
+  }
+  .remark-label { font-weight: 700; color: var(--navy); white-space: nowrap; flex-shrink: 0; }
+
+  /* ── Footer ──────────────────────────────────── */
+  footer {
+    background: var(--navy-deep);
+    color: rgba(255,255,255,0.5);
+    text-align: center;
+    padding: 2rem 1.5rem;
+    font-size: 0.78rem;
+  }
+  footer a { color: rgba(255,255,255,0.7); text-decoration: underline; text-underline-offset: 3px; }
+  footer .footer-resources { margin-top: 0.5rem; }
+  footer .footer-title { font-weight: 600; color: rgba(255,255,255,0.8); margin-bottom: 0.25rem; }
+
+  /* ── Responsive ──────────────────────────────── */
+  @media (max-width: 600px) {
+    .hero { padding: 3rem 1rem 2rem; }
+    main { padding: 1rem 1rem 3rem; }
+    .district-header { flex-direction: column; }
+    .district-right { text-align: left; }
+    .hero-stats { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Signature: party-color stripe -->
+<div class="party-stripe" aria-hidden="true"></div>
+
+<!-- Sticky nav -->
+<nav class="sticky-nav" aria-label="選區快速跳轉">
+  <span class="nav-label">選區</span>
+  <a href="#d1">1｜淡水</a>
+  <a href="#d2">2｜林口</a>
+  <a href="#d3">3｜新莊</a>
+  <a href="#d4">4｜三重</a>
+  <a href="#d5">5｜板橋</a>
+  <a href="#d6">6｜中和</a>
+  <a href="#d7">7｜永和</a>
+  <a href="#d8">8｜土城</a>
+  <a href="#d9">9｜新店</a>
+  <a href="#d10">10｜瑞芳</a>
+  <a href="#d11">11｜汐止</a>
+  <a href="#d12">12｜平原</a>
+  <a href="#d13">13｜山原</a>
+</nav>
+
+<!-- Hero -->
+<header class="hero">
+  <div class="hero-inner">
+    <p class="hero-eyebrow">2026 九合一選舉</p>
+    <h1 class="hero-title">新北市議員<br>候選人圖鑑</h1>
+    <p class="hero-sub">13個選區、全政黨提名名單整理，資料來源：各黨中央公告與媒體報導。</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">投票日</span>
+        <span class="hero-meta-value">2026年11月28日</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">資料截至</span>
+        <span class="hero-meta-value">2026年6月21日</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">正式名單公告</span>
+        <span class="hero-meta-value">2026年11月17日</span>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-card"><div class="stat-num">68</div><div class="stat-desc">總席次（較上屆+2）</div></div>
+      <div class="stat-card"><div class="stat-num">13</div><div class="stat-desc">選舉區（含原住民）</div></div>
+      <div class="stat-card"><div class="stat-num">38</div><div class="stat-desc">國民黨提名席次</div></div>
+      <div class="stat-card"><div class="stat-num">34</div><div class="stat-desc">民進黨提名席次</div></div>
+    </div>
+  </div>
+</header>
+
+<!-- Legend -->
+<div class="legend-bar">
+  <span class="legend-label">政黨色標</span>
+  <div class="legend-items">
+    <div class="legend-item"><div class="legend-dot" style="background:var(--dpp)"></div>民進黨</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--kmt)"></div>國民黨</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--tpp)"></div>民眾黨</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--ind)"></div>無黨籍／其他</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--confirmed)"></div>提名結果確定</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--partial)"></div>部分確定／初選中</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--pending)"></div>提名作業進行中</div>
+  </div>
+</div>
+
+<!-- Districts -->
+<main>
+
+  <!-- 第一選區 -->
+  <section class="district" id="d1">
+    <div class="district-header">
+      <div class="district-title-group">
+        <div class="district-no">第一選區</div>
+        <div class="district-name">淡水・八里・三芝・石門</div>
+        <div class="district-areas">應選 4 席</div>
+      </div>
+      <div class="district-right">
+        <div class="district-seats">應選 4 席</div>
+        <span class="status-pill status-partial">部分確定／初選中</span>
+      </div>
+    </div>
+    <div class="district-body">
+      <div class="party-block">
+        <div class="party-block-head">
+          <span class="party-tag" style="background:var(--dpp)">民進黨</span>
+          <span class="party-note">提名 2 席</span>
+        </div>
+        <div class="candidate-chips">
+          <span class="chip">鄭宇恩<span class="chip-tag">現任</span></span>
+          <span class="chip">游明諺<span class="chip-tag">新人</span></span>
+        </div>
+      </div>
+      <div class="party-block">
+        <div class="party-block-head">
+          <span class="party-tag" style="background:var(--kmt)">國民黨</span>
+          <span class="party-note">整合中</span>
+        </div>
+        <div class="candidate-chips">
+          <span class="chip">呂鈞鴻<span class="chip-tag">新人・蔡錦賢服務處秘書</span></span>
+        </div>
+      </div>
+      <div class="district-remark">
+        <span class="remark-label">選區觀察</span>
+        現任蔡錦賢宣布不再參選，藍營席次競爭浮動；「侯家軍」陳柏翰原傳出可能投入本區，後轉往第七選區（永和）。
+      </div>
+    </div>
+  </section>
+
+  <!-- 第二選區 -->
+  <section class="district" id="d2">
+    <div class="district-header">
+      <div class="district-title-group">
+        <div class="district-no">第二選區</div>
+        <div class="district-name">林口・五股・泰山</div>
+        <div class="district-areas">應選 5 席（原 4 席+1）</div>
+      </div>
+      <div class="district-right">
+        <div class="district-seats">應選 5 席（原4+1）</div>
+        <span class="status-pill status-partial">部分確定／初選中</span>
+      </div>
+    </div>
+    <div class="district-body">
+      <div class="party-block">
+        <div class="party-block-head">
+          <span class="party-tag" style="background:var(--kmt)">國民黨</span>
+          <span class="party-note">擴大提名 4 席，內部初選中</span>
+        </div>
+        <div class="candidate-chips">
+          <span class="chip">蔡淑君<span class="chip-tag">現任</span></span>
+          <span class="chip">陳明義<span class="chip-tag">現任</span></span>
+        </div>
+      </div>
+      <div class="party-block">
+        <div class="party-block-head">
+          <span class="party-tag" style="background:var(--dpp)">民進黨</span>
+          <span class="party-note">保守提名 2 席</span>
+        </div>
+        <div class="candidate-chips">
+          <span class="no-candidates">候選人名單待確認</span>
+        </div>
+      </div>
+      <div class="district-remark">
+        <span class="remark-label">選區觀察</span>
+        人口成長帶動席次增加，藍營傳統優勢選區，國民黨提名席次擴大但內部初選競爭激烈。
+      </div>
+    </div>
+  </section>
+
+  <!-- 第三選區 -->
+  <section class="district" id="d3">
+    <div class="district-header">
+      <div class="district-title-group">
+        <div class="district-no">第三選區</div>
+        <div class="district-name">新莊</div>
+        <div class="district-areas">應選 4 席（含女性保障 1 席）</div>
+      </div>
+      <div class="district-right">
+        <div class="district-seats">應選 4 席</div>
+        <span class="status-pill status-confirmed">提名結果確定</span>
+      </div>
+    </div>
+    <div class="district-body">
+      <div class="party-block">
+        <div class="party-block-head">
+          <span class="party-tag" style="background:var(--dpp)">民進黨</span>
+          <span class="party-note">初選結果確定</span>
+        </div>
+        <div class="candidate-chips">
+          <span class="chip">陳岱吟<span class="chip-tag">新人</span></span>
+          <span class="chip">吳奕萱<span class="chip-tag">新人</span></span>
+          <span class="chip">林秉宥<span class="chip-tag">現任</span></span>
+          <span class="chip">翁震州<span class="chip-tag">現任</span></span>
+        </div>
+      </div>
+      <div class="party-block">
+        <div class="party-block-head">
+          <span class="party-tag" style="background:var(--tpp)">民眾黨</span>
+          <span class="party-note">提名</span>
+        </div>
+        <div class="candidate-chips">
+          <span class="chip">陳世軒</span>
+        </div>
+      </div>
+      <div class="district-remark">
+        <span class="remark-label">選區觀察</span>
+        民進黨初選競爭激烈（5搶4），翁昭仁初選落敗。現任侯家軍戴湘儀確定不領表、不再連任。
+      </div>
+    </div>
+  </section>
+
+  <!-- 第四選區 -->
+  <section class="district" id="d4">
+    <div class="district-header">
+      <div class="district-title-group">
+        <div class="district-no">第四選區</div>
+        <div class="district-name">三重・蘆洲</div>
+        <div class="district-areas">應選 9 席</div>
+      </div>
+      <div class="district-right">
+        <div class="district-seats">應選 9 席</div>
+        <span class="status-pill status-partial">部分確定／初選中</span>
+      </div>
+    </div>
+    <div class="district-body">
+      <div class="party-block">
+        <div class="party-block-head">
+          <span class="party-tag" style="background:var(--tpp)">民眾黨</span>
+          <span class="party-note">提名</span>
+        </div>
+        <div class="candidate-chips">
+          <span class="chip">陳彥廷</span>
+        </div>
+      </div>
+      <div class="party-block">
+        <div class="party-block-head">
+          <span class="party-tag" style="background:var(--dpp)">民進黨</span>
+          <span class="party-note">提名 6 席，名單待確認</span>
+        </div>
+        <div class="candidate-chips">
+          <span class="no-candidates">候選人名單待確認</span>
+        </div>
+      </div>
+      <div class="party-block">
+        <div class="party-block-head">
+          <span class="party-tag" style="background:var(--kmt)">國民黨</span>
+          <span class="party-note">名單待確認</span>
+        </div>
+        <div class="candidate-chips">
+          <span class="no-candidates">候選人名單待確認</span>
+        </div>
+      </div>
+      <div class="district-remark">
+        <span class="remark-label">選區觀察</span>
+        傳統綠營票倉，現任議員多人尋求連任；三重、蘆洲兩區民進黨現任共有多席，國民黨、民進黨完整提名名單尚待確認。
+      </div>
+    </div>
+  </section>
+
+  <!-- 第五選區 -->
+  <section class="district" id="d5">
+    <div class="district-header">
+      <div class="district-title-group">
+        <div class="district-no">第五選區</div>
+        <div class="district-name">板橋</div>
+        <div class="district-areas">應選 5 席</div>
+      </div>
+      <div class="district-right">
+        <div class="district-seats">應選 5 席</div>
+        <span class="status-pill status-partial">部分確定／初選中</span>
+      </div>
+    </div>
+    <div class="district-body">
+      <div class="party-block">
+        <div class="party-block-head">
+          <span class="party-tag" style="background:var(--kmt)">國民黨</span>
+          <span class="party-note">提名 5 席（葉元之轉任立委後出缺）</span>
+        </div>
+        <div class="candidate-chips">
+          <span class="no-candidates">候選人名單待確認</span>
+        </div>
+      </div>
+      <div class="party-block">
+        <div class="party-block-head">
+          <span class="party-tag" style="background:var(--dpp)">民進黨</span>
+          <span class="party-note">5 人滿額登記</span>
+        </div>
+        <div class="candidate-chips">
+          <span class="no-candidates">候選人名單待確認</span>
+        </div>
+      </div>
+      <div class="party-block">
+        <div class="party-block-head">
+          <span class="party-tag" style="background:var(--tpp)">民眾黨</span>
+          <span class="party-note">1 人參選</span>
+        </div>
+        <div class="candidate-chips">
+          <span class="no-candidates">候選人名單待確認</span>
+        </div>
+      </div>
+      <div class="district-remark">
+        <span class="remark-label">選區觀察</span>
+        因現任葉元之 2024 年當選立委後出缺一席，國民黨仍提滿 5 席，戰況激烈。
+      </div>
+    </div>
+  </section>
+
+  <!-- 第六選區 -->
+  <section class="district" id="d6">
+    <div class="district-header">
+      <div class="district-title-group">
+        <div class="district-no">第六選區</div>
+        <div class="district-name">中和</div>
+        <div class="district-areas">應選席次待確認</div>
+      </div>
+      <div class="district-right">
+        <div class="district-seats">席次待確認</div>
+        <span class="status-pill status-pending">提名作業進行中</span>
+      </div>
+    </div>
+    <div class="district-body">
+      <div class="pending-state">
+        <div class="pending-icon">⏳</div>
+        <div class="pending-text">提名作業進行中</div>
+        <div class="pending-sub">各政黨黨內初選或人選協調尚未完成，候選人名單將於後續更新。</div>
+      </div>
+      <div class="district-remark">
+        <span class="remark-label">選區觀察</span>
+        各黨提名 / 初選作業進行中，名單尚未確定。
+      </div>
+    </div>
+  </section>
+
+  <!-- 第七選區 -->
+  <section class="district" id="d7">
+    <div class="district-header">
+      <div class="district-title-group">
+        <div class="district-no">第七選區</div>
+        <div class="district-name">永和</div>
+        <div class="district-areas">應選席次待確認</div>
+      </div>
+      <div class="district-right">
+        <div class="district-seats">席次待確認</div>
+        <span class="status-pill status-partial">部分確定／初選中</span>
+      </div>
+    </div>
+    <div class="district-body">
+      <div class="party-block">
+        <div class="party-block-head">
+          <span class="party-tag" style="background:var(--kmt)">國民黨</span>
+          <span class="party-note">現任連斐璠不再連任，新人激戰，預計進入初選</span>
+        </div>
+        <div class="candidate-chips">
+          <span class="chip">李珮媜<span class="chip-tag">新人</span></span>
+        </div>
+      </div>
+      <div class="district-remark">
+        <span class="remark-label">選區觀察</span>
+        現任資深議員連斐璠不再參選，至少 4 位新人（含「侯家軍」陳柏翰）登記角逐國民黨提名，預計進入初選。
+      </div>
+    </div>
+  </section>
+
+  <!-- 第八選區 -->
+  <section class="district" id="d8">
+    <div class="district-header">
+      <div class="district-title-group">
+        <div class="district-no">第八選區</div>
+        <div class="district-name">土城・樹林・三峽・鶯歌</div>
+        <div class="district-areas">應選 9 席（原 10 席-1）</div>
+      </div>
+      <div class="district-right">
+        <div class="district-seats">應選 9 席（原10-1）</div>
+        <span class="status-pill status-partial">部分確定／初選中</span>
+      </div>
+    </div>
+    <div class="district-body">
+      <div class="party-block">
+        <div class="party-block-head">
+          <span class="party-tag" style="background:var(--dpp)">民進黨</span>
+          <span class="party-note">7 搶 5 初選中</span>
+        </div>
+        <div class="candidate-chips">
+          <span class="chip">卓冠廷<span class="chip-tag">現任</span></span>
+          <span class="chip">廖宜琨<span class="chip-tag">現任</span></span>
+          <span class="chip">彭一書<span class="chip-tag">現任</span></span>
+          <span class="chip">林銘仁<span class="chip-tag">現任</span></span>
+          <span class="chip">吳昇翰<span class="chip-tag">新人</span></span>
+          <span class="chip">高乃芸<span class="chip-tag">新人</span></span>
+          <span class="chip">朱誼臻<span class="chip-tag">新人</span></span>
+        </div>
+      </div>
+      <div class="party-block">
+        <div class="party-block-head">
+          <span class="party-tag" style="background:var(--tpp)">民眾黨</span>
+          <span class="party-note">提名</span>
+        </div>
+        <div class="candidate-chips">
+          <span class="chip">吳亞倫</span>
+        </div>
+      </div>
+      <div class="district-remark">
+        <span class="remark-label">選區觀察</span>
+        人口變化使席次由 10 席減為 9 席，民進黨現任四席全部尋求連任，7 人競爭 5 個提名名額，競爭激烈。
+      </div>
+    </div>
+  </section>
+
+  <!-- 第九選區 -->
+  <section class="district" id="d9">
+    <div class="district-header">
+      <div class="district-title-group">
+        <div class="district-no">第九選區</div>
+        <div class="district-name">新店・深坑・石碇・坪林・烏來</div>
+        <div class="district-areas">應選 4 席（婦女保障 1 席）</div>
+      </div>
+      <div class="district-right">
+        <div class="district-seats">應選 4 席</div>
+        <span class="status-pill status-pending">提名作業進行中</span>
+      </div>
+    </div>
+    <div class="district-body">
+      <div class="party-block">
+        <div class="party-block-head">
+          <span class="party-tag" style="background:var(--kmt)">國民黨</span>
+          <span class="party-note">提名 4 席</span>
+        </div>
+        <div class="candidate-chips">
+          <span class="no-candidates">候選人名單待確認</span>
+        </div>
+      </div>
+      <div class="district-remark">
+        <span class="remark-label">選區觀察</span>
+        國民黨提名 4 席，完整名單與民進黨提名狀況待確認。
+      </div>
+    </div>
+  </section>
+
+  <!-- 第十選區 -->
+  <section class="district" id="d10">
+    <div class="district-header">
+      <div class="district-title-group">
+        <div class="district-no">第十選區</div>
+        <div class="district-name">瑞芳・平溪・雙溪・貢寮</div>
+        <div class="district-areas">應選席次待確認</div>
+      </div>
+      <div class="district-right">
+        <div class="district-seats">席次待確認</div>
+        <span class="status-pill status-pending">提名作業進行中</span>
+      </div>
+    </div>
+    <div class="district-body">
+      <div class="pending-state">
+        <div class="pending-icon">⏳</div>
+        <div class="pending-text">提名作業進行中</div>
+        <div class="pending-sub">各政黨黨內初選或人選協調尚未完成，候選人名單將於後續更新。</div>
+      </div>
+      <div class="district-remark">
+        <span class="remark-label">選區觀察</span>
+        各黨提名 / 初選作業進行中，名單尚未確定。
+      </div>
+    </div>
+  </section>
+
+  <!-- 第十一選區 -->
+  <section class="district" id="d11">
+    <div class="district-header">
+      <div class="district-title-group">
+        <div class="district-no">第十一選區</div>
+        <div class="district-name">汐止・金山・萬里</div>
+        <div class="district-areas">應選席次待確認</div>
+      </div>
+      <div class="district-right">
+        <div class="district-seats">席次待確認</div>
+        <span class="status-pill status-pending">提名作業進行中</span>
+      </div>
+    </div>
+    <div class="district-body">
+      <div class="pending-state">
+        <div class="pending-icon">⏳</div>
+        <div class="pending-text">提名作業進行中</div>
+        <div class="pending-sub">各政黨黨內初選或人選協調尚未完成，候選人名單將於後續更新。</div>
+      </div>
+      <div class="district-remark">
+        <span class="remark-label">選區觀察</span>
+        現任議員廖先翔轉任立委成功後出缺，該席次競爭激烈，藍營新秀多人爭取提名。
+      </div>
+    </div>
+  </section>
+
+  <!-- 第十二選區 -->
+  <section class="district" id="d12">
+    <div class="district-header">
+      <div class="district-title-group">
+        <div class="district-no">第十二選區</div>
+        <div class="district-name">平地原住民</div>
+        <div class="district-areas">應選約 4 席（原 3 席+1）</div>
+      </div>
+      <div class="district-right">
+        <div class="district-seats">應選約 4 席</div>
+        <span class="status-pill status-pending">提名作業進行中</span>
+      </div>
+    </div>
+    <div class="district-body">
+      <div class="pending-state">
+        <div class="pending-icon">⏳</div>
+        <div class="pending-text">提名作業進行中</div>
+        <div class="pending-sub">各政黨黨內初選或人選協調尚未完成，候選人名單將於後續更新。</div>
+      </div>
+      <div class="district-remark">
+        <span class="remark-label">選區觀察</span>
+        原住民選區席次因人口調整增加 1 席，各黨提名作業進行中。
+      </div>
+    </div>
+  </section>
+
+  <!-- 第十三選區 -->
+  <section class="district" id="d13">
+    <div class="district-header">
+      <div class="district-title-group">
+        <div class="district-no">第十三選區</div>
+        <div class="district-name">山地原住民</div>
+        <div class="district-areas">應選約 2 席（原 1 席+1）</div>
+      </div>
+      <div class="district-right">
+        <div class="district-seats">應選約 2 席</div>
+        <span class="status-pill status-pending">提名作業進行中</span>
+      </div>
+    </div>
+    <div class="district-body">
+      <div class="pending-state">
+        <div class="pending-icon">⏳</div>
+        <div class="pending-text">提名作業進行中</div>
+        <div class="pending-sub">各政黨黨內初選或人選協調尚未完成，候選人名單將於後續更新。</div>
+      </div>
+      <div class="district-remark">
+        <span class="remark-label">選區觀察</span>
+        原住民選區席次因人口調整增加 1 席，各黨提名作業進行中。
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="footer-title">建議查詢最新資料</div>
+  <div class="footer-resources">
+    <a href="https://db.cec.gov.tw/Candidate" target="_blank" rel="noopener">中選會候選人資料庫</a>　|　
+    <a href="https://web.cec.gov.tw/tpcec" target="_blank" rel="noopener">新北市選舉委員會</a>　|　
+    <a href="https://www.dppnt.org.tw" target="_blank" rel="noopener">民進黨新北市黨部</a>　|　
+    <a href="https://www.tpp.org.tw" target="_blank" rel="noopener">民眾黨</a>
+  </div>
+  <div style="margin-top:1rem">
+    資料來源：各政黨中央/新北市黨部公告、中選會、媒體報導（截至 2026 年 6 月）。本頁為非官方整理，正式名單以中選會公告為準。
+  </div>
+</footer>
+
+<script>
+  // Active nav highlighting on scroll
+  const sections = document.querySelectorAll('.district');
+  const navLinks = document.querySelectorAll('.sticky-nav a');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navLinks.forEach(a => a.classList.remove('active'));
+        const active = document.querySelector(`.sticky-nav a[href="#${e.target.id}"]`);
+        if (active) {
+          active.classList.add('active');
+          active.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
+        }
+      }
+    });
+  }, { threshold: 0.3, rootMargin: '-80px 0px -60% 0px' });
+  sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
