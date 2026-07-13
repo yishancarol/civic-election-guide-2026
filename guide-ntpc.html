@@ -1015,6 +1015,16 @@
   }, { threshold: 0.3, rootMargin: '-80px 0px -60% 0px' });
   sections.forEach(s => observer.observe(s));
 
+  // Collapsible district sections — collapsed by default
+  document.querySelectorAll('.district-header').forEach(header => {
+    header.addEventListener('click', () => {
+      const district = header.closest('.district');
+      const body = district.querySelector('.district-body');
+      const isExpanded = district.classList.toggle('expanded');
+      body.classList.toggle('collapsed', !isExpanded);
+    });
+  });
+
   // ── Candidate data (待補充：政見／過去立場／爭議事件) ──
   // 目前僅為版位佔位，尚無實際查證過的候選人資料。
   // 之後請提供每位候選人的來源資料，我會依此結構填入。
