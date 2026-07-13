@@ -23,6 +23,15 @@
     --confirmed:  #1B7A3D;
     --partial:    #B07D10;
     --pending:    #8A8F98;
+
+    /* 彩虹光譜（僅供裝飾點綴，刻意與政黨色區隔，不作候選人識別用途） */
+    --rb-red:    #F0847E;
+    --rb-orange: #F2A65A;
+    --rb-yellow: #F2CE5C;
+    --rb-green:  #A9D97E;
+    --rb-teal:   #6FC7C1;
+    --rb-blue:   #74A7E8;
+    --rb-violet: #A98CF0;
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -93,6 +102,16 @@
     padding: 4rem 1.5rem 3rem;
     position: relative;
     overflow: hidden;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 4px;
+    background: linear-gradient(90deg,
+      var(--rb-red) 0%, var(--rb-orange) 16.6%, var(--rb-yellow) 33.3%,
+      var(--rb-green) 50%, var(--rb-teal) 66.6%, var(--rb-blue) 83.3%, var(--rb-violet) 100%);
+    opacity: 0.85;
   }
   .hero-inner {
     max-width: 900px;
@@ -357,32 +376,6 @@
     color: #9CA3AF;
     font-style: italic;
   }
-  .modal-item-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0.7em;
-    padding-left: 1.1em;
-  }
-  .modal-item-text { line-height: 1.7; }
-  .modal-item-meta {
-    font-size: 0.72rem;
-    color: var(--muted);
-    margin-top: 0.25rem;
-  }
-  .modal-item-meta .meta-badge {
-    display: inline-block;
-    background: var(--paper);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: 0.05rem 0.4rem;
-    margin-right: 0.4rem;
-  }
-  .modal-item-meta a {
-    color: var(--navy);
-    text-decoration: underline;
-    text-underline-offset: 2px;
-  }
-  .modal-item-meta a:hover { color: var(--gold); }
   .modal-footnote {
     font-size: 0.72rem;
     color: var(--muted);
@@ -390,6 +383,7 @@
     border-top: 1px solid var(--border);
     margin-top: 0.2rem;
   }
+  #modal-source-link { color: var(--navy); text-decoration: underline; text-underline-offset: 2px; }
 
   /* Pending state */
   .pending-state {
@@ -426,6 +420,16 @@
     text-align: center;
     padding: 2rem 1.5rem;
     font-size: 0.78rem;
+    position: relative;
+  }
+  footer::before {
+    content: '';
+    position: absolute;
+    left: 0; right: 0; top: 0;
+    height: 3px;
+    background: linear-gradient(90deg,
+      var(--rb-red), var(--rb-orange), var(--rb-yellow),
+      var(--rb-green), var(--rb-teal), var(--rb-blue), var(--rb-violet));
   }
   footer a { color: rgba(255,255,255,0.7); text-decoration: underline; text-underline-offset: 3px; }
   footer .footer-resources { margin-top: 0.5rem; }
@@ -463,7 +467,7 @@
       </div>
       <div class="hero-meta-item">
         <span class="hero-meta-label">資料截至</span>
-        <span class="hero-meta-value">2026年6月21日</span>
+        <span class="hero-meta-value">2026年3月13日</span>
       </div>
       <div class="hero-meta-item">
         <span class="hero-meta-label">正式名單公告</span>
@@ -471,10 +475,10 @@
       </div>
     </div>
     <div class="hero-stats">
-      <div class="stat-card"><div class="stat-num">68</div><div class="stat-desc">總席次（較上屆+2）</div></div>
+      <div class="stat-card"><div class="stat-num">80</div><div class="stat-desc">目前列名候選人數</div></div>
       <div class="stat-card"><div class="stat-num">13</div><div class="stat-desc">選舉區（含原住民）</div></div>
-      <div class="stat-card"><div class="stat-num">38</div><div class="stat-desc">國民黨提名席次</div></div>
-      <div class="stat-card"><div class="stat-num">34</div><div class="stat-desc">民進黨提名席次</div></div>
+      <div class="stat-card"><div class="stat-num">40</div><div class="stat-desc">國民黨候選人數</div></div>
+      <div class="stat-card"><div class="stat-num">34</div><div class="stat-desc">民進黨候選人數</div></div>
     </div>
   </div>
 </header>
@@ -513,8 +517,6 @@
 
 <!-- Districts -->
 <main>
-
-  <!-- 第一選區 -->
   <section class="district" id="d1">
     <div class="district-header">
       <div class="district-title-group">
@@ -532,39 +534,40 @@
       <div class="party-block">
         <div class="party-block-head">
           <span class="party-tag" style="background:var(--dpp)">民進黨</span>
-          <span class="party-note">提名 2 席</span>
+          <span class="party-note">提名／登記 2 位</span>
         </div>
         <div class="candidate-chips">
           <span class="chip" onclick="openCandidateModal('鄭宇恩')" tabindex="0" role="button">鄭宇恩<span class="chip-tag">現任</span></span>
-          <span class="chip" onclick="openCandidateModal('游明諺')" tabindex="0" role="button">游明諺<span class="chip-tag">新人</span></span>
+          <span class="chip" onclick="openCandidateModal('游明諺')" tabindex="0" role="button">游明諺<span class="chip-tag">新人・前國會幕僚</span></span>
         </div>
       </div>
       <div class="party-block">
         <div class="party-block-head">
           <span class="party-tag" style="background:var(--kmt)">國民黨</span>
-          <span class="party-note">整合中</span>
+          <span class="party-note">提名／登記 3 位</span>
         </div>
         <div class="candidate-chips">
-          <span class="chip" onclick="openCandidateModal('呂鈞鴻')" tabindex="0" role="button">呂鈞鴻<span class="chip-tag">新人・蔡錦賢服務處秘書</span></span>
+          <span class="chip" onclick="openCandidateModal('陳偉杰')" tabindex="0" role="button">陳偉杰<span class="chip-tag">登記參選</span></span>
+          <span class="chip" onclick="openCandidateModal('呂鈞鴻')" tabindex="0" role="button">呂鈞鴻<span class="chip-tag">登記參選・蔡錦賢服務處秘書</span></span>
+          <span class="chip" onclick="openCandidateModal('陳家琪')" tabindex="0" role="button">陳家琪<span class="chip-tag">登記參選</span></span>
         </div>
       </div>
       <div class="district-remark">
         <span class="remark-label">選區觀察</span>
-        現任蔡錦賢宣布不再參選，藍營席次競爭浮動；「侯家軍」陳柏翰原傳出可能投入本區，後轉往第七選區（永和）。
+        民進黨提名名單已確定，國民黨有3位完成領表登記，但最終提名名單待確認。
       </div>
     </div>
   </section>
 
-  <!-- 第二選區 -->
   <section class="district" id="d2">
     <div class="district-header">
       <div class="district-title-group">
         <div class="district-no">第二選區</div>
         <div class="district-name">林口・五股・泰山</div>
-        <div class="district-areas">應選 5 席（原 4 席+1）</div>
+        <div class="district-areas">應選 5 席</div>
       </div>
       <div class="district-right">
-        <div class="district-seats">應選 5 席（原4+1）</div>
+        <div class="district-seats">應選 5 席</div>
         <span class="status-pill status-partial">部分確定／初選中</span>
         <span class="toggle-arrow" aria-hidden="true">▾</span>
       </div>
@@ -572,40 +575,42 @@
     <div class="district-body collapsed">
       <div class="party-block">
         <div class="party-block-head">
-          <span class="party-tag" style="background:var(--kmt)">國民黨</span>
-          <span class="party-note">擴大提名 4 席，內部初選中</span>
+          <span class="party-tag" style="background:var(--dpp)">民進黨</span>
+          <span class="party-note">提名／登記 2 位</span>
         </div>
         <div class="candidate-chips">
-          <span class="chip" onclick="openCandidateModal('蔡淑君')" tabindex="0" role="button">蔡淑君<span class="chip-tag">現任</span></span>
-          <span class="chip" onclick="openCandidateModal('陳明義')" tabindex="0" role="button">陳明義<span class="chip-tag">現任</span></span>
+          <span class="chip" onclick="openCandidateModal('李宇翔')" tabindex="0" role="button">李宇翔<span class="chip-tag">現任</span></span>
+          <span class="chip" onclick="openCandidateModal('戴翎育')" tabindex="0" role="button">戴翎育<span class="chip-tag">新人・前議員賴秋媚女兒</span></span>
         </div>
       </div>
       <div class="party-block">
         <div class="party-block-head">
-          <span class="party-tag" style="background:var(--dpp)">民進黨</span>
-          <span class="party-note">保守提名 2 席</span>
+          <span class="party-tag" style="background:var(--kmt)">國民黨</span>
+          <span class="party-note">提名／登記 4 位</span>
         </div>
         <div class="candidate-chips">
-          <span class="no-candidates">候選人名單待確認</span>
+          <span class="chip" onclick="openCandidateModal('蔡淑君')" tabindex="0" role="button">蔡淑君<span class="chip-tag">現任</span></span>
+          <span class="chip" onclick="openCandidateModal('陳明義')" tabindex="0" role="button">陳明義<span class="chip-tag">現任</span></span>
+          <span class="chip" onclick="openCandidateModal('蔡佩呈')" tabindex="0" role="button">蔡佩呈<span class="chip-tag">新人・宋明宗女兒</span></span>
+          <span class="chip" onclick="openCandidateModal('鄭丞宏')" tabindex="0" role="button">鄭丞宏<span class="chip-tag">新人・前五股鄉長鄭漢騰兒子、新北市府顧問</span></span>
         </div>
       </div>
       <div class="district-remark">
         <span class="remark-label">選區觀察</span>
-        人口成長帶動席次增加，藍營傳統優勢選區，國民黨提名席次擴大但內部初選競爭激烈。
+        民進黨提名名單已確定，國民黨有4位完成領表登記，預計提名4席，競爭激烈。
       </div>
     </div>
   </section>
 
-  <!-- 第三選區 -->
   <section class="district" id="d3">
     <div class="district-header">
       <div class="district-title-group">
         <div class="district-no">第三選區</div>
         <div class="district-name">新莊</div>
-        <div class="district-areas">應選 4 席（含女性保障 1 席）</div>
+        <div class="district-areas">應選 4 席，含女性保障 1 席</div>
       </div>
       <div class="district-right">
-        <div class="district-seats">應選 4 席</div>
+        <div class="district-seats">應選 4 席，含女性保障 1 席</div>
         <span class="status-pill status-confirmed">提名結果確定</span>
         <span class="toggle-arrow" aria-hidden="true">▾</span>
       </div>
@@ -614,19 +619,19 @@
       <div class="party-block">
         <div class="party-block-head">
           <span class="party-tag" style="background:var(--dpp)">民進黨</span>
-          <span class="party-note">初選結果確定</span>
+          <span class="party-note">提名／登記 4 位</span>
         </div>
         <div class="candidate-chips">
-          <span class="chip" onclick="openCandidateModal('陳岱吟')" tabindex="0" role="button">陳岱吟<span class="chip-tag">新人</span></span>
-          <span class="chip" onclick="openCandidateModal('吳奕萱')" tabindex="0" role="button">吳奕萱<span class="chip-tag">新人</span></span>
-          <span class="chip" onclick="openCandidateModal('林秉宥')" tabindex="0" role="button">林秉宥<span class="chip-tag">現任</span></span>
+          <span class="chip" onclick="openCandidateModal('陳岱吟')" tabindex="0" role="button">陳岱吟<span class="chip-tag">新人・跨派系交棒新人</span></span>
+          <span class="chip" onclick="openCandidateModal('吳奕萱')" tabindex="0" role="button">吳奕萱<span class="chip-tag">新人・立委吳思瑤前辦公室主任</span></span>
           <span class="chip" onclick="openCandidateModal('翁震州')" tabindex="0" role="button">翁震州<span class="chip-tag">現任</span></span>
+          <span class="chip" onclick="openCandidateModal('林秉宥')" tabindex="0" role="button">林秉宥<span class="chip-tag">現任</span></span>
         </div>
       </div>
       <div class="party-block">
         <div class="party-block-head">
           <span class="party-tag" style="background:var(--tpp)">民眾黨</span>
-          <span class="party-note">提名</span>
+          <span class="party-note">提名／登記 1 位</span>
         </div>
         <div class="candidate-chips">
           <span class="chip" onclick="openCandidateModal('陳世軒')" tabindex="0" role="button">陳世軒<span class="chip-tag">現任</span></span>
@@ -634,12 +639,11 @@
       </div>
       <div class="district-remark">
         <span class="remark-label">選區觀察</span>
-        民進黨新莊區初選已於 2026 年 3 月底結束，確定提名名單為林秉宥、翁震州（現任）、陳岱吟、吳奕萱（新人），原初選競爭者翁昭仁未能出線。現任侯家軍戴湘儀確定不領表、不再連任。
+        民進黨初選已於3月底確定提名4席，民眾黨提名1席。
       </div>
     </div>
   </section>
 
-  <!-- 第四選區 -->
   <section class="district" id="d4">
     <div class="district-header">
       <div class="district-title-group">
@@ -656,39 +660,45 @@
     <div class="district-body collapsed">
       <div class="party-block">
         <div class="party-block-head">
-          <span class="party-tag" style="background:var(--tpp)">民眾黨</span>
-          <span class="party-note">提名</span>
-        </div>
-        <div class="candidate-chips">
-          <span class="chip" onclick="openCandidateModal('陳彥廷')" tabindex="0" role="button">陳彥廷</span>
-        </div>
-      </div>
-      <div class="party-block">
-        <div class="party-block-head">
           <span class="party-tag" style="background:var(--dpp)">民進黨</span>
-          <span class="party-note">提名 6 席，名單待確認</span>
+          <span class="party-note">提名／登記 6 位</span>
         </div>
         <div class="candidate-chips">
-          <span class="no-candidates">候選人名單待確認</span>
+          <span class="chip" onclick="openCandidateModal('陳俊維')" tabindex="0" role="button">陳俊維<span class="chip-tag">新人・前議員陳啟能兒子</span></span>
+          <span class="chip" onclick="openCandidateModal('彭佳芸')" tabindex="0" role="button">彭佳芸<span class="chip-tag">現任</span></span>
+          <span class="chip" onclick="openCandidateModal('邱婷蔚')" tabindex="0" role="button">邱婷蔚<span class="chip-tag">現任</span></span>
+          <span class="chip" onclick="openCandidateModal('李倩萍')" tabindex="0" role="button">李倩萍<span class="chip-tag">現任</span></span>
+          <span class="chip" onclick="openCandidateModal('李余典')" tabindex="0" role="button">李余典<span class="chip-tag">現任</span></span>
+          <span class="chip" onclick="openCandidateModal('顏蔚慈')" tabindex="0" role="button">顏蔚慈<span class="chip-tag">現任</span></span>
         </div>
       </div>
       <div class="party-block">
         <div class="party-block-head">
           <span class="party-tag" style="background:var(--kmt)">國民黨</span>
-          <span class="party-note">名單待確認</span>
+          <span class="party-note">提名／登記 3 位</span>
         </div>
         <div class="candidate-chips">
-          <span class="no-candidates">候選人名單待確認</span>
+          <span class="chip" onclick="openCandidateModal('王威元')" tabindex="0" role="button">王威元<span class="chip-tag">登記參選</span></span>
+          <span class="chip" onclick="openCandidateModal('黃桂蘭')" tabindex="0" role="button">黃桂蘭<span class="chip-tag">登記參選</span></span>
+          <span class="chip" onclick="openCandidateModal('蔡政呈')" tabindex="0" role="button">蔡政呈<span class="chip-tag">登記參選</span></span>
+        </div>
+      </div>
+      <div class="party-block">
+        <div class="party-block-head">
+          <span class="party-tag" style="background:var(--tpp)">民眾黨</span>
+          <span class="party-note">提名／登記 1 位</span>
+        </div>
+        <div class="candidate-chips">
+          <span class="chip" onclick="openCandidateModal('陳彥廷')" tabindex="0" role="button">陳彥廷<span class="chip-tag">新人</span></span>
         </div>
       </div>
       <div class="district-remark">
         <span class="remark-label">選區觀察</span>
-        傳統綠營票倉，現任議員多人尋求連任；三重、蘆洲兩區民進黨現任共有多席，國民黨、民進黨完整提名名單尚待確認。
+        民進黨提名6席，國民黨有3位完成領表登記，民眾黨提名1席。
       </div>
     </div>
   </section>
 
-  <!-- 第五選區 -->
   <section class="district" id="d5">
     <div class="district-header">
       <div class="district-title-group">
@@ -705,106 +715,56 @@
     <div class="district-body collapsed">
       <div class="party-block">
         <div class="party-block-head">
-          <span class="party-tag" style="background:var(--kmt)">國民黨</span>
-          <span class="party-note">提名 5 席（葉元之轉任立委後出缺）</span>
+          <span class="party-tag" style="background:var(--dpp)">民進黨</span>
+          <span class="party-note">提名／登記 5 位</span>
         </div>
         <div class="candidate-chips">
-          <span class="no-candidates">候選人名單待確認</span>
+          <span class="chip" onclick="openCandidateModal('李昆穎')" tabindex="0" role="button">李昆穎<span class="chip-tag">新人・國防院前執行長李文忠之子</span></span>
+          <span class="chip" onclick="openCandidateModal('戴瑋姍')" tabindex="0" role="button">戴瑋姍<span class="chip-tag">現任</span></span>
+          <span class="chip" onclick="openCandidateModal('山田摩衣')" tabindex="0" role="button">山田摩衣<span class="chip-tag">現任</span></span>
+          <span class="chip" onclick="openCandidateModal('黃淑君')" tabindex="0" role="button">黃淑君<span class="chip-tag">現任</span></span>
+          <span class="chip" onclick="openCandidateModal('陳俊諺')" tabindex="0" role="button">陳俊諺<span class="chip-tag">新人・前議員石一佑兒子</span></span>
         </div>
       </div>
       <div class="party-block">
         <div class="party-block-head">
-          <span class="party-tag" style="background:var(--dpp)">民進黨</span>
-          <span class="party-note">5 人滿額登記</span>
+          <span class="party-tag" style="background:var(--kmt)">國民黨</span>
+          <span class="party-note">提名／登記 6 位</span>
         </div>
         <div class="candidate-chips">
-          <span class="no-candidates">候選人名單待確認</span>
+          <span class="chip" onclick="openCandidateModal('林國春')" tabindex="0" role="button">林國春<span class="chip-tag">登記參選</span></span>
+          <span class="chip" onclick="openCandidateModal('劉美芳')" tabindex="0" role="button">劉美芳<span class="chip-tag">登記參選</span></span>
+          <span class="chip" onclick="openCandidateModal('周韋翰')" tabindex="0" role="button">周韋翰<span class="chip-tag">新人・資深議員周勝考兒子</span></span>
+          <span class="chip" onclick="openCandidateModal('曾煥嘉')" tabindex="0" role="button">曾煥嘉<span class="chip-tag">登記參選</span></span>
+          <span class="chip" onclick="openCandidateModal('陳金華')" tabindex="0" role="button">陳金華<span class="chip-tag">登記參選</span></span>
+          <span class="chip" onclick="openCandidateModal('鄧凱勛')" tabindex="0" role="button">鄧凱勛<span class="chip-tag">登記參選</span></span>
         </div>
       </div>
       <div class="party-block">
         <div class="party-block-head">
           <span class="party-tag" style="background:var(--tpp)">民眾黨</span>
-          <span class="party-note">1 人參選</span>
+          <span class="party-note">提名／登記 1 位</span>
         </div>
         <div class="candidate-chips">
-          <span class="no-candidates">候選人名單待確認</span>
+          <span class="chip" onclick="openCandidateModal('林子宇')" tabindex="0" role="button">林子宇<span class="chip-tag">新人</span></span>
         </div>
       </div>
       <div class="district-remark">
         <span class="remark-label">選區觀察</span>
-        因現任葉元之 2024 年當選立委後出缺一席，國民黨仍提滿 5 席，戰況激烈。
+        民進黨提名5席，國民黨有6位完成領表登記，民眾黨提名1席。
       </div>
     </div>
   </section>
 
-  <!-- 第六選區 -->
   <section class="district" id="d6">
     <div class="district-header">
       <div class="district-title-group">
         <div class="district-no">第六選區</div>
         <div class="district-name">中和</div>
-        <div class="district-areas">應選席次待確認</div>
+        <div class="district-areas">席次待確認</div>
       </div>
       <div class="district-right">
         <div class="district-seats">席次待確認</div>
-        <span class="status-pill status-pending">提名作業進行中</span>
-        <span class="toggle-arrow" aria-hidden="true">▾</span>
-      </div>
-    </div>
-    <div class="district-body collapsed">
-      <div class="pending-state">
-        <div class="pending-icon">⏳</div>
-        <div class="pending-text">提名作業進行中</div>
-        <div class="pending-sub">各政黨黨內初選或人選協調尚未完成，候選人名單將於後續更新。</div>
-      </div>
-      <div class="district-remark">
-        <span class="remark-label">選區觀察</span>
-        各黨提名 / 初選作業進行中，名單尚未確定。
-      </div>
-    </div>
-  </section>
-
-  <!-- 第七選區 -->
-  <section class="district" id="d7">
-    <div class="district-header">
-      <div class="district-title-group">
-        <div class="district-no">第七選區</div>
-        <div class="district-name">永和</div>
-        <div class="district-areas">應選席次待確認</div>
-      </div>
-      <div class="district-right">
-        <div class="district-seats">席次待確認</div>
-        <span class="status-pill status-partial">部分確定／初選中</span>
-        <span class="toggle-arrow" aria-hidden="true">▾</span>
-      </div>
-    </div>
-    <div class="district-body collapsed">
-      <div class="party-block">
-        <div class="party-block-head">
-          <span class="party-tag" style="background:var(--kmt)">國民黨</span>
-          <span class="party-note">現任連斐璠不再連任，新人激戰，預計進入初選</span>
-        </div>
-        <div class="candidate-chips">
-          <span class="chip" onclick="openCandidateModal('李珮媜')" tabindex="0" role="button">李珮媜<span class="chip-tag">新人</span></span>
-        </div>
-      </div>
-      <div class="district-remark">
-        <span class="remark-label">選區觀察</span>
-        現任資深議員連斐璠不再參選，至少 4 位新人（含「侯家軍」陳柏翰）登記角逐國民黨提名，預計進入初選。
-      </div>
-    </div>
-  </section>
-
-  <!-- 第八選區 -->
-  <section class="district" id="d8">
-    <div class="district-header">
-      <div class="district-title-group">
-        <div class="district-no">第八選區</div>
-        <div class="district-name">土城・樹林・三峽・鶯歌</div>
-        <div class="district-areas">應選 9 席（原 10 席-1）</div>
-      </div>
-      <div class="district-right">
-        <div class="district-seats">應選 9 席（原10-1）</div>
         <span class="status-pill status-partial">部分確定／初選中</span>
         <span class="toggle-arrow" aria-hidden="true">▾</span>
       </div>
@@ -813,45 +773,276 @@
       <div class="party-block">
         <div class="party-block-head">
           <span class="party-tag" style="background:var(--dpp)">民進黨</span>
-          <span class="party-note">7 搶 5 初選中</span>
+          <span class="party-note">提名／登記 3 位</span>
         </div>
         <div class="candidate-chips">
-          <span class="chip" onclick="openCandidateModal('卓冠廷')" tabindex="0" role="button">卓冠廷<span class="chip-tag">現任</span></span>
-          <span class="chip" onclick="openCandidateModal('廖宜琨')" tabindex="0" role="button">廖宜琨<span class="chip-tag">現任</span></span>
-          <span class="chip" onclick="openCandidateModal('彭一書')" tabindex="0" role="button">彭一書<span class="chip-tag">現任</span></span>
-          <span class="chip" onclick="openCandidateModal('林銘仁')" tabindex="0" role="button">林銘仁<span class="chip-tag">現任</span></span>
-          <span class="chip" onclick="openCandidateModal('吳昇翰')" tabindex="0" role="button">吳昇翰<span class="chip-tag">新人</span></span>
-          <span class="chip" onclick="openCandidateModal('高乃芸')" tabindex="0" role="button">高乃芸<span class="chip-tag">新人</span></span>
-          <span class="chip" onclick="openCandidateModal('朱誼臻')" tabindex="0" role="button">朱誼臻<span class="chip-tag">新人</span></span>
+          <span class="chip" onclick="openCandidateModal('張維倩')" tabindex="0" role="button">張維倩<span class="chip-tag">現任</span></span>
+          <span class="chip" onclick="openCandidateModal('張嘉玲')" tabindex="0" role="button">張嘉玲<span class="chip-tag">現任</span></span>
+          <span class="chip" onclick="openCandidateModal('張志豪')" tabindex="0" role="button">張志豪<span class="chip-tag">前議員・上屆落選頭</span></span>
+        </div>
+      </div>
+      <div class="party-block">
+        <div class="party-block-head">
+          <span class="party-tag" style="background:var(--kmt)">國民黨</span>
+          <span class="party-note">提名／登記 4 位</span>
+        </div>
+        <div class="candidate-chips">
+          <span class="chip" onclick="openCandidateModal('陳錦錠')" tabindex="0" role="button">陳錦錠<span class="chip-tag">登記參選</span></span>
+          <span class="chip" onclick="openCandidateModal('邱烽堯')" tabindex="0" role="button">邱烽堯<span class="chip-tag">登記參選</span></span>
+          <span class="chip" onclick="openCandidateModal('游輝宂')" tabindex="0" role="button">游輝宂<span class="chip-tag">登記參選</span></span>
+          <span class="chip" onclick="openCandidateModal('金瑞龍')" tabindex="0" role="button">金瑞龍<span class="chip-tag">登記參選</span></span>
         </div>
       </div>
       <div class="party-block">
         <div class="party-block-head">
           <span class="party-tag" style="background:var(--tpp)">民眾黨</span>
-          <span class="party-note">提名</span>
+          <span class="party-note">提名／登記 1 位</span>
         </div>
         <div class="candidate-chips">
-          <span class="chip" onclick="openCandidateModal('吳亞倫')" tabindex="0" role="button">吳亞倫</span>
+          <span class="chip" onclick="openCandidateModal('陳怡君')" tabindex="0" role="button">陳怡君<span class="chip-tag">新人</span></span>
         </div>
       </div>
       <div class="district-remark">
         <span class="remark-label">選區觀察</span>
-        人口變化使席次由 10 席減為 9 席，民進黨現任四席全部尋求連任，7 人競爭 5 個提名名額，競爭激烈。
+        民進黨提名3席，國民黨有4位完成領表登記，民眾黨提名1席。
       </div>
     </div>
   </section>
 
-  <!-- 第九選區 -->
+  <section class="district" id="d7">
+    <div class="district-header">
+      <div class="district-title-group">
+        <div class="district-no">第七選區</div>
+        <div class="district-name">永和</div>
+        <div class="district-areas">席次待確認</div>
+      </div>
+      <div class="district-right">
+        <div class="district-seats">席次待確認</div>
+        <span class="status-pill status-partial">部分確定／初選中</span>
+        <span class="toggle-arrow" aria-hidden="true">▾</span>
+      </div>
+    </div>
+    <div class="district-body collapsed">
+      <div class="party-block">
+        <div class="party-block-head">
+          <span class="party-tag" style="background:var(--dpp)">民進黨</span>
+          <span class="party-note">提名／登記 2 位</span>
+        </div>
+        <div class="candidate-chips">
+          <span class="chip" onclick="openCandidateModal('許昭興')" tabindex="0" role="button">許昭興<span class="chip-tag">現任</span></span>
+          <span class="chip" onclick="openCandidateModal('羅文崇')" tabindex="0" role="button">羅文崇<span class="chip-tag">前議員</span></span>
+        </div>
+      </div>
+      <div class="party-block">
+        <div class="party-block-head">
+          <span class="party-tag" style="background:var(--kmt)">國民黨</span>
+          <span class="party-note">提名／登記 5 位</span>
+        </div>
+        <div class="candidate-chips">
+          <span class="chip" onclick="openCandidateModal('陳鴻源')" tabindex="0" role="button">陳鴻源<span class="chip-tag">登記參選</span></span>
+          <span class="chip" onclick="openCandidateModal('陳柏翰')" tabindex="0" role="button">陳柏翰<span class="chip-tag">新人・侯家軍</span></span>
+          <span class="chip" onclick="openCandidateModal('蘇昭龍')" tabindex="0" role="button">蘇昭龍<span class="chip-tag">登記參選</span></span>
+          <span class="chip" onclick="openCandidateModal('李珮媜')" tabindex="0" role="button">李珮媜<span class="chip-tag">新人</span></span>
+          <span class="chip" onclick="openCandidateModal('陳以樂')" tabindex="0" role="button">陳以樂<span class="chip-tag">登記參選</span></span>
+        </div>
+      </div>
+      <div class="district-remark">
+        <span class="remark-label">選區觀察</span>
+        民進黨提名2席，國民黨有5位完成領表登記，其中包含侯家軍陳柏翰。
+      </div>
+    </div>
+  </section>
+
+  <section class="district" id="d8">
+    <div class="district-header">
+      <div class="district-title-group">
+        <div class="district-no">第八選區</div>
+        <div class="district-name">土城・樹林・三峽・鶯歌</div>
+        <div class="district-areas">應選 9 席，原 10 席-1</div>
+      </div>
+      <div class="district-right">
+        <div class="district-seats">應選 9 席，原 10 席-1</div>
+        <span class="status-pill status-partial">部分確定／初選中</span>
+        <span class="toggle-arrow" aria-hidden="true">▾</span>
+      </div>
+    </div>
+    <div class="district-body collapsed">
+      <div class="party-block">
+        <div class="party-block-head">
+          <span class="party-tag" style="background:var(--dpp)">民進黨</span>
+          <span class="party-note">提名／登記 5 位</span>
+        </div>
+        <div class="candidate-chips">
+          <span class="chip" onclick="openCandidateModal('卓冠廷')" tabindex="0" role="button">卓冠廷<span class="chip-tag">現任</span></span>
+          <span class="chip" onclick="openCandidateModal('吳昇翰')" tabindex="0" role="button">吳昇翰<span class="chip-tag">新人・立委吳琪銘之子</span></span>
+          <span class="chip" onclick="openCandidateModal('彭一書')" tabindex="0" role="button">彭一書<span class="chip-tag">現任</span></span>
+          <span class="chip" onclick="openCandidateModal('廖宜琨')" tabindex="0" role="button">廖宜琨<span class="chip-tag">現任</span></span>
+          <span class="chip" onclick="openCandidateModal('高乃芸')" tabindex="0" role="button">高乃芸<span class="chip-tag">新人・前議員高敏慧姪女，獲婦女保障名額</span></span>
+        </div>
+      </div>
+      <div class="party-block">
+        <div class="party-block-head">
+          <span class="party-tag" style="background:var(--kmt)">國民黨</span>
+          <span class="party-note">提名／登記 3 位</span>
+        </div>
+        <div class="candidate-chips">
+          <span class="chip" onclick="openCandidateModal('林金結')" tabindex="0" role="button">林金結<span class="chip-tag">現任</span></span>
+          <span class="chip" onclick="openCandidateModal('呂家愷')" tabindex="0" role="button">呂家愷<span class="chip-tag">現任</span></span>
+          <span class="chip" onclick="openCandidateModal('洪佳君')" tabindex="0" role="button">洪佳君<span class="chip-tag">現任</span></span>
+        </div>
+      </div>
+      <div class="party-block">
+        <div class="party-block-head">
+          <span class="party-tag" style="background:var(--tpp)">民眾黨</span>
+          <span class="party-note">提名／登記 1 位</span>
+        </div>
+        <div class="candidate-chips">
+          <span class="chip" onclick="openCandidateModal('吳亞倫')" tabindex="0" role="button">吳亞倫<span class="chip-tag">新人</span></span>
+        </div>
+      </div>
+      <div class="district-remark">
+        <span class="remark-label">選區觀察</span>
+        民進黨初選結果已出爐，現任林銘仁落馬，吳昇翰、高乃芸獲提名。國民黨現任江怡臻不參選，黃永昌初選資格不符。民眾黨提名吳亞倫。
+      </div>
+    </div>
+  </section>
+
   <section class="district" id="d9">
     <div class="district-header">
       <div class="district-title-group">
         <div class="district-no">第九選區</div>
         <div class="district-name">新店・深坑・石碇・坪林・烏來</div>
-        <div class="district-areas">應選 4 席（婦女保障 1 席）</div>
+        <div class="district-areas">應選 4 席，婦女保障 1 席</div>
       </div>
       <div class="district-right">
-        <div class="district-seats">應選 4 席</div>
-        <span class="status-pill status-pending">提名作業進行中</span>
+        <div class="district-seats">應選 4 席，婦女保障 1 席</div>
+        <span class="status-pill status-partial">部分確定／初選中</span>
+        <span class="toggle-arrow" aria-hidden="true">▾</span>
+      </div>
+    </div>
+    <div class="district-body collapsed">
+      <div class="party-block">
+        <div class="party-block-head">
+          <span class="party-tag" style="background:var(--dpp)">民進黨</span>
+          <span class="party-note">提名／登記 2 位</span>
+        </div>
+        <div class="candidate-chips">
+          <span class="chip" onclick="openCandidateModal('陳乃瑜')" tabindex="0" role="button">陳乃瑜<span class="chip-tag">現任</span></span>
+          <span class="chip" onclick="openCandidateModal('陳韋任')" tabindex="0" role="button">陳韋任<span class="chip-tag">新人・資深議員陳永福兒子</span></span>
+        </div>
+      </div>
+      <div class="party-block">
+        <div class="party-block-head">
+          <span class="party-tag" style="background:var(--kmt)">國民黨</span>
+          <span class="party-note">提名／登記 5 位</span>
+        </div>
+        <div class="candidate-chips">
+          <span class="chip" onclick="openCandidateModal('劉哲彰')" tabindex="0" role="button">劉哲彰<span class="chip-tag">登記參選</span></span>
+          <span class="chip" onclick="openCandidateModal('陳儀君')" tabindex="0" role="button">陳儀君<span class="chip-tag">登記參選</span></span>
+          <span class="chip" onclick="openCandidateModal('黃心華')" tabindex="0" role="button">黃心華<span class="chip-tag">登記參選</span></span>
+          <span class="chip" onclick="openCandidateModal('邸聖德')" tabindex="0" role="button">邸聖德<span class="chip-tag">登記參選</span></span>
+          <span class="chip" onclick="openCandidateModal('游皓麟')" tabindex="0" role="button">游皓麟<span class="chip-tag">登記參選</span></span>
+        </div>
+      </div>
+      <div class="district-remark">
+        <span class="remark-label">選區觀察</span>
+        民進黨提名2席，國民黨有5位完成領表登記。
+      </div>
+    </div>
+  </section>
+
+  <section class="district" id="d10">
+    <div class="district-header">
+      <div class="district-title-group">
+        <div class="district-no">第十選區</div>
+        <div class="district-name">瑞芳・平溪・雙溪・貢寮</div>
+        <div class="district-areas">席次待確認</div>
+      </div>
+      <div class="district-right">
+        <div class="district-seats">席次待確認</div>
+        <span class="status-pill status-partial">部分確定／初選中</span>
+        <span class="toggle-arrow" aria-hidden="true">▾</span>
+      </div>
+    </div>
+    <div class="district-body collapsed">
+      <div class="party-block">
+        <div class="party-block-head">
+          <span class="party-tag" style="background:var(--dpp)">民進黨</span>
+          <span class="party-note">提名／登記 1 位</span>
+        </div>
+        <div class="candidate-chips">
+          <span class="chip" onclick="openCandidateModal('林裔綺')" tabindex="0" role="button">林裔綺<span class="chip-tag">現任</span></span>
+        </div>
+      </div>
+      <div class="district-remark">
+        <span class="remark-label">選區觀察</span>
+        民進黨提名1席，國民黨目前無人登記。
+      </div>
+    </div>
+  </section>
+
+  <section class="district" id="d11">
+    <div class="district-header">
+      <div class="district-title-group">
+        <div class="district-no">第十一選區</div>
+        <div class="district-name">汐止・金山・萬里</div>
+        <div class="district-areas">席次待確認</div>
+      </div>
+      <div class="district-right">
+        <div class="district-seats">席次待確認</div>
+        <span class="status-pill status-partial">部分確定／初選中</span>
+        <span class="toggle-arrow" aria-hidden="true">▾</span>
+      </div>
+    </div>
+    <div class="district-body collapsed">
+      <div class="party-block">
+        <div class="party-block-head">
+          <span class="party-tag" style="background:var(--dpp)">民進黨</span>
+          <span class="party-note">提名／登記 2 位</span>
+        </div>
+        <div class="candidate-chips">
+          <span class="chip" onclick="openCandidateModal('張錦豪')" tabindex="0" role="button">張錦豪<span class="chip-tag">現任</span></span>
+          <span class="chip" onclick="openCandidateModal('蔡美華')" tabindex="0" role="button">蔡美華<span class="chip-tag">新人・立委王義川辦公室前主任</span></span>
+        </div>
+      </div>
+      <div class="party-block">
+        <div class="party-block-head">
+          <span class="party-tag" style="background:var(--kmt)">國民黨</span>
+          <span class="party-note">提名／登記 4 位</span>
+        </div>
+        <div class="candidate-chips">
+          <span class="chip" onclick="openCandidateModal('何元楷')" tabindex="0" role="button">何元楷<span class="chip-tag">登記參選</span></span>
+          <span class="chip" onclick="openCandidateModal('白珮茹')" tabindex="0" role="button">白珮茹<span class="chip-tag">登記參選</span></span>
+          <span class="chip" onclick="openCandidateModal('陶威中')" tabindex="0" role="button">陶威中<span class="chip-tag">登記參選</span></span>
+          <span class="chip" onclick="openCandidateModal('蕭敬嚴')" tabindex="0" role="button">蕭敬嚴<span class="chip-tag">登記參選</span></span>
+        </div>
+      </div>
+      <div class="party-block">
+        <div class="party-block-head">
+          <span class="party-tag" style="background:var(--tpp)">民眾黨</span>
+          <span class="party-note">提名／登記 1 位</span>
+        </div>
+        <div class="candidate-chips">
+          <span class="chip" onclick="openCandidateModal('陳語倢')" tabindex="0" role="button">陳語倢<span class="chip-tag">新人</span></span>
+        </div>
+      </div>
+      <div class="district-remark">
+        <span class="remark-label">選區觀察</span>
+        民進黨提名2席，國民黨有4位完成領表登記，民眾黨提名1席。
+      </div>
+    </div>
+  </section>
+
+  <section class="district" id="d12">
+    <div class="district-header">
+      <div class="district-title-group">
+        <div class="district-no">第十二選區</div>
+        <div class="district-name">平地原住民</div>
+        <div class="district-areas">應選約 4 席，原 3+1</div>
+      </div>
+      <div class="district-right">
+        <div class="district-seats">應選約 4 席，原 3+1</div>
+        <span class="status-pill status-partial">部分確定／初選中</span>
         <span class="toggle-arrow" aria-hidden="true">▾</span>
       </div>
     </div>
@@ -859,127 +1050,49 @@
       <div class="party-block">
         <div class="party-block-head">
           <span class="party-tag" style="background:var(--kmt)">國民黨</span>
-          <span class="party-note">提名 4 席</span>
+          <span class="party-note">提名／登記 2 位</span>
         </div>
         <div class="candidate-chips">
-          <span class="no-candidates">候選人名單待確認</span>
+          <span class="chip" onclick="openCandidateModal('楊春妹')" tabindex="0" role="button">楊春妹<span class="chip-tag">登記參選</span></span>
+          <span class="chip" onclick="openCandidateModal('吳國譽 La‧ls‧Amid')" tabindex="0" role="button">吳國譽 La‧ls‧Amid<span class="chip-tag">登記參選</span></span>
         </div>
       </div>
       <div class="district-remark">
         <span class="remark-label">選區觀察</span>
-        國民黨提名 4 席，完整名單與民進黨提名狀況待確認。
+        國民黨有2位完成領表登記。民進黨尚未公布提名名單。
       </div>
     </div>
   </section>
 
-  <!-- 第十選區 -->
-  <section class="district" id="d10">
-    <div class="district-header">
-      <div class="district-title-group">
-        <div class="district-no">第十選區</div>
-        <div class="district-name">瑞芳・平溪・雙溪・貢寮</div>
-        <div class="district-areas">應選席次待確認</div>
-      </div>
-      <div class="district-right">
-        <div class="district-seats">席次待確認</div>
-        <span class="status-pill status-pending">提名作業進行中</span>
-        <span class="toggle-arrow" aria-hidden="true">▾</span>
-      </div>
-    </div>
-    <div class="district-body collapsed">
-      <div class="pending-state">
-        <div class="pending-icon">⏳</div>
-        <div class="pending-text">提名作業進行中</div>
-        <div class="pending-sub">各政黨黨內初選或人選協調尚未完成，候選人名單將於後續更新。</div>
-      </div>
-      <div class="district-remark">
-        <span class="remark-label">選區觀察</span>
-        各黨提名 / 初選作業進行中，名單尚未確定。
-      </div>
-    </div>
-  </section>
-
-  <!-- 第十一選區 -->
-  <section class="district" id="d11">
-    <div class="district-header">
-      <div class="district-title-group">
-        <div class="district-no">第十一選區</div>
-        <div class="district-name">汐止・金山・萬里</div>
-        <div class="district-areas">應選席次待確認</div>
-      </div>
-      <div class="district-right">
-        <div class="district-seats">席次待確認</div>
-        <span class="status-pill status-pending">提名作業進行中</span>
-        <span class="toggle-arrow" aria-hidden="true">▾</span>
-      </div>
-    </div>
-    <div class="district-body collapsed">
-      <div class="pending-state">
-        <div class="pending-icon">⏳</div>
-        <div class="pending-text">提名作業進行中</div>
-        <div class="pending-sub">各政黨黨內初選或人選協調尚未完成，候選人名單將於後續更新。</div>
-      </div>
-      <div class="district-remark">
-        <span class="remark-label">選區觀察</span>
-        現任議員廖先翔轉任立委成功後出缺，該席次競爭激烈，藍營新秀多人爭取提名。
-      </div>
-    </div>
-  </section>
-
-  <!-- 第十二選區 -->
-  <section class="district" id="d12">
-    <div class="district-header">
-      <div class="district-title-group">
-        <div class="district-no">第十二選區</div>
-        <div class="district-name">平地原住民</div>
-        <div class="district-areas">應選約 4 席（原 3 席+1）</div>
-      </div>
-      <div class="district-right">
-        <div class="district-seats">應選約 4 席</div>
-        <span class="status-pill status-pending">提名作業進行中</span>
-        <span class="toggle-arrow" aria-hidden="true">▾</span>
-      </div>
-    </div>
-    <div class="district-body collapsed">
-      <div class="pending-state">
-        <div class="pending-icon">⏳</div>
-        <div class="pending-text">提名作業進行中</div>
-        <div class="pending-sub">各政黨黨內初選或人選協調尚未完成，候選人名單將於後續更新。</div>
-      </div>
-      <div class="district-remark">
-        <span class="remark-label">選區觀察</span>
-        原住民選區席次因人口調整增加 1 席，各黨提名作業進行中。
-      </div>
-    </div>
-  </section>
-
-  <!-- 第十三選區 -->
   <section class="district" id="d13">
     <div class="district-header">
       <div class="district-title-group">
         <div class="district-no">第十三選區</div>
         <div class="district-name">山地原住民</div>
-        <div class="district-areas">應選約 2 席（原 1 席+1）</div>
+        <div class="district-areas">應選約 2 席，原 1+1</div>
       </div>
       <div class="district-right">
-        <div class="district-seats">應選約 2 席</div>
-        <span class="status-pill status-pending">提名作業進行中</span>
+        <div class="district-seats">應選約 2 席，原 1+1</div>
+        <span class="status-pill status-partial">部分確定／初選中</span>
         <span class="toggle-arrow" aria-hidden="true">▾</span>
       </div>
     </div>
     <div class="district-body collapsed">
-      <div class="pending-state">
-        <div class="pending-icon">⏳</div>
-        <div class="pending-text">提名作業進行中</div>
-        <div class="pending-sub">各政黨黨內初選或人選協調尚未完成，候選人名單將於後續更新。</div>
+      <div class="party-block">
+        <div class="party-block-head">
+          <span class="party-tag" style="background:var(--kmt)">國民黨</span>
+          <span class="party-note">提名／登記 1 位</span>
+        </div>
+        <div class="candidate-chips">
+          <span class="chip" onclick="openCandidateModal('何應明')" tabindex="0" role="button">何應明<span class="chip-tag">登記參選</span></span>
+        </div>
       </div>
       <div class="district-remark">
         <span class="remark-label">選區觀察</span>
-        原住民選區席次因人口調整增加 1 席，各黨提名作業進行中。
+        國民黨有1位完成領表登記。民進黨尚未公布提名名單。
       </div>
     </div>
   </section>
-
 </main>
 
 <!-- Candidate modal -->
@@ -1006,9 +1119,12 @@
         <div class="modal-section-body" id="modal-controversies"></div>
       </div>
       <div class="modal-section">
-        <div class="modal-section-title"><span class="modal-section-icon">🏆</span>曾有過的具體貢獻</div>
+        <div class="modal-section-title"><span class="modal-section-icon">🏆</span>曾經的具體貢獻／政績</div>
         <div class="modal-section-body" id="modal-contributions"></div>
       </div>
+    </div>
+    <div class="modal-footnote" id="modal-source-row" style="display:none;">
+      資料來源：<a href="#" id="modal-source-link" target="_blank" rel="noopener">查看原始報導</a>
     </div>
     <div class="modal-footnote">本頁資料為非官方整理，僅供參考，正式資訊請以候選人官方發布與中選會公告為準。</div>
   </div>
@@ -1023,7 +1139,10 @@
     <a href="https://www.tpp.org.tw" target="_blank" rel="noopener">民眾黨</a>
   </div>
   <div style="margin-top:1rem">
-    資料來源：各政黨中央/新北市黨部公告、中選會、媒體報導（截至 2026 年 6 月）。本頁為非官方整理，正式名單以中選會公告為準。
+    資料來源：各政黨中央/新北市黨部公告、中選會、媒體報導（v2 查證版，截至 2026 年 3 月）。本頁為非官方整理，正式名單以中選會公告為準。
+  </div>
+  <div style="margin-top:0.6rem; opacity:0.75; max-width:640px; margin-left:auto; margin-right:auto;">
+    本次更新重點：第八選區民進黨初選結果出爐，現任林銘仁落馬，吳昇翰、高乃芸獲提名；國民黨江怡臻不參選，黃永昌初選資格不符；其餘選區同步更新各黨領表登記與提名最新狀態。
   </div>
 </footer>
 
@@ -1055,151 +1174,150 @@
     });
   });
 
-  // ── Candidate data (待補充：政見／過去立場／爭議事件) ──
-  // 目前僅為版位佔位，尚無實際查證過的候選人資料。
-  // 之後請提供每位候選人的來源資料，我會依此結構填入。
-  const candidateData = {
-    '鄭宇恩':   { district: '第一選區・淡水', party: '民進黨', tag: '現任' },
-    '游明諺':   { district: '第一選區・淡水', party: '民進黨', tag: '新人' },
-    '呂鈞鴻':   { district: '第一選區・淡水', party: '國民黨', tag: '新人' },
-    '蔡淑君':   { district: '第二選區・林口', party: '國民黨', tag: '現任' },
-    '陳明義':   { district: '第二選區・林口', party: '國民黨', tag: '現任' },
-    '陳岱吟': {
-      district: '第三選區・新莊', party: '民進黨', tag: '新人',
-      platform: [
-        { text: '推動婦幼政策回歸托育、就學、照護與支持系統，減輕夾心世代壓力。', category: '社福', source: 'https://www.facebook.com/maygoddejia/videos/1438816847875645/', verified: true },
-        { text: '關心校園建設、環境安全、公園綠地等議題，並提出具體改善方案。', category: '教育', source: 'https://www.threads.com/@evalynchen/post/DTHq3Msk71m/', verified: true }
-      ],
-      pastPositions: [
-        { text: '支持民進黨政策，並獲前行政院長游錫堃、前基隆市長林右昌及議員鍾宏仁支持。', stance: 'support', date: '2026-03', source: 'https://news.ltn.com.tw/news/politics/breakingnews/5375596', verified: true }
-      ],
-      controversies: [],
-      contributions: [
-        { text: '曾任前行政院長游錫堃辦公室副主任，具備12年政治幕僚經驗。', category: '其他', date: '2026', source: 'https://news.ltn.com.tw/news/politics/breakingnews/5375596', verified: true }
-      ]
-    },
-    '吳奕萱': {
-      district: '第三選區・新莊', party: '民進黨', tag: '新人',
-      platform: [
-        { text: '以務實問政與理性監督為原則，致力將公共資源轉化為地方落實的具體改善。', category: '其他', source: 'https://news.wkm.tw/archives/24937', verified: true }
-      ],
-      pastPositions: [
-        { text: '在立法院任職期間，成功促成企業貸款補助增列「新興業種」，擴大產業救援。', stance: 'support', date: '2026-03', source: 'https://udn.com/news/story/124652/9378065', verified: true },
-        { text: '積極推動國家體育資源實踐「性別平權」。', stance: 'support', date: '2026-03', source: 'https://udn.com/news/story/124652/9378065', verified: true }
-      ],
-      controversies: [],
-      contributions: [
-        { text: '具備十年國會幕僚經驗，曾任立委吳思瑤辦公室主任，熟悉法案研議與行政協調。', category: '其他', date: '2026', source: 'https://news.wkm.tw/archives/24937', verified: true }
-      ]
-    },
-    '林秉宥': {
-      district: '第三選區・新莊', party: '民進黨', tag: '現任',
-      platform: [
-        { text: '加速新莊第一公墓遷葬，推動公墓用地變更，設置新莊森林公園。', category: '都更', source: 'https://www.ntp.gov.tw/councilor-detail?program=37&A=3&C=611', verified: true },
-        { text: '爭取福營運動中心興建，加速閒置公有土地活化，平衡南北新莊發展。', category: '地方建設', source: 'https://www.ntp.gov.tw/councilor-detail?program=37&A=3&C=611', verified: true }
-      ],
-      pastPositions: [
-        { text: '反對禁止任用三等親內親屬為公費助理的「三親等禁令」，認為不符比例原則。', stance: 'oppose', date: '2025-02', source: 'https://tw.news.yahoo.com/%E6%89%8D%E8%BD%9F%E8%B3%B4-%E4%B8%89%E8%A6%AA%E7%AD%89%E7%A6%81%E4%BB%A4-%E7%8B%97%E5%B1%81-%E6%9E%97%E7%A7%89%E5%AE%A5%E7%82%BA%E6%BF%80%E7%83%88%E6%8E%AA%E8%BE%AD%E9%81%93%E6%AD%89%E4%BA%86-091852290.html', verified: true }
-      ],
-      controversies: [
-        { text: '在社群平台評論台南女警遭輾斃案時，發文稱「一定是車道太窄讓後車沒辦法超車」，遭指反諷路權團體引發爭議。', date: '2026-04', status_of_case: null, source: 'https://zh.wikipedia.org/zh-hant/%E6%9E%97%E7%A7%89%E5%AE%A5', verified: true }
-      ],
-      contributions: [
-        { text: '獨自前往泰緬邊境探訪「苗瓦迪」詐騙園區，關心海外詐騙受害者。', category: '公益行動', date: '2025-12', source: 'https://www.youtube.com/watch?v=P72MhsMCqyM', verified: true }
-      ]
-    },
-    '翁震州': {
-      district: '第三選區・新莊', party: '民進黨', tag: '現任',
-      platform: [
-        { text: '主張泰板輕軌應以高架化優先，降低地面車流交織風險，並爭取捷運西盛支線。', category: '交通', source: 'https://news.wkm.tw/archives/24662', verified: true },
-        { text: '主張公有設施（學校、公園）應同步規劃地下停車場，以緩解路面停車壓力。', category: '交通', source: 'https://news.wkm.tw/archives/24662', verified: true }
-      ],
-      pastPositions: [
-        { text: '長期倡議提升基層資源，成功推動新北市鄰長工作協助費調高至2500元。', stance: 'support', date: '2026-06', source: 'https://news.wkm.tw/archives/25810', verified: true }
-      ],
-      controversies: [
-        { text: '引用屏東地檢署資料指控國民黨市長參選人李四川家族涉及地方爭議，遭對方批評為政治抹黑。', date: '2026-05', status_of_case: null, source: 'https://www.ftnn.com.tw/news/545427', verified: true }
-      ],
-      contributions: [
-        { text: '成功推動調高鄰長工作協助費至每月2500元，強化基層服務量能。', category: '法案推動', date: '2026-06', source: 'https://news.wkm.tw/archives/25810', verified: true }
-      ]
-    },
-    '陳世軒': {
-      district: '第三選區・新莊', party: '民眾黨', tag: '現任',
-      platform: [
-        { text: '提出「五大好孕政見」，包含生育補助與育兒友善環境，鼓勵年輕人敢婚敢生。', category: '社福', source: 'https://news.ltn.com.tw/news/politics/breakingnews/5488743', verified: true }
-      ],
-      pastPositions: [
-        { text: '反對「4萬6還稅於市民」提案，主張應優先用於整建道路等公共建設。', stance: 'oppose', date: '2026-05', source: 'https://www.threads.com/@stanley_wch/post/DYVhFCkAQZl/', verified: true }
-      ],
-      controversies: [
-        { text: '受訪談論黨內「狗仔爭議」及黃國昌布局新北市長計畫，引發外界對民眾黨內部運作的關注。', date: '2025-10', status_of_case: null, source: 'https://tw.news.yahoo.com/%E7%8B%97%E4%BB%94%E7%88%AD%E8%AD%B0%E6%96%B7%E9%BB%83%E5%9C%8B%E6%98%8C%E9%81%B8%E6%96%B0%E5%8C%97%E5%B8%82%E9%95%B7-%E9%99%B3%E4%B8%96%E8%BB%92%E6%9B%9D%E9%80%B2%E5%BA%A6-030316506.html', verified: true }
-      ],
-      contributions: [
-        { text: '爭取並完成新莊中華路與中誠街口行人環境改造，完工新莊首個Z字型人行穿越道。', category: '地方建設', date: '2020-01', source: 'https://www.youtube.com/watch?v=evUw-mEcGBc', verified: true }
-      ]
-    },
-    '陳彥廷':   { district: '第四選區・三重', party: '民眾黨', tag: '' },
-    '李珮媜':   { district: '第七選區・永和', party: '國民黨', tag: '新人' },
-    '卓冠廷':   { district: '第八選區・土城', party: '民進黨', tag: '現任' },
-    '廖宜琨':   { district: '第八選區・土城', party: '民進黨', tag: '現任' },
-    '彭一書':   { district: '第八選區・土城', party: '民進黨', tag: '現任' },
-    '林銘仁':   { district: '第八選區・土城', party: '民進黨', tag: '現任' },
-    '吳昇翰':   { district: '第八選區・土城', party: '民進黨', tag: '新人' },
-    '高乃芸':   { district: '第八選區・土城', party: '民進黨', tag: '新人' },
-    '朱誼臻':   { district: '第八選區・土城', party: '民進黨', tag: '新人' },
-    '吳亞倫':   { district: '第八選區・土城', party: '民眾黨', tag: '' },
+  // ── Candidate data (待補充：政見／過去立場／爭議事件／貢獻) ──
+  // 欄位命名對齊 candidates-ntpc-v1.1.json 的 candidate_schema：
+  //   party / party_color_var / status / status_detail / district_id / photo_url
+  //   platform / past_positions / controversies / contributions
+  // 每個陣列欄位可放入物件 { text, source, verified, ... }（結構同 JSON schema），
+  // 也可暫時放純文字字串，renderModalSection 兩種都能顯示。
+  // 目前皆為 unverified 佔位狀態，尚無實際查證過的資料。
+
+  // 選區 id 對照表（同 candidates-ntpc-v1.1.json 的 districts[].id / no / name）
+  const districtLookup = {
+    1:  { no: '第一選區',   name: '淡水・八里・三芝・石門' },
+    2:  { no: '第二選區',   name: '林口・五股・泰山' },
+    3:  { no: '第三選區',   name: '新莊' },
+    4:  { no: '第四選區',   name: '三重・蘆洲' },
+    5:  { no: '第五選區',   name: '板橋' },
+    6:  { no: '第六選區',   name: '中和' },
+    7:  { no: '第七選區',   name: '永和' },
+    8:  { no: '第八選區',   name: '土城・樹林・三峽・鶯歌' },
+    9:  { no: '第九選區',   name: '新店・深坑・石碇・坪林・烏來' },
+    10: { no: '第十選區',   name: '瑞芳・平溪・雙溪・貢寮' },
+    11: { no: '第十一選區', name: '汐止・金山・萬里' },
+    12: { no: '第十二選區', name: '平地原住民' },
+    13: { no: '第十三選區', name: '山地原住民' },
   };
-  // 每位候選人可另外附加以下欄位（陣列）：
-  //   platform / pastPositions / controversies / contributions
-  // 陣列內每一項可以是純文字字串（舊格式），也可以是物件：
-  //   { text, category?, stance?('support'|'oppose'|'mixed'), date?, status_of_case?, source?, verified? }
-  // verified === false 的項目不會顯示在畫面上（視為尚待查證），
-  // 該分類若無任何可顯示項目，彈跳視窗會顯示「資料待補充」。
-  // 未提供該欄位（或陣列為空）時效果相同。
 
-  const stanceLabels = { support: '支持', oppose: '反對', mixed: '立場不一' };
+  const candidateData = {
+    "鄭宇恩": { party: "民進黨", party_color_var: "--dpp", status: "現任", status_detail: null, district_id: 1, source: "https://www.setn.com/news/1813756", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "游明諺": { party: "民進黨", party_color_var: "--dpp", status: "新人", status_detail: "前國會幕僚", district_id: 1, source: "https://www.setn.com/news/1813756", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "陳偉杰": { party: "國民黨", party_color_var: "--kmt", status: "登記參選", status_detail: null, district_id: 1, source: "https://etaiwan.news/2026/03/13/%E4%B8%AD%E5%9C%8B%E5%9C%8B%E6%B0%91%E9%BB%A8%E6%96%B0%E5%8C%97%E5%B8%82%E8%AD%B0%E5%93%A1%E9%81%B8%E8%88%89%E5%80%99%E9%81%B8%E4%BA%BA%EF%BD%9C%E7%B8%BD%E8%A8%8847%E4%BD%8D%E9%A0%98%E8%A1%A8%E3%80%81/", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "呂鈞鴻": { party: "國民黨", party_color_var: "--kmt", status: "登記參選", status_detail: "蔡錦賢服務處秘書", district_id: 1, source: "https://etaiwan.news/2026/03/13/%E4%B8%AD%E5%9C%8B%E5%9C%8B%E6%B0%91%E9%BB%A8%E6%96%B0%E5%8C%97%E5%B8%82%E8%AD%B0%E5%93%A1%E9%81%B8%E8%88%89%E5%80%99%E9%81%B8%E4%BA%BA%EF%BD%9C%E7%B8%BD%E8%A8%8847%E4%BD%8D%E9%A0%98%E8%A1%A8%E3%80%81/", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "陳家琪": { party: "國民黨", party_color_var: "--kmt", status: "登記參選", status_detail: null, district_id: 1, source: "https://etaiwan.news/2026/03/13/%E4%B8%AD%E5%9C%8B%E5%9C%8B%E6%B0%91%E9%BB%A8%E6%96%B0%E5%8C%97%E5%B8%82%E8%AD%B0%E5%93%A1%E9%81%B8%E8%88%89%E5%80%99%E9%81%B8%E4%BA%BA%EF%BD%9C%E7%B8%BD%E8%A8%8847%E4%BD%8D%E9%A0%98%E8%A1%A8%E3%80%81/", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "李宇翔": { party: "民進黨", party_color_var: "--dpp", status: "現任", status_detail: null, district_id: 2, source: "https://www.setn.com/news/1813756", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "戴翎育": { party: "民進黨", party_color_var: "--dpp", status: "新人", status_detail: "前議員賴秋媚女兒", district_id: 2, source: "https://www.setn.com/news/1813756", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "蔡淑君": { party: "國民黨", party_color_var: "--kmt", status: "現任", status_detail: null, district_id: 2, source: "https://udn.com/news/story/124652/9563490", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "陳明義": { party: "國民黨", party_color_var: "--kmt", status: "現任", status_detail: null, district_id: 2, source: "https://udn.com/news/story/124652/9563490", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "蔡佩呈": { party: "國民黨", party_color_var: "--kmt", status: "新人", status_detail: "宋明宗女兒", district_id: 2, source: "https://udn.com/news/story/124652/9563490", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "鄭丞宏": { party: "國民黨", party_color_var: "--kmt", status: "新人", status_detail: "前五股鄉長鄭漢騰兒子、新北市府顧問", district_id: 2, source: "https://udn.com/news/story/124652/9563490", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "陳岱吟": { party: "民進黨", party_color_var: "--dpp", status: "新人", status_detail: "跨派系交棒新人", district_id: 3, source: "https://www.setn.com/news/1813756", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "吳奕萱": { party: "民進黨", party_color_var: "--dpp", status: "新人", status_detail: "立委吳思瑤前辦公室主任", district_id: 3, source: "https://www.setn.com/news/1813756", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "翁震州": { party: "民進黨", party_color_var: "--dpp", status: "現任", status_detail: null, district_id: 3, source: "https://www.setn.com/news/1813756", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "林秉宥": { party: "民進黨", party_color_var: "--dpp", status: "現任", status_detail: null, district_id: 3, source: "https://www.setn.com/news/1813756", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "陳世軒": { party: "民眾黨", party_color_var: "--tpp", status: "現任", status_detail: null, district_id: 3, source: "https://www.facebook.com/TPPfanpage/posts/1420683136080861/", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "陳俊維": { party: "民進黨", party_color_var: "--dpp", status: "新人", status_detail: "前議員陳啟能兒子", district_id: 4, source: "https://www.setn.com/news/1813756", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "彭佳芸": { party: "民進黨", party_color_var: "--dpp", status: "現任", status_detail: null, district_id: 4, source: "https://www.setn.com/news/1813756", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "邱婷蔚": { party: "民進黨", party_color_var: "--dpp", status: "現任", status_detail: null, district_id: 4, source: "https://www.setn.com/news/1813756", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "李倩萍": { party: "民進黨", party_color_var: "--dpp", status: "現任", status_detail: null, district_id: 4, source: "https://www.setn.com/news/1813756", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "李余典": { party: "民進黨", party_color_var: "--dpp", status: "現任", status_detail: null, district_id: 4, source: "https://www.setn.com/news/1813756", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "顏蔚慈": { party: "民進黨", party_color_var: "--dpp", status: "現任", status_detail: null, district_id: 4, source: "https://www.setn.com/news/1813756", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "王威元": { party: "國民黨", party_color_var: "--kmt", status: "登記參選", status_detail: null, district_id: 4, source: "https://etaiwan.news/2026/03/13/%E4%B8%AD%E5%9C%8B%E5%9C%8B%E6%B0%91%E9%BB%A8%E6%96%B0%E5%8C%97%E5%B8%82%E8%AD%B0%E5%93%A1%E9%81%B8%E8%88%89%E5%80%99%E9%81%B8%E4%BA%BA%EF%BD%9C%E7%B8%BD%E8%A8%8847%E4%BD%8D%E9%A0%98%E8%A1%A8%E3%80%81/", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "黃桂蘭": { party: "國民黨", party_color_var: "--kmt", status: "登記參選", status_detail: null, district_id: 4, source: "https://etaiwan.news/2026/03/13/%E4%B8%AD%E5%9C%8B%E5%9C%8B%E6%B0%91%E9%BB%A8%E6%96%B0%E5%8C%97%E5%B8%82%E8%AD%B0%E5%93%A1%E9%81%B8%E8%88%89%E5%80%99%E9%81%B8%E4%BA%BA%EF%BD%9C%E7%B8%BD%E8%A8%8847%E4%BD%8D%E9%A0%98%E8%A1%A8%E3%80%81/", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "蔡政呈": { party: "國民黨", party_color_var: "--kmt", status: "登記參選", status_detail: null, district_id: 4, source: "https://etaiwan.news/2026/03/13/%E4%B8%AD%E5%9C%8B%E5%9C%8B%E6%B0%91%E9%BB%A8%E6%96%B0%E5%8C%97%E5%B8%82%E8%AD%B0%E5%93%A1%E9%81%B8%E8%88%89%E5%80%99%E9%81%B8%E4%BA%BA%EF%BD%9C%E7%B8%BD%E8%A8%8847%E4%BD%8D%E9%A0%98%E8%A1%A8%E3%80%81/", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "陳彥廷": { party: "民眾黨", party_color_var: "--tpp", status: "新人", status_detail: null, district_id: 4, source: "https://news.nextapple.com/politics/20260313/9CB4AAC3CE6EF77D37C59877751284D7", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "李昆穎": { party: "民進黨", party_color_var: "--dpp", status: "新人", status_detail: "國防院前執行長李文忠之子", district_id: 5, source: "https://www.setn.com/news/1813756", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "戴瑋姍": { party: "民進黨", party_color_var: "--dpp", status: "現任", status_detail: null, district_id: 5, source: "https://www.setn.com/news/1813756", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "山田摩衣": { party: "民進黨", party_color_var: "--dpp", status: "現任", status_detail: null, district_id: 5, source: "https://www.setn.com/news/1813756", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "黃淑君": { party: "民進黨", party_color_var: "--dpp", status: "現任", status_detail: null, district_id: 5, source: "https://www.setn.com/news/1813756", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "陳俊諺": { party: "民進黨", party_color_var: "--dpp", status: "新人", status_detail: "前議員石一佑兒子", district_id: 5, source: "https://www.setn.com/news/1813756", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "林國春": { party: "國民黨", party_color_var: "--kmt", status: "登記參選", status_detail: null, district_id: 5, source: "https://etaiwan.news/2026/03/13/%E4%B8%AD%E5%9C%8B%E5%9C%8B%E6%B0%91%E9%BB%A8%E6%96%B0%E5%8C%97%E5%B8%82%E8%AD%B0%E5%93%A1%E9%81%B8%E8%88%89%E5%80%99%E9%81%B8%E4%BA%BA%EF%BD%9C%E7%B8%BD%E8%A8%8847%E4%BD%8D%E9%A0%98%E8%A1%A8%E3%80%81/", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "劉美芳": { party: "國民黨", party_color_var: "--kmt", status: "登記參選", status_detail: null, district_id: 5, source: "https://etaiwan.news/2026/03/13/%E4%B8%AD%E5%9C%8B%E5%9C%8B%E6%B0%91%E9%BB%A8%E6%96%B0%E5%8C%97%E5%B8%82%E8%AD%B0%E5%93%A1%E9%81%B8%E8%88%89%E5%80%99%E9%81%B8%E4%BA%BA%EF%BD%9C%E7%B8%BD%E8%A8%8847%E4%BD%8D%E9%A0%98%E8%A1%A8%E3%80%81/", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "周韋翰": { party: "國民黨", party_color_var: "--kmt", status: "新人", status_detail: "資深議員周勝考兒子", district_id: 5, source: "https://news.ltn.com.tw/news/politics/breakingnews/5368193", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "曾煥嘉": { party: "國民黨", party_color_var: "--kmt", status: "登記參選", status_detail: null, district_id: 5, source: "https://etaiwan.news/2026/03/13/%E4%B8%AD%E5%9C%8B%E5%9C%8B%E6%B0%91%E9%BB%A8%E6%96%B0%E5%8C%97%E5%B8%82%E8%AD%B0%E5%93%A1%E9%81%B8%E8%88%89%E5%80%99%E9%81%B8%E4%BA%BA%EF%BD%9C%E7%B8%BD%E8%A8%8847%E4%BD%8D%E9%A0%98%E8%A1%A8%E3%80%81/", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "陳金華": { party: "國民黨", party_color_var: "--kmt", status: "登記參選", status_detail: null, district_id: 5, source: "https://etaiwan.news/2026/03/13/%E4%B8%AD%E5%9C%8B%E5%9C%8B%E6%B0%91%E9%BB%A8%E6%96%B0%E5%8C%97%E5%B8%82%E8%AD%B0%E5%93%A1%E9%81%B8%E8%88%89%E5%80%99%E9%81%B8%E4%BA%BA%EF%BD%9C%E7%B8%BD%E8%A8%8847%E4%BD%8D%E9%A0%98%E8%A1%A8%E3%80%81/", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "鄧凱勛": { party: "國民黨", party_color_var: "--kmt", status: "登記參選", status_detail: null, district_id: 5, source: "https://etaiwan.news/2026/03/13/%E4%B8%AD%E5%9C%8B%E5%9C%8B%E6%B0%91%E9%BB%A8%E6%96%B0%E5%8C%97%E5%B8%82%E8%AD%B0%E5%93%A1%E9%81%B8%E8%88%89%E5%80%99%E9%81%B8%E4%BA%BA%EF%BD%9C%E7%B8%BD%E8%A8%8847%E4%BD%8D%E9%A0%98%E8%A1%A8%E3%80%81/", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "林子宇": { party: "民眾黨", party_color_var: "--tpp", status: "新人", status_detail: null, district_id: 5, source: "https://news.nextapple.com/politics/20260313/9CB4AAC3CE6EF77D37C59877751284D7", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "張維倩": { party: "民進黨", party_color_var: "--dpp", status: "現任", status_detail: null, district_id: 6, source: "https://www.setn.com/news/1813756", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "張嘉玲": { party: "民進黨", party_color_var: "--dpp", status: "現任", status_detail: null, district_id: 6, source: "https://www.setn.com/news/1813756", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "張志豪": { party: "民進黨", party_color_var: "--dpp", status: "前議員", status_detail: "上屆落選頭", district_id: 6, source: "https://www.setn.com/news/1813756", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "陳錦錠": { party: "國民黨", party_color_var: "--kmt", status: "登記參選", status_detail: null, district_id: 6, source: "https://etaiwan.news/2026/03/13/%E4%B8%AD%E5%9C%8B%E5%9C%8B%E6%B0%91%E9%BB%A8%E6%96%B0%E5%8C%97%E5%B8%82%E8%AD%B0%E5%93%A1%E9%81%B8%E8%88%89%E5%80%99%E9%81%B8%E4%BA%BA%EF%BD%9C%E7%B8%BD%E8%A8%8847%E4%BD%8D%E9%A0%98%E8%A1%A8%E3%80%81/", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "邱烽堯": { party: "國民黨", party_color_var: "--kmt", status: "登記參選", status_detail: null, district_id: 6, source: "https://etaiwan.news/2026/03/13/%E4%B8%AD%E5%9C%8B%E5%9C%8B%E6%B0%91%E9%BB%A8%E6%96%B0%E5%8C%97%E5%B8%82%E8%AD%B0%E5%93%A1%E9%81%B8%E8%88%89%E5%80%99%E9%81%B8%E4%BA%BA%EF%BD%9C%E7%B8%BD%E8%A8%8847%E4%BD%8D%E9%A0%98%E8%A1%A8%E3%80%81/", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "游輝宂": { party: "國民黨", party_color_var: "--kmt", status: "登記參選", status_detail: null, district_id: 6, source: "https://etaiwan.news/2026/03/13/%E4%B8%AD%E5%9C%8B%E5%9C%8B%E6%B0%91%E9%BB%A8%E6%96%B0%E5%8C%97%E5%B8%82%E8%AD%B0%E5%93%A1%E9%81%B8%E8%88%89%E5%80%99%E9%81%B8%E4%BA%BA%EF%BD%9C%E7%B8%BD%E8%A8%8847%E4%BD%8D%E9%A0%98%E8%A1%A8%E3%80%81/", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "金瑞龍": { party: "國民黨", party_color_var: "--kmt", status: "登記參選", status_detail: null, district_id: 6, source: "https://etaiwan.news/2026/03/13/%E4%B8%AD%E5%9C%8B%E5%9C%8B%E6%B0%91%E9%BB%A8%E6%96%B0%E5%8C%97%E5%B8%82%E8%AD%B0%E5%93%A1%E9%81%B8%E8%88%89%E5%80%99%E9%81%B8%E4%BA%BA%EF%BD%9C%E7%B8%BD%E8%A8%8847%E4%BD%8D%E9%A0%98%E8%A1%A8%E3%80%81/", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "陳怡君": { party: "民眾黨", party_color_var: "--tpp", status: "新人", status_detail: null, district_id: 6, source: "https://news.nextapple.com/politics/20260313/9CB4AAC3CE6EF77D37C59877751284D7", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "許昭興": { party: "民進黨", party_color_var: "--dpp", status: "現任", status_detail: null, district_id: 7, source: "https://www.setn.com/news/1813756", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "羅文崇": { party: "民進黨", party_color_var: "--dpp", status: "前議員", status_detail: null, district_id: 7, source: "https://www.setn.com/news/1813756", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "陳鴻源": { party: "國民黨", party_color_var: "--kmt", status: "登記參選", status_detail: null, district_id: 7, source: "https://etaiwan.news/2026/03/13/%E4%B8%AD%E5%9C%8B%E5%9C%8B%E6%B0%91%E9%BB%A8%E6%96%B0%E5%8C%97%E5%B8%82%E8%AD%B0%E5%93%A1%E9%81%B8%E8%88%89%E5%80%99%E9%81%B8%E4%BA%BA%EF%BD%9C%E7%B8%BD%E8%A8%8847%E4%BD%8D%E9%A0%98%E8%A1%A8%E3%80%81/", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "陳柏翰": { party: "國民黨", party_color_var: "--kmt", status: "新人", status_detail: "侯家軍", district_id: 7, source: "https://etaiwan.news/2026/03/13/%E4%B8%AD%E5%9C%8B%E5%9C%8B%E6%B0%91%E9%BB%A8%E6%96%B0%E5%8C%97%E5%B8%82%E8%AD%B0%E5%93%A1%E9%81%B8%E8%88%89%E5%80%99%E9%81%B8%E4%BA%BA%EF%BD%9C%E7%B8%BD%E8%A8%8847%E4%BD%8D%E9%A0%98%E8%A1%A8%E3%80%81/", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "蘇昭龍": { party: "國民黨", party_color_var: "--kmt", status: "登記參選", status_detail: null, district_id: 7, source: "https://etaiwan.news/2026/03/13/%E4%B8%AD%E5%9C%8B%E5%9C%8B%E6%B0%91%E9%BB%A8%E6%96%B0%E5%8C%97%E5%B8%82%E8%AD%B0%E5%93%A1%E9%81%B8%E8%88%89%E5%80%99%E9%81%B8%E4%BA%BA%EF%BD%9C%E7%B8%BD%E8%A8%8847%E4%BD%8D%E9%A0%98%E8%A1%A8%E3%80%81/", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "李珮媜": { party: "國民黨", party_color_var: "--kmt", status: "新人", status_detail: null, district_id: 7, source: "https://etaiwan.news/2026/03/13/%E4%B8%AD%E5%9C%8B%E5%9C%8B%E6%B0%91%E9%BB%A8%E6%96%B0%E5%8C%97%E5%B8%82%E8%AD%B0%E5%93%A1%E9%81%B8%E8%88%89%E5%80%99%E9%81%B8%E4%BA%BA%EF%BD%9C%E7%B8%BD%E8%A8%8847%E4%BD%8D%E9%A0%98%E8%A1%A8%E3%80%81/", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "陳以樂": { party: "國民黨", party_color_var: "--kmt", status: "登記參選", status_detail: null, district_id: 7, source: "https://etaiwan.news/2026/03/13/%E4%B8%AD%E5%9C%8B%E5%9C%8B%E6%B0%91%E9%BB%A8%E6%96%B0%E5%8C%97%E5%B8%82%E8%AD%B0%E5%93%A1%E9%81%B8%E8%88%89%E5%80%99%E9%81%B8%E4%BA%BA%EF%BD%9C%E7%B8%BD%E8%A8%8847%E4%BD%8D%E9%A0%98%E8%A1%A8%E3%80%81/", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "卓冠廷": { party: "民進黨", party_color_var: "--dpp", status: "現任", status_detail: null, district_id: 8, source: "https://udn.com/news/story/124652/9404245", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "吳昇翰": { party: "民進黨", party_color_var: "--dpp", status: "新人", status_detail: "立委吳琪銘之子", district_id: 8, source: "https://udn.com/news/story/124652/9404245", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "彭一書": { party: "民進黨", party_color_var: "--dpp", status: "現任", status_detail: null, district_id: 8, source: "https://udn.com/news/story/124652/9404245", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "廖宜琨": { party: "民進黨", party_color_var: "--dpp", status: "現任", status_detail: null, district_id: 8, source: "https://udn.com/news/story/124652/9404245", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "高乃芸": { party: "民進黨", party_color_var: "--dpp", status: "新人", status_detail: "前議員高敏慧姪女，獲婦女保障名額", district_id: 8, source: "https://udn.com/news/story/124652/9404245", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "林金結": { party: "國民黨", party_color_var: "--kmt", status: "現任", status_detail: null, district_id: 8, source: "https://etaiwan.news/2026/03/13/%E4%B8%AD%E5%9C%8B%E5%9C%8B%E6%B0%91%E9%BB%A8%E6%96%B0%E5%8C%97%E5%B8%82%E8%AD%B0%E5%93%A1%E9%81%B8%E8%88%89%E5%80%99%E9%81%B8%E4%BA%BA%EF%BD%9C%E7%B8%BD%E8%A8%8847%E4%BD%8D%E9%A0%98%E8%A1%A8%E3%80%81/", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "呂家愷": { party: "國民黨", party_color_var: "--kmt", status: "現任", status_detail: null, district_id: 8, source: "https://etaiwan.news/2026/03/13/%E4%B8%AD%E5%9C%8B%E5%9C%8B%E6%B0%91%E9%BB%A8%E6%96%B0%E5%8C%97%E5%B8%82%E8%AD%B0%E5%93%A1%E9%81%B8%E8%88%89%E5%80%99%E9%81%B8%E4%BA%BA%EF%BD%9C%E7%B8%BD%E8%A8%8847%E4%BD%8D%E9%A0%98%E8%A1%A8%E3%80%81/", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "洪佳君": { party: "國民黨", party_color_var: "--kmt", status: "現任", status_detail: null, district_id: 8, source: "https://etaiwan.news/2026/03/13/%E4%B8%AD%E5%9C%8B%E5%9C%8B%E6%B0%91%E9%BB%A8%E6%96%B0%E5%8C%97%E5%B8%82%E8%AD%B0%E5%93%A1%E9%81%B8%E8%88%89%E5%80%99%E9%81%B8%E4%BA%BA%EF%BD%9C%E7%B8%BD%E8%A8%8847%E4%BD%8D%E9%A0%98%E8%A1%A8%E3%80%81/", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "吳亞倫": { party: "民眾黨", party_color_var: "--tpp", status: "新人", status_detail: null, district_id: 8, source: "https://www.threads.com/@wuyalun1209", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "陳乃瑜": { party: "民進黨", party_color_var: "--dpp", status: "現任", status_detail: null, district_id: 9, source: "https://www.setn.com/news/1813756", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "陳韋任": { party: "民進黨", party_color_var: "--dpp", status: "新人", status_detail: "資深議員陳永福兒子", district_id: 9, source: "https://www.setn.com/news/1813756", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "劉哲彰": { party: "國民黨", party_color_var: "--kmt", status: "登記參選", status_detail: null, district_id: 9, source: "https://etaiwan.news/2026/03/13/%E4%B8%AD%E5%9C%8B%E5%9C%8B%E6%B0%91%E9%BB%A8%E6%96%B0%E5%8C%97%E5%B8%82%E8%AD%B0%E5%93%A1%E9%81%B8%E8%88%89%E5%80%99%E9%81%B8%E4%BA%BA%EF%BD%9C%E7%B8%BD%E8%A8%8847%E4%BD%8D%E9%A0%98%E8%A1%A8%E3%80%81/", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "陳儀君": { party: "國民黨", party_color_var: "--kmt", status: "登記參選", status_detail: null, district_id: 9, source: "https://etaiwan.news/2026/03/13/%E4%B8%AD%E5%9C%8B%E5%9C%8B%E6%B0%91%E9%BB%A8%E6%96%B0%E5%8C%97%E5%B8%82%E8%AD%B0%E5%93%A1%E9%81%B8%E8%88%89%E5%80%99%E9%81%B8%E4%BA%BA%EF%BD%9C%E7%B8%BD%E8%A8%8847%E4%BD%8D%E9%A0%98%E8%A1%A8%E3%80%81/", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "黃心華": { party: "國民黨", party_color_var: "--kmt", status: "登記參選", status_detail: null, district_id: 9, source: "https://etaiwan.news/2026/03/13/%E4%B8%AD%E5%9C%8B%E5%9C%8B%E6%B0%91%E9%BB%A8%E6%96%B0%E5%8C%97%E5%B8%82%E8%AD%B0%E5%93%A1%E9%81%B8%E8%88%89%E5%80%99%E9%81%B8%E4%BA%BA%EF%BD%9C%E7%B8%BD%E8%A8%8847%E4%BD%8D%E9%A0%98%E8%A1%A8%E3%80%81/", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "邸聖德": { party: "國民黨", party_color_var: "--kmt", status: "登記參選", status_detail: null, district_id: 9, source: "https://etaiwan.news/2026/03/13/%E4%B8%AD%E5%9C%8B%E5%9C%8B%E6%B0%91%E9%BB%A8%E6%96%B0%E5%8C%97%E5%B8%82%E8%AD%B0%E5%93%A1%E9%81%B8%E8%88%89%E5%80%99%E9%81%B8%E4%BA%BA%EF%BD%9C%E7%B8%BD%E8%A8%8847%E4%BD%8D%E9%A0%98%E8%A1%A8%E3%80%81/", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "游皓麟": { party: "國民黨", party_color_var: "--kmt", status: "登記參選", status_detail: null, district_id: 9, source: "https://etaiwan.news/2026/03/13/%E4%B8%AD%E5%9C%8B%E5%9C%8B%E6%B0%91%E9%BB%A8%E6%96%B0%E5%8C%97%E5%B8%82%E8%AD%B0%E5%93%A1%E9%81%B8%E8%88%89%E5%80%99%E9%81%B8%E4%BA%BA%EF%BD%9C%E7%B8%BD%E8%A8%8847%E4%BD%8D%E9%A0%98%E8%A1%A8%E3%80%81/", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "林裔綺": { party: "民進黨", party_color_var: "--dpp", status: "現任", status_detail: null, district_id: 10, source: "https://www.setn.com/news/1813756", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "張錦豪": { party: "民進黨", party_color_var: "--dpp", status: "現任", status_detail: null, district_id: 11, source: "https://www.setn.com/news/1813756", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "蔡美華": { party: "民進黨", party_color_var: "--dpp", status: "新人", status_detail: "立委王義川辦公室前主任", district_id: 11, source: "https://www.setn.com/news/1813756", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "何元楷": { party: "國民黨", party_color_var: "--kmt", status: "登記參選", status_detail: null, district_id: 11, source: "https://etaiwan.news/2026/03/13/%E4%B8%AD%E5%9C%8B%E5%9C%8B%E6%B0%91%E9%BB%A8%E6%96%B0%E5%8C%97%E5%B8%82%E8%AD%B0%E5%93%A1%E9%81%B8%E8%88%89%E5%80%99%E9%81%B8%E4%BA%BA%EF%BD%9C%E7%B8%BD%E8%A8%8847%E4%BD%8D%E9%A0%98%E8%A1%A8%E3%80%81/", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "白珮茹": { party: "國民黨", party_color_var: "--kmt", status: "登記參選", status_detail: null, district_id: 11, source: "https://etaiwan.news/2026/03/13/%E4%B8%AD%E5%9C%8B%E5%9C%8B%E6%B0%91%E9%BB%A8%E6%96%B0%E5%8C%97%E5%B8%82%E8%AD%B0%E5%93%A1%E9%81%B8%E8%88%89%E5%80%99%E9%81%B8%E4%BA%BA%EF%BD%9C%E7%B8%BD%E8%A8%8847%E4%BD%8D%E9%A0%98%E8%A1%A8%E3%80%81/", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "陶威中": { party: "國民黨", party_color_var: "--kmt", status: "登記參選", status_detail: null, district_id: 11, source: "https://etaiwan.news/2026/03/13/%E4%B8%AD%E5%9C%8B%E5%9C%8B%E6%B0%91%E9%BB%A8%E6%96%B0%E5%8C%97%E5%B8%82%E8%AD%B0%E5%93%A1%E9%81%B8%E8%88%89%E5%80%99%E9%81%B8%E4%BA%BA%EF%BD%9C%E7%B8%BD%E8%A8%8847%E4%BD%8D%E9%A0%98%E8%A1%A8%E3%80%81/", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "蕭敬嚴": { party: "國民黨", party_color_var: "--kmt", status: "登記參選", status_detail: null, district_id: 11, source: "https://etaiwan.news/2026/03/13/%E4%B8%AD%E5%9C%8B%E5%9C%8B%E6%B0%91%E9%BB%A8%E6%96%B0%E5%8C%97%E5%B8%82%E8%AD%B0%E5%93%A1%E9%81%B8%E8%88%89%E5%80%99%E9%81%B8%E4%BA%BA%EF%BD%9C%E7%B8%BD%E8%A8%8847%E4%BD%8D%E9%A0%98%E8%A1%A8%E3%80%81/", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "陳語倢": { party: "民眾黨", party_color_var: "--tpp", status: "新人", status_detail: null, district_id: 11, source: "https://news.nextapple.com/politics/20260313/9CB4AAC3CE6EF77D37C59877751284D7", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "楊春妹": { party: "國民黨", party_color_var: "--kmt", status: "登記參選", status_detail: null, district_id: 12, source: "https://etaiwan.news/2026/03/13/%E4%B8%AD%E5%9C%8B%E5%9C%8B%E6%B0%91%E9%BB%A8%E6%96%B0%E5%8C%97%E5%B8%82%E8%AD%B0%E5%93%A1%E9%81%B8%E8%88%89%E5%80%99%E9%81%B8%E4%BA%BA%EF%BD%9C%E7%B8%BD%E8%A8%8847%E4%BD%8D%E9%A0%98%E8%A1%A8%E3%80%81/", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "吳國譽 La‧ls‧Amid": { party: "國民黨", party_color_var: "--kmt", status: "登記參選", status_detail: null, district_id: 12, source: "https://etaiwan.news/2026/03/13/%E4%B8%AD%E5%9C%8B%E5%9C%8B%E6%B0%91%E9%BB%A8%E6%96%B0%E5%8C%97%E5%B8%82%E8%AD%B0%E5%93%A1%E9%81%B8%E8%88%89%E5%80%99%E9%81%B8%E4%BA%BA%EF%BD%9C%E7%B8%BD%E8%A8%8847%E4%BD%8D%E9%A0%98%E8%A1%A8%E3%80%81/", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "何應明": { party: "國民黨", party_color_var: "--kmt", status: "登記參選", status_detail: null, district_id: 13, source: "https://etaiwan.news/2026/03/13/%E4%B8%AD%E5%9C%8B%E5%9C%8B%E6%B0%91%E9%BB%A8%E6%96%B0%E5%8C%97%E5%B8%82%E8%AD%B0%E5%93%A1%E9%81%B8%E8%88%89%E5%80%99%E9%81%B8%E4%BA%BA%EF%BD%9C%E7%B8%BD%E8%A8%8847%E4%BD%8D%E9%A0%98%E8%A1%A8%E3%80%81/", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+  };
 
-  // 支援兩種資料型態：
-  //  1. 純文字字串（舊格式，向下相容）
-  //  2. 物件 { text, category?, stance?, date?, status_of_case?, source?, verified? }
-  // verified === false 的項目不會顯示於畫面（視為尚待查證，不曝光未確認內容）
   function renderModalSection(containerId, items) {
     const el = document.getElementById(containerId);
-    const list = Array.isArray(items) ? items : [];
-    const visible = list.filter(item => typeof item === 'string' || item.verified !== false);
-
-    if (visible.length === 0) {
+    if (Array.isArray(items) && items.length > 0) {
+      el.innerHTML = '<ul style="padding-left:1.1em; display:flex; flex-direction:column; gap:0.4em;">' +
+        items.map(item => {
+          // 相容純字串，或符合 JSON schema 的物件 { text, source, verified, ... }
+          const text = typeof item === 'string' ? item : (item && item.text) || '';
+          return `<li>${text}</li>`;
+        }).join('') + '</ul>';
+    } else {
       el.innerHTML = '<span class="modal-placeholder">資料待補充</span>';
-      return;
     }
-
-    el.innerHTML = '<ul class="modal-item-list">' + visible.map(item => {
-      if (typeof item === 'string') return `<li><div class="modal-item-text">${item}</div></li>`;
-
-      const badges = [];
-      if (item.category) badges.push(`<span class="meta-badge">${item.category}</span>`);
-      if (item.stance) badges.push(`<span class="meta-badge">${stanceLabels[item.stance] || item.stance}</span>`);
-      if (item.status_of_case) badges.push(`<span class="meta-badge">${item.status_of_case}</span>`);
-      if (item.date) badges.push(`<span class="meta-badge">${item.date}</span>`);
-      const sourceLink = item.source ? `<a href="${item.source}" target="_blank" rel="noopener">資料來源</a>` : '';
-      const metaLine = (badges.length || sourceLink)
-        ? `<div class="modal-item-meta">${badges.join('')}${sourceLink}</div>`
-        : '';
-
-      return `<li><div class="modal-item-text">${item.text || ''}</div>${metaLine}</li>`;
-    }).join('') + '</ul>';
   }
 
   function openCandidateModal(name) {
     const data = candidateData[name] || {};
     document.getElementById('modal-name').textContent = name;
-    const metaParts = [data.district, data.party, data.tag].filter(Boolean);
+    const d = districtLookup[data.district_id] || {};
+    const districtLabel = d.no ? `${d.no}・${d.name}` : '';
+    const statusLabel = data.status_detail
+      ? `${data.status || ''}・${data.status_detail}`.replace(/^・/, '')
+      : data.status;
+    const metaParts = [districtLabel, data.party, statusLabel].filter(Boolean);
     document.getElementById('modal-meta').textContent = metaParts.join('　|　');
     renderModalSection('modal-platform', data.platform);
-    renderModalSection('modal-past-positions', data.pastPositions);
+    renderModalSection('modal-past-positions', data.past_positions);
     renderModalSection('modal-controversies', data.controversies);
     renderModalSection('modal-contributions', data.contributions);
+
+    const sourceRow = document.getElementById('modal-source-row');
+    if (data.source) {
+      document.getElementById('modal-source-link').href = data.source;
+      sourceRow.style.display = 'block';
+    } else {
+      sourceRow.style.display = 'none';
+    }
 
     const overlay = document.getElementById('candidate-modal');
     overlay.classList.add('open');
