@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- index_v4.html — 資料架構對齊 counties-index-v1.json（欄位命名、active/coming_soon 狀態、stats 陣列） -->
 <html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
@@ -187,6 +188,7 @@
   .county-stat { display: flex; flex-direction: column; gap: 0.1rem; }
   .county-stat-num { font-size: 1.1rem; font-weight: 700; color: var(--text); }
   .county-stat-label { font-size: 0.68rem; color: var(--muted); }
+  .county-stat-note { font-size: 0.65rem; color: #B2967D; }
 
   .county-arrow {
     position: absolute;
@@ -355,42 +357,8 @@
 <main>
   <p class="section-label">選擇縣市</p>
   <p class="section-sub">選擇縣市，瀏覽各選區議員候選人提名名單。</p>
-  <div class="county-grid">
-
-    <!-- 新北市 -->
-    <a class="county-card" href="https://yishancarol.github.io/civic-election-guide-2026/guide-ntpc.html">
-      <span class="county-tag">直轄市</span>
-      <div class="county-name">新北市</div>
-      <div class="county-meta">13 個選區　議員選舉</div>
-      <div class="county-stats">
-        <div class="county-stat">
-          <span class="county-stat-num">68</span>
-          <span class="county-stat-label">總席次</span>
-        </div>
-        <div class="county-stat">
-          <span class="county-stat-num">13</span>
-          <span class="county-stat-label">選舉區</span>
-        </div>
-      </div>
-      <span class="county-arrow">→</span>
-    </a>
-
-    <!-- 台北市（預留） -->
-    <div class="county-card coming-soon">
-      <span class="county-tag">直轄市</span>
-      <div class="county-name">台北市</div>
-      <div class="county-meta">議員選舉</div>
-      <span class="coming-badge">即將上線</span>
-    </div>
-
-    <!-- 桃園市（預留） -->
-    <div class="county-card coming-soon">
-      <span class="county-tag">直轄市</span>
-      <div class="county-name">桃園市</div>
-      <div class="county-meta">議員選舉</div>
-      <span class="coming-badge">即將上線</span>
-    </div>
-
+  <div class="county-grid" id="county-grid">
+    <!-- 卡片由 JS 依 countiesData.counties 動態產生，結構對齊 counties-index-v1.json -->
   </div>
 </main>
 
@@ -424,6 +392,104 @@
 </footer>
 
 <script>
+  // ── 縣市資料（欄位命名與結構對齊 counties-index-v1.json） ──
+  // 之後若改為 fetch('counties-index-v1.json') 讀外部檔案，
+  // 只需將下方常數替換為 fetch 結果，render 邏輯不需更動。
+  const countiesData = {
+    election_date: "2026-11-28",
+    countdown_target_iso: "2026-11-28T08:00:00+08:00",
+    counties: [
+      {
+        id: "ntpc",
+        name: "新北市",
+        tag: "直轄市",
+        status: "active",
+        url: "https://yishancarol.github.io/civic-election-guide-2026/guide-ntpc.html",
+        election_type_label: "議員選舉",
+        district_count: 13,
+        stats: [
+          { label: "總席次", value: 68, note: "較上屆+2" },
+          { label: "選舉區", value: 13, note: "含原住民選區" }
+        ],
+        coming_badge_text: null,
+        data_source_ref: "candidates-ntpc-v1.1.json"
+      },
+      {
+        id: "tpe",
+        name: "台北市",
+        tag: "直轄市",
+        status: "coming_soon",
+        url: null,
+        election_type_label: "議員選舉",
+        district_count: null,
+        stats: [],
+        coming_badge_text: "即將上線",
+        data_source_ref: null
+      },
+      {
+        id: "tyc",
+        name: "桃園市",
+        tag: "直轄市",
+        status: "coming_soon",
+        url: null,
+        election_type_label: "議員選舉",
+        district_count: null,
+        stats: [],
+        coming_badge_text: "即將上線",
+        data_source_ref: null
+      }
+    ]
+  };
+
+  function renderCountyMeta(county) {
+    const parts = [];
+    if (county.district_count) parts.push(`${county.district_count} 個選區`);
+    parts.push(county.election_type_label);
+    return parts.join('　');
+  }
+
+  function renderCountyStats(stats) {
+    if (!Array.isArray(stats) || stats.length === 0) return '';
+    const items = stats.map(s => `
+        <div class="county-stat">
+          <span class="county-stat-num">${s.value}</span>
+          <span class="county-stat-label">${s.label}</span>
+          ${s.note ? `<span class="county-stat-note">${s.note}</span>` : ''}
+        </div>`).join('');
+    return `<div class="county-stats">${items}</div>`;
+  }
+
+  function renderCountyCard(county) {
+    const tag = `<span class="county-tag">${county.tag}</span>`;
+    const name = `<div class="county-name">${county.name}</div>`;
+    const meta = `<div class="county-meta">${renderCountyMeta(county)}</div>`;
+
+    if (county.status === 'active') {
+      return `
+        <a class="county-card" href="${county.url}" data-county-id="${county.id}">
+          ${tag}
+          ${name}
+          ${meta}
+          ${renderCountyStats(county.stats)}
+          <span class="county-arrow">→</span>
+        </a>`;
+    }
+
+    return `
+        <div class="county-card coming-soon" data-county-id="${county.id}">
+          ${tag}
+          ${name}
+          ${meta}
+          <span class="coming-badge">${county.coming_badge_text || '即將上線'}</span>
+        </div>`;
+  }
+
+  function renderCountyGrid() {
+    const grid = document.getElementById('county-grid');
+    grid.innerHTML = countiesData.counties.map(renderCountyCard).join('');
+  }
+  renderCountyGrid();
+
   function toggleFaq(id) {
     const item = document.getElementById(id);
     const btn = item.querySelector('.faq-question');
@@ -432,7 +498,7 @@
   }
 
   function updateCountdown() {
-    const voteDay = new Date('2026-11-28T08:00:00+08:00');
+    const voteDay = new Date(countiesData.countdown_target_iso);
     const now = new Date();
     const diff = voteDay - now;
     if (diff <= 0) {
