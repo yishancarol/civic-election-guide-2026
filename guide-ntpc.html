@@ -257,9 +257,11 @@
     color: var(--text);
     font-weight: 500;
     border: 1px solid transparent;
-    transition: border-color 0.15s, background 0.15s;
+    transition: border-color 0.15s, background 0.15s, transform 0.15s;
+    cursor: pointer;
   }
-  .chip:hover { background: #E0E5F0; border-color: var(--border); }
+  .chip:hover { background: #E0E5F0; border-color: var(--border); transform: translateY(-1px); }
+  .chip:focus-visible { outline: 2px solid var(--navy); outline-offset: 2px; }
   .chip-tag {
     font-size: 0.68rem;
     color: var(--muted);
@@ -267,6 +269,101 @@
     font-weight: 400;
   }
   .no-candidates { font-size: 0.82rem; color: var(--muted); font-style: italic; }
+
+  /* ── Candidate modal ─────────────────────────── */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(17, 25, 46, 0.55);
+    backdrop-filter: blur(2px);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal-box {
+    background: var(--white);
+    border-radius: 16px;
+    max-width: 520px;
+    width: 100%;
+    max-height: 85vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(17, 25, 46, 0.35);
+    animation: modal-pop 0.18s ease;
+  }
+  @keyframes modal-pop {
+    from { opacity: 0; transform: translateY(8px) scale(0.98); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  .modal-header {
+    background: var(--navy-deep);
+    padding: 1.4rem 1.6rem;
+    border-radius: 16px 16px 0 0;
+    position: sticky;
+    top: 0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .modal-name { font-size: 1.35rem; font-weight: 700; color: var(--white); }
+  .modal-meta { font-size: 0.78rem; color: rgba(255,255,255,0.55); margin-top: 0.3rem; }
+  .modal-close {
+    background: rgba(255,255,255,0.1);
+    border: none;
+    color: var(--white);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    font-size: 1rem;
+    line-height: 1;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background 0.15s;
+  }
+  .modal-close:hover { background: rgba(255,255,255,0.22); }
+  .modal-body { padding: 1.4rem 1.6rem 1.8rem; }
+  .modal-section { margin-bottom: 1.4rem; }
+  .modal-section:last-child { margin-bottom: 0; }
+  .modal-section-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 0.5rem;
+  }
+  .modal-section-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
+    background: var(--paper);
+    font-size: 0.85rem;
+    flex-shrink: 0;
+  }
+  .modal-section-body {
+    font-size: 0.86rem;
+    color: var(--text);
+    line-height: 1.75;
+    padding-left: 2rem;
+  }
+  .modal-placeholder {
+    color: #9CA3AF;
+    font-style: italic;
+  }
+  .modal-footnote {
+    font-size: 0.72rem;
+    color: var(--muted);
+    padding: 0.9rem 1.6rem 1.3rem;
+    border-top: 1px solid var(--border);
+    margin-top: 0.2rem;
+  }
 
   /* Pending state */
   .pending-state {
@@ -412,8 +509,8 @@
           <span class="party-note">提名 2 席</span>
         </div>
         <div class="candidate-chips">
-          <span class="chip">鄭宇恩<span class="chip-tag">現任</span></span>
-          <span class="chip">游明諺<span class="chip-tag">新人</span></span>
+          <span class="chip" onclick="openCandidateModal('鄭宇恩')" tabindex="0" role="button">鄭宇恩<span class="chip-tag">現任</span></span>
+          <span class="chip" onclick="openCandidateModal('游明諺')" tabindex="0" role="button">游明諺<span class="chip-tag">新人</span></span>
         </div>
       </div>
       <div class="party-block">
@@ -422,7 +519,7 @@
           <span class="party-note">整合中</span>
         </div>
         <div class="candidate-chips">
-          <span class="chip">呂鈞鴻<span class="chip-tag">新人・蔡錦賢服務處秘書</span></span>
+          <span class="chip" onclick="openCandidateModal('呂鈞鴻')" tabindex="0" role="button">呂鈞鴻<span class="chip-tag">新人・蔡錦賢服務處秘書</span></span>
         </div>
       </div>
       <div class="district-remark">
@@ -453,8 +550,8 @@
           <span class="party-note">擴大提名 4 席，內部初選中</span>
         </div>
         <div class="candidate-chips">
-          <span class="chip">蔡淑君<span class="chip-tag">現任</span></span>
-          <span class="chip">陳明義<span class="chip-tag">現任</span></span>
+          <span class="chip" onclick="openCandidateModal('蔡淑君')" tabindex="0" role="button">蔡淑君<span class="chip-tag">現任</span></span>
+          <span class="chip" onclick="openCandidateModal('陳明義')" tabindex="0" role="button">陳明義<span class="chip-tag">現任</span></span>
         </div>
       </div>
       <div class="party-block">
@@ -494,10 +591,10 @@
           <span class="party-note">初選結果確定</span>
         </div>
         <div class="candidate-chips">
-          <span class="chip">陳岱吟<span class="chip-tag">新人</span></span>
-          <span class="chip">吳奕萱<span class="chip-tag">新人</span></span>
-          <span class="chip">林秉宥<span class="chip-tag">現任</span></span>
-          <span class="chip">翁震州<span class="chip-tag">現任</span></span>
+          <span class="chip" onclick="openCandidateModal('陳岱吟')" tabindex="0" role="button">陳岱吟<span class="chip-tag">新人</span></span>
+          <span class="chip" onclick="openCandidateModal('吳奕萱')" tabindex="0" role="button">吳奕萱<span class="chip-tag">新人</span></span>
+          <span class="chip" onclick="openCandidateModal('林秉宥')" tabindex="0" role="button">林秉宥<span class="chip-tag">現任</span></span>
+          <span class="chip" onclick="openCandidateModal('翁震州')" tabindex="0" role="button">翁震州<span class="chip-tag">現任</span></span>
         </div>
       </div>
       <div class="party-block">
@@ -506,7 +603,7 @@
           <span class="party-note">提名</span>
         </div>
         <div class="candidate-chips">
-          <span class="chip">陳世軒</span>
+          <span class="chip" onclick="openCandidateModal('陳世軒')" tabindex="0" role="button">陳世軒</span>
         </div>
       </div>
       <div class="district-remark">
@@ -537,7 +634,7 @@
           <span class="party-note">提名</span>
         </div>
         <div class="candidate-chips">
-          <span class="chip">陳彥廷</span>
+          <span class="chip" onclick="openCandidateModal('陳彥廷')" tabindex="0" role="button">陳彥廷</span>
         </div>
       </div>
       <div class="party-block">
@@ -662,7 +759,7 @@
           <span class="party-note">現任連斐璠不再連任，新人激戰，預計進入初選</span>
         </div>
         <div class="candidate-chips">
-          <span class="chip">李珮媜<span class="chip-tag">新人</span></span>
+          <span class="chip" onclick="openCandidateModal('李珮媜')" tabindex="0" role="button">李珮媜<span class="chip-tag">新人</span></span>
         </div>
       </div>
       <div class="district-remark">
@@ -693,13 +790,13 @@
           <span class="party-note">7 搶 5 初選中</span>
         </div>
         <div class="candidate-chips">
-          <span class="chip">卓冠廷<span class="chip-tag">現任</span></span>
-          <span class="chip">廖宜琨<span class="chip-tag">現任</span></span>
-          <span class="chip">彭一書<span class="chip-tag">現任</span></span>
-          <span class="chip">林銘仁<span class="chip-tag">現任</span></span>
-          <span class="chip">吳昇翰<span class="chip-tag">新人</span></span>
-          <span class="chip">高乃芸<span class="chip-tag">新人</span></span>
-          <span class="chip">朱誼臻<span class="chip-tag">新人</span></span>
+          <span class="chip" onclick="openCandidateModal('卓冠廷')" tabindex="0" role="button">卓冠廷<span class="chip-tag">現任</span></span>
+          <span class="chip" onclick="openCandidateModal('廖宜琨')" tabindex="0" role="button">廖宜琨<span class="chip-tag">現任</span></span>
+          <span class="chip" onclick="openCandidateModal('彭一書')" tabindex="0" role="button">彭一書<span class="chip-tag">現任</span></span>
+          <span class="chip" onclick="openCandidateModal('林銘仁')" tabindex="0" role="button">林銘仁<span class="chip-tag">現任</span></span>
+          <span class="chip" onclick="openCandidateModal('吳昇翰')" tabindex="0" role="button">吳昇翰<span class="chip-tag">新人</span></span>
+          <span class="chip" onclick="openCandidateModal('高乃芸')" tabindex="0" role="button">高乃芸<span class="chip-tag">新人</span></span>
+          <span class="chip" onclick="openCandidateModal('朱誼臻')" tabindex="0" role="button">朱誼臻<span class="chip-tag">新人</span></span>
         </div>
       </div>
       <div class="party-block">
@@ -708,7 +805,7 @@
           <span class="party-note">提名</span>
         </div>
         <div class="candidate-chips">
-          <span class="chip">吳亞倫</span>
+          <span class="chip" onclick="openCandidateModal('吳亞倫')" tabindex="0" role="button">吳亞倫</span>
         </div>
       </div>
       <div class="district-remark">
@@ -859,6 +956,34 @@
 
 </main>
 
+<!-- Candidate modal -->
+<div class="modal-overlay" id="candidate-modal" onclick="if(event.target===this) closeCandidateModal()">
+  <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modal-name">
+    <div class="modal-header">
+      <div>
+        <div class="modal-name" id="modal-name">候選人姓名</div>
+        <div class="modal-meta" id="modal-meta"></div>
+      </div>
+      <button class="modal-close" onclick="closeCandidateModal()" aria-label="關閉">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-section">
+        <div class="modal-section-title"><span class="modal-section-icon">📋</span>本次提出的政見</div>
+        <div class="modal-section-body" id="modal-platform"></div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title"><span class="modal-section-icon">🔁</span>曾經支持／不支持的政見</div>
+        <div class="modal-section-body" id="modal-past-positions"></div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title"><span class="modal-section-icon">⚠️</span>曾經捲入的重大議題</div>
+        <div class="modal-section-body" id="modal-controversies"></div>
+      </div>
+    </div>
+    <div class="modal-footnote">本頁資料為非官方整理，僅供參考，正式資訊請以候選人官方發布與中選會公告為準。</div>
+  </div>
+</div>
+
 <footer>
   <div class="footer-title">建議查詢最新資料</div>
   <div class="footer-resources">
@@ -890,14 +1015,68 @@
   }, { threshold: 0.3, rootMargin: '-80px 0px -60% 0px' });
   sections.forEach(s => observer.observe(s));
 
-  // Collapsible district sections — collapsed by default
-  document.querySelectorAll('.district-header').forEach(header => {
-    header.addEventListener('click', () => {
-      const district = header.closest('.district');
-      const body = district.querySelector('.district-body');
-      const isExpanded = district.classList.toggle('expanded');
-      body.classList.toggle('collapsed', !isExpanded);
-    });
+  // ── Candidate data (待補充：政見／過去立場／爭議事件) ──
+  // 目前僅為版位佔位，尚無實際查證過的候選人資料。
+  // 之後請提供每位候選人的來源資料，我會依此結構填入。
+  const candidateData = {
+    '鄭宇恩':   { district: '第一選區・淡水', party: '民進黨', tag: '現任' },
+    '游明諺':   { district: '第一選區・淡水', party: '民進黨', tag: '新人' },
+    '呂鈞鴻':   { district: '第一選區・淡水', party: '國民黨', tag: '新人' },
+    '蔡淑君':   { district: '第二選區・林口', party: '國民黨', tag: '現任' },
+    '陳明義':   { district: '第二選區・林口', party: '國民黨', tag: '現任' },
+    '陳岱吟':   { district: '第三選區・新莊', party: '民進黨', tag: '新人' },
+    '吳奕萱':   { district: '第三選區・新莊', party: '民進黨', tag: '新人' },
+    '林秉宥':   { district: '第三選區・新莊', party: '民進黨', tag: '現任' },
+    '翁震州':   { district: '第三選區・新莊', party: '民進黨', tag: '現任' },
+    '陳世軒':   { district: '第三選區・新莊', party: '民眾黨', tag: '' },
+    '陳彥廷':   { district: '第四選區・三重', party: '民眾黨', tag: '' },
+    '李珮媜':   { district: '第七選區・永和', party: '國民黨', tag: '新人' },
+    '卓冠廷':   { district: '第八選區・土城', party: '民進黨', tag: '現任' },
+    '廖宜琨':   { district: '第八選區・土城', party: '民進黨', tag: '現任' },
+    '彭一書':   { district: '第八選區・土城', party: '民進黨', tag: '現任' },
+    '林銘仁':   { district: '第八選區・土城', party: '民進黨', tag: '現任' },
+    '吳昇翰':   { district: '第八選區・土城', party: '民進黨', tag: '新人' },
+    '高乃芸':   { district: '第八選區・土城', party: '民進黨', tag: '新人' },
+    '朱誼臻':   { district: '第八選區・土城', party: '民進黨', tag: '新人' },
+    '吳亞倫':   { district: '第八選區・土城', party: '民眾黨', tag: '' },
+  };
+  // 每位候選人可另外附加以下欄位（陣列，每項為一句文字）：
+  //   platform: ['政見一', '政見二', ...]
+  //   pastPositions: ['過去支持／不支持的政見一', ...]
+  //   controversies: ['曾捲入的重大議題一', ...]
+  // 未提供時彈跳視窗會顯示「資料待補充」。
+
+  function renderModalSection(containerId, items) {
+    const el = document.getElementById(containerId);
+    if (Array.isArray(items) && items.length > 0) {
+      el.innerHTML = '<ul style="padding-left:1.1em; display:flex; flex-direction:column; gap:0.4em;">' +
+        items.map(t => `<li>${t}</li>`).join('') + '</ul>';
+    } else {
+      el.innerHTML = '<span class="modal-placeholder">資料待補充</span>';
+    }
+  }
+
+  function openCandidateModal(name) {
+    const data = candidateData[name] || {};
+    document.getElementById('modal-name').textContent = name;
+    const metaParts = [data.district, data.party, data.tag].filter(Boolean);
+    document.getElementById('modal-meta').textContent = metaParts.join('　|　');
+    renderModalSection('modal-platform', data.platform);
+    renderModalSection('modal-past-positions', data.pastPositions);
+    renderModalSection('modal-controversies', data.controversies);
+
+    const overlay = document.getElementById('candidate-modal');
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeCandidateModal() {
+    document.getElementById('candidate-modal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeCandidateModal();
   });
 </script>
 
