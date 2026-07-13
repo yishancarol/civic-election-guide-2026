@@ -357,6 +357,32 @@
     color: #9CA3AF;
     font-style: italic;
   }
+  .modal-item-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7em;
+    padding-left: 1.1em;
+  }
+  .modal-item-text { line-height: 1.7; }
+  .modal-item-meta {
+    font-size: 0.72rem;
+    color: var(--muted);
+    margin-top: 0.25rem;
+  }
+  .modal-item-meta .meta-badge {
+    display: inline-block;
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 0.05rem 0.4rem;
+    margin-right: 0.4rem;
+  }
+  .modal-item-meta a {
+    color: var(--navy);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .modal-item-meta a:hover { color: var(--gold); }
   .modal-footnote {
     font-size: 0.72rem;
     color: var(--muted);
@@ -603,12 +629,12 @@
           <span class="party-note">提名</span>
         </div>
         <div class="candidate-chips">
-          <span class="chip" onclick="openCandidateModal('陳世軒')" tabindex="0" role="button">陳世軒</span>
+          <span class="chip" onclick="openCandidateModal('陳世軒')" tabindex="0" role="button">陳世軒<span class="chip-tag">現任</span></span>
         </div>
       </div>
       <div class="district-remark">
         <span class="remark-label">選區觀察</span>
-        民進黨初選競爭激烈（5搶4），翁昭仁初選落敗。現任侯家軍戴湘儀確定不領表、不再連任。
+        民進黨新莊區初選已於 2026 年 3 月底結束，確定提名名單為林秉宥、翁震州（現任）、陳岱吟、吳奕萱（新人），原初選競爭者翁昭仁未能出線。現任侯家軍戴湘儀確定不領表、不再連任。
       </div>
     </div>
   </section>
@@ -979,6 +1005,10 @@
         <div class="modal-section-title"><span class="modal-section-icon">⚠️</span>曾經捲入的重大議題</div>
         <div class="modal-section-body" id="modal-controversies"></div>
       </div>
+      <div class="modal-section">
+        <div class="modal-section-title"><span class="modal-section-icon">🏆</span>曾有過的具體貢獻</div>
+        <div class="modal-section-body" id="modal-contributions"></div>
+      </div>
     </div>
     <div class="modal-footnote">本頁資料為非官方整理，僅供參考，正式資訊請以候選人官方發布與中選會公告為準。</div>
   </div>
@@ -1034,11 +1064,81 @@
     '呂鈞鴻':   { district: '第一選區・淡水', party: '國民黨', tag: '新人' },
     '蔡淑君':   { district: '第二選區・林口', party: '國民黨', tag: '現任' },
     '陳明義':   { district: '第二選區・林口', party: '國民黨', tag: '現任' },
-    '陳岱吟':   { district: '第三選區・新莊', party: '民進黨', tag: '新人' },
-    '吳奕萱':   { district: '第三選區・新莊', party: '民進黨', tag: '新人' },
-    '林秉宥':   { district: '第三選區・新莊', party: '民進黨', tag: '現任' },
-    '翁震州':   { district: '第三選區・新莊', party: '民進黨', tag: '現任' },
-    '陳世軒':   { district: '第三選區・新莊', party: '民眾黨', tag: '' },
+    '陳岱吟': {
+      district: '第三選區・新莊', party: '民進黨', tag: '新人',
+      platform: [
+        { text: '推動婦幼政策回歸托育、就學、照護與支持系統，減輕夾心世代壓力。', category: '社福', source: 'https://www.facebook.com/maygoddejia/videos/1438816847875645/', verified: true },
+        { text: '關心校園建設、環境安全、公園綠地等議題，並提出具體改善方案。', category: '教育', source: 'https://www.threads.com/@evalynchen/post/DTHq3Msk71m/', verified: true }
+      ],
+      pastPositions: [
+        { text: '支持民進黨政策，並獲前行政院長游錫堃、前基隆市長林右昌及議員鍾宏仁支持。', stance: 'support', date: '2026-03', source: 'https://news.ltn.com.tw/news/politics/breakingnews/5375596', verified: true }
+      ],
+      controversies: [],
+      contributions: [
+        { text: '曾任前行政院長游錫堃辦公室副主任，具備12年政治幕僚經驗。', category: '其他', date: '2026', source: 'https://news.ltn.com.tw/news/politics/breakingnews/5375596', verified: true }
+      ]
+    },
+    '吳奕萱': {
+      district: '第三選區・新莊', party: '民進黨', tag: '新人',
+      platform: [
+        { text: '以務實問政與理性監督為原則，致力將公共資源轉化為地方落實的具體改善。', category: '其他', source: 'https://news.wkm.tw/archives/24937', verified: true }
+      ],
+      pastPositions: [
+        { text: '在立法院任職期間，成功促成企業貸款補助增列「新興業種」，擴大產業救援。', stance: 'support', date: '2026-03', source: 'https://udn.com/news/story/124652/9378065', verified: true },
+        { text: '積極推動國家體育資源實踐「性別平權」。', stance: 'support', date: '2026-03', source: 'https://udn.com/news/story/124652/9378065', verified: true }
+      ],
+      controversies: [],
+      contributions: [
+        { text: '具備十年國會幕僚經驗，曾任立委吳思瑤辦公室主任，熟悉法案研議與行政協調。', category: '其他', date: '2026', source: 'https://news.wkm.tw/archives/24937', verified: true }
+      ]
+    },
+    '林秉宥': {
+      district: '第三選區・新莊', party: '民進黨', tag: '現任',
+      platform: [
+        { text: '加速新莊第一公墓遷葬，推動公墓用地變更，設置新莊森林公園。', category: '都更', source: 'https://www.ntp.gov.tw/councilor-detail?program=37&A=3&C=611', verified: true },
+        { text: '爭取福營運動中心興建，加速閒置公有土地活化，平衡南北新莊發展。', category: '地方建設', source: 'https://www.ntp.gov.tw/councilor-detail?program=37&A=3&C=611', verified: true }
+      ],
+      pastPositions: [
+        { text: '反對禁止任用三等親內親屬為公費助理的「三親等禁令」，認為不符比例原則。', stance: 'oppose', date: '2025-02', source: 'https://tw.news.yahoo.com/%E6%89%8D%E8%BD%9F%E8%B3%B4-%E4%B8%89%E8%A6%AA%E7%AD%89%E7%A6%81%E4%BB%A4-%E7%8B%97%E5%B1%81-%E6%9E%97%E7%A7%89%E5%AE%A5%E7%82%BA%E6%BF%80%E7%83%88%E6%8E%AA%E8%BE%AD%E9%81%93%E6%AD%89%E4%BA%86-091852290.html', verified: true }
+      ],
+      controversies: [
+        { text: '在社群平台評論台南女警遭輾斃案時，發文稱「一定是車道太窄讓後車沒辦法超車」，遭指反諷路權團體引發爭議。', date: '2026-04', status_of_case: null, source: 'https://zh.wikipedia.org/zh-hant/%E6%9E%97%E7%A7%89%E5%AE%A5', verified: true }
+      ],
+      contributions: [
+        { text: '獨自前往泰緬邊境探訪「苗瓦迪」詐騙園區，關心海外詐騙受害者。', category: '公益行動', date: '2025-12', source: 'https://www.youtube.com/watch?v=P72MhsMCqyM', verified: true }
+      ]
+    },
+    '翁震州': {
+      district: '第三選區・新莊', party: '民進黨', tag: '現任',
+      platform: [
+        { text: '主張泰板輕軌應以高架化優先，降低地面車流交織風險，並爭取捷運西盛支線。', category: '交通', source: 'https://news.wkm.tw/archives/24662', verified: true },
+        { text: '主張公有設施（學校、公園）應同步規劃地下停車場，以緩解路面停車壓力。', category: '交通', source: 'https://news.wkm.tw/archives/24662', verified: true }
+      ],
+      pastPositions: [
+        { text: '長期倡議提升基層資源，成功推動新北市鄰長工作協助費調高至2500元。', stance: 'support', date: '2026-06', source: 'https://news.wkm.tw/archives/25810', verified: true }
+      ],
+      controversies: [
+        { text: '引用屏東地檢署資料指控國民黨市長參選人李四川家族涉及地方爭議，遭對方批評為政治抹黑。', date: '2026-05', status_of_case: null, source: 'https://www.ftnn.com.tw/news/545427', verified: true }
+      ],
+      contributions: [
+        { text: '成功推動調高鄰長工作協助費至每月2500元，強化基層服務量能。', category: '法案推動', date: '2026-06', source: 'https://news.wkm.tw/archives/25810', verified: true }
+      ]
+    },
+    '陳世軒': {
+      district: '第三選區・新莊', party: '民眾黨', tag: '現任',
+      platform: [
+        { text: '提出「五大好孕政見」，包含生育補助與育兒友善環境，鼓勵年輕人敢婚敢生。', category: '社福', source: 'https://news.ltn.com.tw/news/politics/breakingnews/5488743', verified: true }
+      ],
+      pastPositions: [
+        { text: '反對「4萬6還稅於市民」提案，主張應優先用於整建道路等公共建設。', stance: 'oppose', date: '2026-05', source: 'https://www.threads.com/@stanley_wch/post/DYVhFCkAQZl/', verified: true }
+      ],
+      controversies: [
+        { text: '受訪談論黨內「狗仔爭議」及黃國昌布局新北市長計畫，引發外界對民眾黨內部運作的關注。', date: '2025-10', status_of_case: null, source: 'https://tw.news.yahoo.com/%E7%8B%97%E4%BB%94%E7%88%AD%E8%AD%B0%E6%96%B7%E9%BB%83%E5%9C%8B%E6%98%8C%E9%81%B8%E6%96%B0%E5%8C%97%E5%B8%82%E9%95%B7-%E9%99%B3%E4%B8%96%E8%BB%92%E6%9B%9D%E9%80%B2%E5%BA%A6-030316506.html', verified: true }
+      ],
+      contributions: [
+        { text: '爭取並完成新莊中華路與中誠街口行人環境改造，完工新莊首個Z字型人行穿越道。', category: '地方建設', date: '2020-01', source: 'https://www.youtube.com/watch?v=evUw-mEcGBc', verified: true }
+      ]
+    },
     '陳彥廷':   { district: '第四選區・三重', party: '民眾黨', tag: '' },
     '李珮媜':   { district: '第七選區・永和', party: '國民黨', tag: '新人' },
     '卓冠廷':   { district: '第八選區・土城', party: '民進黨', tag: '現任' },
@@ -1050,20 +1150,45 @@
     '朱誼臻':   { district: '第八選區・土城', party: '民進黨', tag: '新人' },
     '吳亞倫':   { district: '第八選區・土城', party: '民眾黨', tag: '' },
   };
-  // 每位候選人可另外附加以下欄位（陣列，每項為一句文字）：
-  //   platform: ['政見一', '政見二', ...]
-  //   pastPositions: ['過去支持／不支持的政見一', ...]
-  //   controversies: ['曾捲入的重大議題一', ...]
-  // 未提供時彈跳視窗會顯示「資料待補充」。
+  // 每位候選人可另外附加以下欄位（陣列）：
+  //   platform / pastPositions / controversies / contributions
+  // 陣列內每一項可以是純文字字串（舊格式），也可以是物件：
+  //   { text, category?, stance?('support'|'oppose'|'mixed'), date?, status_of_case?, source?, verified? }
+  // verified === false 的項目不會顯示在畫面上（視為尚待查證），
+  // 該分類若無任何可顯示項目，彈跳視窗會顯示「資料待補充」。
+  // 未提供該欄位（或陣列為空）時效果相同。
 
+  const stanceLabels = { support: '支持', oppose: '反對', mixed: '立場不一' };
+
+  // 支援兩種資料型態：
+  //  1. 純文字字串（舊格式，向下相容）
+  //  2. 物件 { text, category?, stance?, date?, status_of_case?, source?, verified? }
+  // verified === false 的項目不會顯示於畫面（視為尚待查證，不曝光未確認內容）
   function renderModalSection(containerId, items) {
     const el = document.getElementById(containerId);
-    if (Array.isArray(items) && items.length > 0) {
-      el.innerHTML = '<ul style="padding-left:1.1em; display:flex; flex-direction:column; gap:0.4em;">' +
-        items.map(t => `<li>${t}</li>`).join('') + '</ul>';
-    } else {
+    const list = Array.isArray(items) ? items : [];
+    const visible = list.filter(item => typeof item === 'string' || item.verified !== false);
+
+    if (visible.length === 0) {
       el.innerHTML = '<span class="modal-placeholder">資料待補充</span>';
+      return;
     }
+
+    el.innerHTML = '<ul class="modal-item-list">' + visible.map(item => {
+      if (typeof item === 'string') return `<li><div class="modal-item-text">${item}</div></li>`;
+
+      const badges = [];
+      if (item.category) badges.push(`<span class="meta-badge">${item.category}</span>`);
+      if (item.stance) badges.push(`<span class="meta-badge">${stanceLabels[item.stance] || item.stance}</span>`);
+      if (item.status_of_case) badges.push(`<span class="meta-badge">${item.status_of_case}</span>`);
+      if (item.date) badges.push(`<span class="meta-badge">${item.date}</span>`);
+      const sourceLink = item.source ? `<a href="${item.source}" target="_blank" rel="noopener">資料來源</a>` : '';
+      const metaLine = (badges.length || sourceLink)
+        ? `<div class="modal-item-meta">${badges.join('')}${sourceLink}</div>`
+        : '';
+
+      return `<li><div class="modal-item-text">${item.text || ''}</div>${metaLine}</li>`;
+    }).join('') + '</ul>';
   }
 
   function openCandidateModal(name) {
@@ -1074,6 +1199,7 @@
     renderModalSection('modal-platform', data.platform);
     renderModalSection('modal-past-positions', data.pastPositions);
     renderModalSection('modal-controversies', data.controversies);
+    renderModalSection('modal-contributions', data.contributions);
 
     const overlay = document.getElementById('candidate-modal');
     overlay.classList.add('open');
