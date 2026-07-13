@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- index_v4.html — 資料架構對齊 counties-index-v1.json（欄位命名、active/coming_soon 狀態、stats 陣列） -->
+<!-- index_v5.html — 對齊 design spec_rainbow_ver 規格；移除 hero 半圓裝飾，改將彩虹漸層套用於倒數計時 widget 外框 -->
 <html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
@@ -7,14 +7,23 @@
 <title>台灣選舉圖鑑 2026</title>
 <style>
   :root {
-    --navy:      #4A342A;
-    --navy-deep: #4C362D;
-    --gold:      #B2967D;
-    --paper:     #F5F1EA;
-    --white:     #F2EFE8;
-    --text:      #3A2518;
-    --muted:     #9C8472;
-    --border:    #D7C9B8;
+    --ink:        #2A2A2A;
+    --muted:      #7A7A88;
+    --paper:      #FDFCFB;
+    --white:      #FFFFFF;
+    --border:     #E7E5EA;
+    --text:       #2A2A2A;
+
+    /* 彩虹光譜（柔和飽和度，僅供裝飾點綴，不作大面積主色） */
+    --rb-red:     #F0847E;
+    --rb-orange:  #F2A65A;
+    --rb-yellow:  #F2CE5C;
+    --rb-green:   #A9D97E;
+    --rb-teal:    #6FC7C1;
+    --rb-blue:    #74A7E8;
+    --rb-violet:  #A98CF0;
+
+    /* 政黨色（僅限候選人識別使用，不進主視覺） */
     --dpp:       #1B7A3D;
     --kmt:       #1B4A9C;
     --tpp:       #0E8C8C;
@@ -32,17 +41,30 @@
   }
 
   .hero {
-    background: linear-gradient(160deg, #3E2B20 0%, #4A342A 50%, #4C362D 100%);
+    background: var(--ink);
     padding: 5rem 1.5rem 4rem;
     text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 6px;
+    background: linear-gradient(90deg,
+      var(--rb-red) 0%, var(--rb-orange) 16.6%, var(--rb-yellow) 33.3%,
+      var(--rb-green) 50%, var(--rb-teal) 66.6%, var(--rb-blue) 83.3%, var(--rb-violet) 100%);
   }
   .hero-eyebrow {
     font-size: 0.78rem;
     letter-spacing: 0.22em;
-    color: var(--gold);
+    color: rgba(255,255,255,0.6);
     text-transform: uppercase;
     font-weight: 600;
     margin-bottom: 0.75rem;
+    position: relative;
+    z-index: 2;
   }
   .hero-title {
     font-size: clamp(2rem, 6vw, 3rem);
@@ -50,27 +72,40 @@
     color: var(--white);
     line-height: 1.2;
     margin-bottom: 0.75rem;
+    position: relative;
+    z-index: 2;
   }
   .hero-info-line {
     font-size: 0.88rem;
-    color: rgba(242,239,232,0.55);
+    color: rgba(255,255,255,0.55);
     letter-spacing: 0.08em;
     margin-bottom: 2rem;
+    position: relative;
+    z-index: 2;
+  }
+  .countdown-widget-ring {
+    display: inline-block;
+    padding: 3px;
+    border-radius: 19px;
+    background: conic-gradient(from 180deg,
+      var(--rb-red), var(--rb-orange), var(--rb-yellow), var(--rb-green),
+      var(--rb-teal), var(--rb-blue), var(--rb-violet), var(--rb-red));
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
   }
   .countdown-widget {
-    display: inline-block;
-    background: rgba(255,255,255,0.07);
-    border: 1px solid rgba(242,239,232,0.15);
+    display: block;
+    background: var(--ink);
     border-radius: 16px;
     padding: 1.2rem 2rem 1rem;
-    margin: 0 auto;
     min-width: 280px;
   }
   .countdown-widget-label {
     font-size: 0.68rem;
     letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: rgba(242,239,232,0.5);
+    color: rgba(255,255,255,0.5);
     margin-bottom: 0.8rem;
   }
   .countdown-widget-digits {
@@ -83,21 +118,21 @@
   .countdown-widget-num {
     font-size: 2.2rem;
     font-weight: 700;
-    color: rgba(242,239,232,0.88);
+    color: rgba(255,255,255,0.88);
     line-height: 1;
     display: block;
     min-width: 2.4ch;
   }
   .countdown-widget-unit-label {
     font-size: 0.6rem;
-    color: rgba(242,239,232,0.45);
+    color: rgba(255,255,255,0.45);
     letter-spacing: 0.1em;
     margin-top: 0.3rem;
     display: block;
   }
   .countdown-widget-sep {
     font-size: 1.8rem;
-    color: rgba(242,239,232,0.2);
+    color: rgba(255,255,255,0.2);
     line-height: 1;
     margin-bottom: 1rem;
   }
@@ -113,7 +148,7 @@
     font-size: 1.25rem;
     letter-spacing: 0.02em;
     text-transform: none;
-    color: var(--navy);
+    color: var(--ink);
     font-weight: 700;
     margin-bottom: 0.4rem;
   }
@@ -121,7 +156,7 @@
     font-size: 0.78rem;
     letter-spacing: 0.22em;
     text-transform: uppercase;
-    color: var(--gold);
+    color: #B0651F;
     font-weight: 600;
     margin-bottom: 1.2rem;
   }
@@ -147,14 +182,14 @@
     position: absolute;
     left: 0; top: 0; bottom: 0;
     width: 4px;
-    background: var(--navy);
+    background: linear-gradient(180deg, var(--rb-teal), var(--rb-blue), var(--rb-violet));
     border-radius: 12px 0 0 12px;
     transition: width 0.15s;
   }
   .county-card:hover {
-    box-shadow: 0 8px 24px rgba(58,37,24,0.10);
+    box-shadow: 0 8px 24px rgba(42,42,42,0.10);
     transform: translateY(-2px);
-    border-color: #CFC0AA;
+    border-color: #D4D2D8;
   }
   .county-card:hover::before { width: 6px; }
 
@@ -165,7 +200,7 @@
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--white);
-    background: var(--navy);
+    background: var(--ink);
     padding: 0.18rem 0.55rem;
     border-radius: 5px;
     margin-bottom: 0.7rem;
@@ -173,7 +208,7 @@
   .county-name {
     font-size: 1.25rem;
     font-weight: 700;
-    color: var(--navy);
+    color: var(--ink);
     margin-bottom: 0.3rem;
   }
   .county-meta {
@@ -188,7 +223,7 @@
   .county-stat { display: flex; flex-direction: column; gap: 0.1rem; }
   .county-stat-num { font-size: 1.1rem; font-weight: 700; color: var(--text); }
   .county-stat-label { font-size: 0.68rem; color: var(--muted); }
-  .county-stat-note { font-size: 0.65rem; color: #B2967D; }
+  .county-stat-note { font-size: 0.65rem; color: #C9793B; }
 
   .county-arrow {
     position: absolute;
@@ -196,10 +231,10 @@
     top: 50%;
     transform: translateY(-50%);
     font-size: 1.1rem;
-    color: #CFC0AA;
+    color: #D4D2D8;
     transition: color 0.15s, right 0.15s;
   }
-  .county-card:hover .county-arrow { color: var(--navy); right: 1rem; }
+  .county-card:hover .county-arrow { color: var(--ink); right: 1rem; }
 
   .county-card.coming-soon {
     opacity: 0.45;
@@ -210,8 +245,8 @@
     display: inline-block;
     font-size: 0.65rem;
     font-weight: 600;
-    color: var(--muted);
-    border: 1px solid var(--border);
+    color: #7A4A12;
+    background: linear-gradient(90deg, var(--rb-yellow), var(--rb-orange));
     padding: 0.15rem 0.5rem;
     border-radius: 5px;
     margin-top: 0.6rem;
@@ -219,9 +254,9 @@
 
   /* ── FAQ ─────────────────────────────────────── */
   .faq-wrapper {
-    background: #EDE6DA;
-    border-top: 1px solid #D7C9B8;
-    border-bottom: 1px solid #D7C9B8;
+    background: #F0EFEF;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
     margin: 1rem 0 0;
   }
   .faq-section {
@@ -233,8 +268,8 @@
   .faq-section .section-label { margin-bottom: 1.2rem; }
 
   .faq-item {
-    background: #F5F1EA;
-    border: 1px solid #D7C9B8;
+    background: var(--white);
+    border: 1px solid var(--border);
     border-radius: 10px;
     margin-bottom: 0.6rem;
     overflow: hidden;
@@ -251,12 +286,12 @@
     text-align: left;
     transition: background 0.15s;
   }
-  .faq-question:hover { background: #EDE6DA; }
+  .faq-question:hover { background: #F0EFEF; }
   .faq-num {
     font-size: 0.68rem;
     font-weight: 700;
     color: var(--white);
-    background: var(--navy);
+    background: var(--ink);
     padding: 0.15rem 0.5rem;
     border-radius: 5px;
     flex-shrink: 0;
@@ -266,7 +301,7 @@
   .faq-q-text {
     font-size: 0.95rem;
     font-weight: 600;
-    color: var(--navy);
+    color: var(--ink);
     flex: 1;
     line-height: 1.4;
   }
@@ -283,30 +318,40 @@
     display: none;
     padding: 1rem 1.2rem 1.2rem 3.1rem;
     font-size: 0.88rem;
-    color: #3A2518;
+    color: var(--ink);
     line-height: 1.8;
     border-top: 1px solid var(--border);
   }
   .faq-item.open .faq-answer { display: block; }
   .faq-answer p { margin-bottom: 0.7rem; }
   .faq-answer p:last-child { margin-bottom: 0; }
-  .faq-answer strong { color: var(--navy); }
+  .faq-answer strong { color: var(--ink); }
   .faq-example {
-    background: #EDE6DA;
-    border-left: 3px solid var(--gold);
+    background: #F0EFEF;
+    border-left: 3px solid var(--rb-orange);
     border-radius: 0 6px 6px 0;
     padding: 0.65rem 1rem;
     margin: 0.5rem 0 0.7rem;
     font-size: 0.84rem;
-    color: #3A2518;
+    color: var(--ink);
   }
 
   footer {
-    background: linear-gradient(160deg, #4C362D 0%, #3E2B20 100%);
-    color: rgba(242,239,232,0.5);
+    background: var(--ink);
+    color: rgba(255,255,255,0.6);
     text-align: center;
-    padding: 1.5rem;
+    padding: 1.5rem 1.5rem 1.4rem;
     font-size: 0.75rem;
+    position: relative;
+  }
+  footer::before {
+    content: '';
+    position: absolute;
+    left: 0; right: 0; top: 0;
+    height: 4px;
+    background: linear-gradient(90deg,
+      var(--rb-red), var(--rb-orange), var(--rb-yellow),
+      var(--rb-green), var(--rb-teal), var(--rb-blue), var(--rb-violet));
   }
 
   @media (max-width: 480px) {
@@ -315,6 +360,7 @@
     .county-grid { grid-template-columns: 1fr; }
     .faq-section { padding: 1.5rem 1rem 2rem; }
     .faq-answer { padding-left: 1.2rem; }
+    .countdown-widget-ring { display: block; width: 100%; }
     .countdown-widget { min-width: 0; width: 100%; }
     .countdown-widget-num { font-size: 1.8rem; }
   }
@@ -333,6 +379,7 @@
     22 縣市・11/28 投票日
   </div>
 
+  <div class="countdown-widget-ring">
   <div class="countdown-widget">
     <div class="countdown-widget-label">距離投票日還有</div>
     <div class="countdown-widget-digits">
@@ -351,6 +398,7 @@
         <span class="countdown-widget-unit-label">分</span>
       </div>
     </div>
+  </div>
   </div>
 </header>
 
