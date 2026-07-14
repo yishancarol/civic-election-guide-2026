@@ -4,18 +4,19 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>2026 新北市議員候選人圖鑑</title>
+<!-- guide-ntpc_v7 — 用色對齊 design_spec_rainbow_ver / index_v5（ink 基底 + 彩虹點綴，政黨色僅限識別）；資料截至 2026-06-14；新莊選區已填入查證後的政見／立場／爭議／貢獻 -->
 <style>
   /* ── Tokens ─────────────────────────────────── */
   :root {
-    --navy:       #1B2A4A;
-    --navy-deep:  #11192E;
-    --navy-mid:   #243558;
-    --gold:       #C9A227;
-    --paper:      #F7F8FA;
+    --ink:        #2A2A2A;
+    --ink-deep:   #2A2A2A;
+    --ink-mid:    #3D3D3D;
+    --accent:     #F2CE5C;
+    --paper:      #FDFCFB;
     --white:      #FFFFFF;
-    --text:       #1F2430;
-    --muted:      #6B7280;
-    --border:     #E2E6EE;
+    --text:       #2A2A2A;
+    --muted:      #7A7A88;
+    --border:     #E7E5EA;
     --dpp:        #1B7A3D;
     --kmt:        #1B4A9C;
     --tpp:        #0E8C8C;
@@ -49,9 +50,8 @@
   .party-stripe {
     height: 5px;
     background: linear-gradient(90deg,
-      var(--dpp) 0%, var(--dpp) 33.3%,
-      var(--kmt) 33.3%, var(--kmt) 66.6%,
-      var(--tpp) 66.6%, var(--tpp) 100%);
+      var(--rb-red) 0%, var(--rb-orange) 16.6%, var(--rb-yellow) 33.3%,
+      var(--rb-green) 50%, var(--rb-teal) 66.6%, var(--rb-blue) 83.3%, var(--rb-violet) 100%);
     position: sticky;
     top: 0;
     z-index: 100;
@@ -62,7 +62,7 @@
     position: sticky;
     top: 5px;
     z-index: 99;
-    background: var(--navy-deep);
+    background: var(--ink-deep);
     padding: 0 1.5rem;
     display: flex;
     align-items: center;
@@ -92,13 +92,13 @@
     flex-shrink: 0;
   }
   .sticky-nav a:hover, .sticky-nav a.active {
-    color: var(--gold);
-    border-bottom-color: var(--gold);
+    color: var(--accent);
+    border-bottom-color: var(--accent);
   }
 
   /* ── Hero ────────────────────────────────────── */
   .hero {
-    background: var(--navy-deep);
+    background: var(--ink-deep);
     padding: 4rem 1.5rem 3rem;
     position: relative;
     overflow: hidden;
@@ -107,11 +107,10 @@
     content: '';
     position: absolute;
     left: 0; right: 0; bottom: 0;
-    height: 4px;
+    height: 6px;
     background: linear-gradient(90deg,
       var(--rb-red) 0%, var(--rb-orange) 16.6%, var(--rb-yellow) 33.3%,
       var(--rb-green) 50%, var(--rb-teal) 66.6%, var(--rb-blue) 83.3%, var(--rb-violet) 100%);
-    opacity: 0.85;
   }
   .hero-inner {
     max-width: 900px;
@@ -122,7 +121,7 @@
   .hero-eyebrow {
     font-size: 0.8rem;
     letter-spacing: 0.2em;
-    color: var(--gold);
+    color: var(--accent);
     text-transform: uppercase;
     font-weight: 600;
     margin-bottom: 0.6rem;
@@ -164,7 +163,7 @@
   .stat-num {
     font-size: 2rem;
     font-weight: 700;
-    color: var(--gold);
+    color: var(--accent);
     line-height: 1;
     margin-bottom: 0.2rem;
   }
@@ -192,7 +191,7 @@
   /* ── District section ────────────────────────── */
   .district { margin-bottom: 2.5rem; scroll-margin-top: 80px; }
   .district-header {
-    background: var(--navy);
+    background: var(--ink);
     border-radius: 12px 12px 0 0;
     padding: 1rem 1.4rem;
     display: flex;
@@ -202,13 +201,13 @@
     flex-wrap: wrap;
   }
   .district-title-group {}
-  .district-no { font-size: 0.7rem; letter-spacing: 0.15em; color: var(--gold); text-transform: uppercase; font-weight: 600; margin-bottom: 0.15rem; }
+  .district-no { font-size: 0.7rem; letter-spacing: 0.15em; color: var(--accent); text-transform: uppercase; font-weight: 600; margin-bottom: 0.15rem; }
   .district-name { font-size: 1.25rem; font-weight: 700; color: var(--white); }
   .district-areas { font-size: 0.8rem; color: rgba(255,255,255,0.55); margin-top: 0.15rem; }
   .district-right { text-align: right; flex-shrink: 0; display: flex; flex-direction: column; align-items: flex-end; }
-  .district-seats { font-size: 0.85rem; font-weight: 600; color: var(--gold); margin-bottom: 0.4rem; }
+  .district-seats { font-size: 0.85rem; font-weight: 600; color: var(--accent); margin-bottom: 0.4rem; }
   .district-header { cursor: pointer; user-select: none; }
-  .district-header:hover { background: var(--navy-mid); }
+  .district-header:hover { background: var(--ink-mid); }
   .toggle-arrow {
     display: inline-block;
     margin-top: 0.5rem;
@@ -280,7 +279,7 @@
     cursor: pointer;
   }
   .chip:hover { background: #E0E5F0; border-color: var(--border); transform: translateY(-1px); }
-  .chip:focus-visible { outline: 2px solid var(--navy); outline-offset: 2px; }
+  .chip:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
   .chip-tag {
     font-size: 0.68rem;
     color: var(--muted);
@@ -317,7 +316,7 @@
     to   { opacity: 1; transform: translateY(0) scale(1); }
   }
   .modal-header {
-    background: var(--navy-deep);
+    background: var(--ink-deep);
     padding: 1.4rem 1.6rem;
     border-radius: 16px 16px 0 0;
     position: sticky;
@@ -352,7 +351,7 @@
     gap: 0.5rem;
     font-size: 0.85rem;
     font-weight: 700;
-    color: var(--navy);
+    color: var(--ink);
     margin-bottom: 0.5rem;
   }
   .modal-section-icon {
@@ -383,7 +382,7 @@
     border-top: 1px solid var(--border);
     margin-top: 0.2rem;
   }
-  #modal-source-link { color: var(--navy); text-decoration: underline; text-underline-offset: 2px; }
+  #modal-source-link { color: var(--ink); text-decoration: underline; text-underline-offset: 2px; }
 
   /* Pending state */
   .pending-state {
@@ -411,11 +410,11 @@
     display: flex;
     gap: 0.5rem;
   }
-  .remark-label { font-weight: 700; color: var(--navy); white-space: nowrap; flex-shrink: 0; }
+  .remark-label { font-weight: 700; color: var(--ink); white-space: nowrap; flex-shrink: 0; }
 
   /* ── Footer ──────────────────────────────────── */
   footer {
-    background: var(--navy-deep);
+    background: var(--ink-deep);
     color: rgba(255,255,255,0.5);
     text-align: center;
     padding: 2rem 1.5rem;
@@ -426,7 +425,7 @@
     content: '';
     position: absolute;
     left: 0; right: 0; top: 0;
-    height: 3px;
+    height: 4px;
     background: linear-gradient(90deg,
       var(--rb-red), var(--rb-orange), var(--rb-yellow),
       var(--rb-green), var(--rb-teal), var(--rb-blue), var(--rb-violet));
@@ -467,7 +466,7 @@
       </div>
       <div class="hero-meta-item">
         <span class="hero-meta-label">資料截至</span>
-        <span class="hero-meta-value">2026年3月13日</span>
+        <span class="hero-meta-value">2026年6月14日</span>
       </div>
       <div class="hero-meta-item">
         <span class="hero-meta-label">正式名單公告</span>
@@ -1139,7 +1138,7 @@
     <a href="https://www.tpp.org.tw" target="_blank" rel="noopener">民眾黨</a>
   </div>
   <div style="margin-top:1rem">
-    資料來源：各政黨中央/新北市黨部公告、中選會、媒體報導（v2 查證版，截至 2026 年 3 月）。本頁為非官方整理，正式名單以中選會公告為準。
+    資料來源：各政黨中央/新北市黨部公告、中選會、媒體報導（v2 查證版，資料截至 2026 年 6 月 14 日）。本頁為非官方整理，正式名單以中選會公告為準。
   </div>
   <div style="margin-top:0.6rem; opacity:0.75; max-width:640px; margin-left:auto; margin-right:auto;">
     本次更新重點：第八選區民進黨初選結果出爐，現任林銘仁落馬，吳昇翰、高乃芸獲提名；國民黨江怡臻不參選，黃永昌初選資格不符；其餘選區同步更新各黨領表登記與提名最新狀態。
@@ -1211,11 +1210,11 @@
     "陳明義": { party: "國民黨", party_color_var: "--kmt", status: "現任", status_detail: null, district_id: 2, source: "https://udn.com/news/story/124652/9563490", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
     "蔡佩呈": { party: "國民黨", party_color_var: "--kmt", status: "新人", status_detail: "宋明宗女兒", district_id: 2, source: "https://udn.com/news/story/124652/9563490", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
     "鄭丞宏": { party: "國民黨", party_color_var: "--kmt", status: "新人", status_detail: "前五股鄉長鄭漢騰兒子、新北市府顧問", district_id: 2, source: "https://udn.com/news/story/124652/9563490", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
-    "陳岱吟": { party: "民進黨", party_color_var: "--dpp", status: "新人", status_detail: "跨派系交棒新人", district_id: 3, source: "https://www.setn.com/news/1813756", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
-    "吳奕萱": { party: "民進黨", party_color_var: "--dpp", status: "新人", status_detail: "立委吳思瑤前辦公室主任", district_id: 3, source: "https://www.setn.com/news/1813756", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
-    "翁震州": { party: "民進黨", party_color_var: "--dpp", status: "現任", status_detail: null, district_id: 3, source: "https://www.setn.com/news/1813756", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
-    "林秉宥": { party: "民進黨", party_color_var: "--dpp", status: "現任", status_detail: null, district_id: 3, source: "https://www.setn.com/news/1813756", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
-    "陳世軒": { party: "民眾黨", party_color_var: "--tpp", status: "現任", status_detail: null, district_id: 3, source: "https://www.facebook.com/TPPfanpage/posts/1420683136080861/", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
+    "陳岱吟": { party: "民進黨", party_color_var: "--dpp", status: "新人", status_detail: "跨派系交棒新人", district_id: 3, source: "https://www.setn.com/news/1813756", verified: true, photo_url: null, platform: [{ text: "推動婦幼政策回歸托育、就學、照護與支持系統，減輕夾心世代壓力。", category: "社福", source: "https://www.facebook.com/maygoddejia/videos/1438816847875645/", verified: true }, { text: "關心校園建設、環境安全、公園綠地等議題，並提出具體改善方案。", category: "教育", source: "https://www.threads.com/@evalynchen/post/DTHq3Msk71m/", verified: true }], past_positions: [{ text: "支持民進黨政策，並獲前行政院長游錫堃、前基隆市長林右昌及議員鍾宏仁支持。", stance: "support", date: "2026-03", source: "https://news.ltn.com.tw/news/politics/breakingnews/5375596", verified: true }], controversies: [], contributions: [{ text: "曾任前行政院長游錫堃辦公室副主任，具備12年政治幕僚經驗。", category: "其他", date: "2026", source: "https://news.ltn.com.tw/news/politics/breakingnews/5375596", verified: true }] },
+    "吳奕萱": { party: "民進黨", party_color_var: "--dpp", status: "新人", status_detail: "立委吳思瑤前辦公室主任", district_id: 3, source: "https://www.setn.com/news/1813756", verified: true, photo_url: null, platform: [{ text: "以務實問政與理性監督為原則，致力將公共資源轉化為地方落實的具體改善。", category: "其他", source: "https://news.wkm.tw/archives/24937", verified: true }], past_positions: [{ text: "在立法院任職期間，成功促成企業貸款補助增列「新興業種」，擴大產業救援。", stance: "support", date: "2026-03", source: "https://udn.com/news/story/124652/9378065", verified: true }, { text: "積極推動國家體育資源實踐「性別平權」。", stance: "support", date: "2026-03", source: "https://udn.com/news/story/124652/9378065", verified: true }], controversies: [], contributions: [{ text: "具備十年國會幕僚經驗，曾任立委吳思瑤辦公室主任，熟悉法案研議與行政協調。", category: "其他", date: "2026", source: "https://news.wkm.tw/archives/24937", verified: true }] },
+    "翁震州": { party: "民進黨", party_color_var: "--dpp", status: "現任", status_detail: null, district_id: 3, source: "https://www.setn.com/news/1813756", verified: true, photo_url: null, platform: [{ text: "主張泰板輕軌應以高架化優先，降低地面車流交織風險，並爭取捷運西盛支線。", category: "交通", source: "https://news.wkm.tw/archives/24662", verified: true }, { text: "主張公有設施（學校、公園）應同步規劃地下停車場，以緩解路面停車壓力。", category: "交通", source: "https://news.wkm.tw/archives/24662", verified: true }], past_positions: [{ text: "長期倡議提升基層資源，成功推動新北市鄰長工作協助費調高至2500元。", stance: "support", date: "2026-06", source: "https://news.wkm.tw/archives/25810", verified: true }], controversies: [{ text: "引用屏東地檢署資料指控國民黨市長參選人李四川家族涉及地方爭議，遭對方批評為政治抹黑。", date: "2026-05", status_of_case: null, source: "https://www.ftnn.com.tw/news/545427", verified: true }], contributions: [{ text: "成功推動調高鄰長工作協助費至每月2500元，強化基層服務量能。", category: "法案推動", date: "2026-06", source: "https://news.wkm.tw/archives/25810", verified: true }] },
+    "林秉宥": { party: "民進黨", party_color_var: "--dpp", status: "現任", status_detail: null, district_id: 3, source: "https://www.setn.com/news/1813756", verified: true, photo_url: null, platform: [{ text: "加速新莊第一公墓遷葬，推動公墓用地變更，設置新莊森林公園。", category: "都更", source: "https://www.ntp.gov.tw/councilor-detail?program=37&A=3&C=611", verified: true }, { text: "爭取福營運動中心興建，加速閒置公有土地活化，平衡南北新莊發展。", category: "地方建設", source: "https://www.ntp.gov.tw/councilor-detail?program=37&A=3&C=611", verified: true }], past_positions: [{ text: "反對禁止任用三等親內親屬為公費助理的「三親等禁令」，認為不符比例原則。", stance: "oppose", date: "2025-02", source: "https://tw.news.yahoo.com/%E6%89%8D%E8%BD%9F%E8%B3%B4-%E4%B8%89%E8%A6%AA%E7%AD%89%E7%A6%81%E4%BB%A4-%E7%8B%97%E5%B1%81-%E6%9E%97%E7%A7%89%E5%AE%A5%E7%82%BA%E6%BF%80%E7%83%88%E6%8E%AA%E8%BE%AD%E9%81%93%E6%AD%89%E4%BA%86-091852290.html", verified: true }], controversies: [{ text: "在社群平台評論台南女警遭輾斃案時，發文稱「一定是車道太窄讓後車沒辦法超車」，遭指反諷路權團體引發爭議。", date: "2026-04", status_of_case: null, source: "https://zh.wikipedia.org/zh-hant/%E6%9E%97%E7%A7%89%E5%AE%A5", verified: true }], contributions: [{ text: "獨自前往泰緬邊境探訪「苗瓦迪」詐騙園區，關心海外詐騙受害者。", category: "公益行動", date: "2025-12", source: "https://www.youtube.com/watch?v=P72MhsMCqyM", verified: true }] },
+    "陳世軒": { party: "民眾黨", party_color_var: "--tpp", status: "現任", status_detail: null, district_id: 3, source: "https://www.facebook.com/TPPfanpage/posts/1420683136080861/", verified: true, photo_url: null, platform: [{ text: "提出「五大好孕政見」，包含生育補助與育兒友善環境，鼓勵年輕人敢婚敢生。", category: "社福", source: "https://news.ltn.com.tw/news/politics/breakingnews/5488743", verified: true }], past_positions: [{ text: "反對「4萬6還稅於市民」提案，主張應優先用於整建道路等公共建設。", stance: "oppose", date: "2026-05", source: "https://www.threads.com/@stanley_wch/post/DYVhFCkAQZl/", verified: true }], controversies: [{ text: "受訪談論黨內「狗仔爭議」及黃國昌布局新北市長計畫，引發外界對民眾黨內部運作的關注。", date: "2025-10", status_of_case: null, source: "https://tw.news.yahoo.com/%E7%8B%97%E4%BB%94%E7%88%AD%E8%AD%B0%E6%96%B7%E9%BB%83%E5%9C%8B%E6%98%8C%E9%81%B8%E6%96%B0%E5%8C%97%E5%B8%82%E9%95%B7-%E9%99%B3%E4%B8%96%E8%BB%92%E6%9B%9D%E9%80%B2%E5%BA%A6-030316506.html", verified: true }], contributions: [{ text: "爭取並完成新莊中華路與中誠街口行人環境改造，完工新莊首個Z字型人行穿越道。", category: "地方建設", date: "2020-01", source: "https://www.youtube.com/watch?v=evUw-mEcGBc", verified: true }] },
     "陳俊維": { party: "民進黨", party_color_var: "--dpp", status: "新人", status_detail: "前議員陳啟能兒子", district_id: 4, source: "https://www.setn.com/news/1813756", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
     "彭佳芸": { party: "民進黨", party_color_var: "--dpp", status: "現任", status_detail: null, district_id: 4, source: "https://www.setn.com/news/1813756", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
     "邱婷蔚": { party: "民進黨", party_color_var: "--dpp", status: "現任", status_detail: null, district_id: 4, source: "https://www.setn.com/news/1813756", verified: true, photo_url: null, platform: [], past_positions: [], controversies: [], contributions: [] },
@@ -1284,15 +1283,22 @@
 
   function renderModalSection(containerId, items) {
     const el = document.getElementById(containerId);
-    if (Array.isArray(items) && items.length > 0) {
+    // 依 資料架構-ntpc-v1.1 schema_notes：未查證（verified !== true）的內容不顯示
+    const visible = (Array.isArray(items) ? items : []).filter(item =>
+      typeof item === 'string' ? true : (item && item.verified === true)
+    );
+    if (visible.length > 0) {
       el.innerHTML = '<ul style="padding-left:1.1em; display:flex; flex-direction:column; gap:0.4em;">' +
-        items.map(item => {
+        visible.map(item => {
           // 相容純字串，或符合 JSON schema 的物件 { text, source, verified, ... }
           const text = typeof item === 'string' ? item : (item && item.text) || '';
-          return `<li>${text}</li>`;
+          const src = (typeof item === 'object' && item && item.source)
+            ? ` <a href="${item.source}" target="_blank" rel="noopener" style="font-size:0.72em; color:var(--muted);">[來源]</a>`
+            : '';
+          return `<li>${text}${src}</li>`;
         }).join('') + '</ul>';
     } else {
-      el.innerHTML = '<span class="modal-placeholder">資料待補充</span>';
+      el.innerHTML = '<span class="modal-placeholder">資料蒐集中</span>';
     }
   }
 
